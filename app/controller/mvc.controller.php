@@ -90,6 +90,18 @@ class mvc_controller {
 		}
 	}
 
+	function add_tag(){
+		$this->validate_session();
+
+		$pagina = $this->load_template("Add tag", "en", "addtag.css");
+		$menu = $this->load_page('../app/views/default/modules/addtag/menu.php');
+		$pagina = $this->replace_content('/\#{MENU}\#/ms' ,$menu , $pagina);
+		$form = $this->load_page('../app/views/default/modules/addtag/form.php');
+		$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms', $form , $pagina);
+		
+		$this->view_page($pagina);
+	}
+
 	function principal()
 	{
 		$pagina=$this->load_template('Index', 'en', 'index.css');

@@ -13,6 +13,9 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/geodisplay.js"></script>
   </head>
   <body>
     #{HEADER}#
@@ -21,8 +24,5 @@
       #{CONTENIDO}#
     </div>
     #{FOOTER}#
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/geodisplay.js"></script>
   </body>
 </html>
