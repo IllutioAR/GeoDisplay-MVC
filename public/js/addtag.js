@@ -1,6 +1,9 @@
 var state = 1;
+var uploading = false;
 
 function next(){
+	if (uploading)
+		return;
 	state++;
 	console.log(state)
 	if (state == 3) {
@@ -16,6 +19,8 @@ function next(){
 }
 
 function back(){
+	if (uploading)
+		return;
 	state--;
 	console.log(state)
 	if (state == 2){
@@ -26,10 +31,14 @@ function back(){
 		window.location.href = "index.html";
 	}
 	$("#" + (state+1) ).hide();
-	$("#" + state ).show();       	
+	$("#" + state ).show();
 }
 
 function submit_form(){
+	uploading = true;
+	$("#save").click(function(){
+		$("#submit").trigger("click");
+	});
 	$("#form").submit();
 	console.log("submit");
 }

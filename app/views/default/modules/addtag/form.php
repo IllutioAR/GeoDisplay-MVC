@@ -90,24 +90,12 @@
 						<strong>Video</strong>
 					</div>
 					<div class="form" id="multimedia">
-						<div class="row" id="multimedia-audio">
-							<div class="col-xs-6">
-								<button id="dragandrophandler" type="button" class="btn btn-default" style="background: #DDD;margin:.2em; height:9.8em">
-									Drop file here
-								</button>
-							</div>
-							<div class="col-xs-6">
-								<button id="dragandrophandler" class="btn btn-default" style="margin:.2em">
+						<div class="row" id="multimedia-video">
+							<div class="col-xs-12">
+								<input type="file" name="video" class="btn btn-default" style="display:none">
+								<button id="btn-video" class="btn btn-default" style="margin:.2em">
 									<i class="fa fa-laptop"></i> 
-									Computer
-								</button>
-								<button type="button" class="btn btn-default" style="margin:.2em">
-									<i class="fa fa-film"></i> 
-									My files
-								</button>
-								<button type="button" class="btn btn-default" style="margin:.2em">
-									<i class="fa fa-film"></i> 
-									Default Gallery
+									Select file
 								</button>
 							</div>
 						</div>
@@ -121,23 +109,11 @@
 					</div>
 					<div class="form" id="multimedia">
 						<div class="row" id="multimedia-audio">
-							<div class="col-xs-6">
-								<button class="btn btn-default" style="background: #DDD;margin:.2em; height:9.8em">
-									Drop file here
-								</button>
-							</div>
-							<div class="col-xs-6">
-								<button type="button" class="btn btn-default" style="margin:.2em">
+							<div class="col-xs-12">
+								<input type="file" name="audio" class="btn btn-default" style="display:none">
+								<button id="btn-audio" class="btn btn-default" style="margin:.2em">
 									<i class="fa fa-laptop"></i> 
-									Computer
-								</button>
-								<button type="button" class="btn btn-default" style="margin:.2em">
-									<i class="fa fa-music"></i> 
-									My files
-								</button>
-								<button type="button" class="btn btn-default" style="margin:.2em">
-									<i class="fa fa-music"></i> 
-									Default Gallery
+									Select file
 								</button>
 							</div>
 						</div>
@@ -150,24 +126,12 @@
 						<strong>Image</strong>
 					</div>
 					<div class="form" id="multimedia">
-						<div class="row" id="multimedia-audio">
-							<div class="col-xs-6">
-								<button class="btn btn-default" style="background: #DDD;margin:.2em; height:9.8em">
-									Drop file here
-								</button>
-							</div>
-							<div class="col-xs-6">
-								<button type="button" class="btn btn-default" style="margin:.2em">
+						<div class="row" id="multimedia-image">
+							<div class="col-xs-12">
+								<input type="file" name="image" class="btn btn-default" style="display:none">
+								<button id="btn-image" class="btn btn-default" style="margin:.2em">
 									<i class="fa fa-laptop"></i> 
-									Computer
-								</button>
-								<button type="button" class="btn btn-default" style="margin:.2em">
-									<i class="fa fa-photo"></i> 
-									My files
-								</button>
-								<button type="button" class="btn btn-default" style="margin:.2em">
-									<i class="fa fa-photo"></i> 
-									Default Gallery
+									Select file
 								</button>
 							</div>
 						</div>
@@ -175,6 +139,7 @@
 				</div>
 			</div>
 		</div>
+		<input id="upload" type="submit" style="display:none" value="Submit">
 	</form>
 </div>
 <script>
@@ -183,3 +148,40 @@
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script src="js/map.js"></script>
 <script src="js/addtag.js"></script>
+<script>
+	$("#btn-video").click(function(){
+		$("input[name=video]").trigger("click");
+	});
+	$("input[name=video]").change(function(){
+		if($(this).val() == ""){
+			$("#btn-video").html('<i class="fa fa-laptop"></i> Select file');
+		}
+		else{
+			$("#btn-video").html($(this).val());
+		}
+	});
+
+	$("#btn-audio").click(function(){
+		$("input[name=audio]").trigger("click");
+	});
+	$("input[name=audio]").change(function(){
+		if($(this).val() == ""){
+			$("#btn-audio").html('<i class="fa fa-laptop"></i> Select file');
+		}
+		else{
+			$("#btn-audio").html($(this).val());
+		}
+	});
+
+	$("#btn-image").click(function(){
+		$("input[name=image]").trigger("click");
+	});
+	$("input[name=image]").change(function(){
+		if($(this).val() == ""){
+			$("#btn-image").html('<i class="fa fa-laptop"></i> Select file');
+		}
+		else{
+			$("#btn-image").html($(this).val());
+		}
+	});
+</script>
