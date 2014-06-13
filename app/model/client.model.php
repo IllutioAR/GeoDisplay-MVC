@@ -11,13 +11,17 @@ class client extends database {
 	}
 
 	function validate_client($email, $password){
-		$statement = "SELECT email, password FROM client WHERE email = :email and password = :password ";
-		$query = $this->db->prepare($statement);
-		$query->bindParam(':email', $email, PDO::PARAM_STR);
-		$query->bindParam(':password', $password, PDO::PARAM_STR);
-		$query->execute();
-		if($query->rowCount() == 1){
-			return true;
+		if(filter_var($email,FILTER_VALIDATE_EMAIL)){
+			$statement = "SELECT password FROM client WHERE email = :email";
+			$query = $this->db->prepare($statement);
+			$query->bindParam(':email', $email, PDO::PARAM_STR);
+			$query->execute();
+			if($query->rowCount() == 1){
+				$hashedPassword = $query->fetchAll(PDO::FETCH_ASSOC)[0]["password"];
+				if(crypt($password, $hashedPassword) == $hashedPassword){
+					return true;
+				}
+			}
 		}
 		return false;
 	}

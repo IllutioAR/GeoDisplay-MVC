@@ -39,7 +39,7 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 			    <li>
-			    	<a href="addtag.html" class="green">
+			    	<a href="addtag.php" class="green">
 			    		<i class="fa fa-plus-circle"></i>
 			    		Add tag
 			    	</a>

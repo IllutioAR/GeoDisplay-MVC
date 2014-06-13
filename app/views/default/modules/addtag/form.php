@@ -1,5 +1,5 @@
 <div>
-	<form id="form" role="form">
+	<form id="form" role="form" action="ajax/addtag.php" method="post">
 		<div id="1" class="row">
 			<div class="col-xs-12 col-md-8 col-md-offset-2">
 				<div class="seccion">
@@ -11,11 +11,11 @@
 						<div class="row">
 							<div class="col-xs-6">
 								<label for="latitude">Latitude <i class="fa fa-asterisk"></i></label>
-								<input type="text" class="form-control" id="latitude" pattern="-?\d+\.\d+" title="Enter a decimal number." required>
+								<input name="latitude" type="text" class="form-control" id="latitude" pattern="-?\d+\.\d+" title="Enter a decimal number." required>
 							</div>
 							<div class="col-xs-6">
 								<label for="longitude">Longitude <i class="fa fa-asterisk"></i></label>
-								<input type="text" class="form-control" id="longitude" pattern="-?\d+\.\d+" title="Enter a decimal number." required>
+								<input name="longitude" type="text" class="form-control" id="longitude" pattern="-?\d+\.\d+" title="Enter a decimal number." required>
 							</div>
 						</div>
 					</div>
@@ -36,7 +36,7 @@
 									<i class="fa fa-asterisk"></i>
 									[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Name the place you want to tag."></i>]
 								</label>
-								<input type="text" class="form-control" id="tag" autofocus required>
+								<input name="name" type="text" class="form-control" id="tag" required>
 							</div>
 							<div class="col-xs-6">
 								<label for="descripcion">
@@ -44,7 +44,7 @@
 									<i class="fa fa-asterisk"></i>
 									[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Say something about this place."></i>]
 								</label>
-								<textarea class="form-control" rows="2" id="descripcion" required>
+								<textarea name="description" class="form-control" rows="2" id="descripcion" required>
 								</textarea>
 							</div>
 							<div class="col-xs-6">
@@ -52,14 +52,14 @@
 									URL
 									[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="A link to your website."></i>]
 								</label>
-								<input type="text" class="form-control" id="tag">
+								<input name="url" type="text" class="form-control" id="tag">
 							</div>
 							<div class="col-xs-6">
 								<label for="tag">
 									Purchase URL
 									[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="A link to buy a product or service."></i>]
 								</label>
-								<input type="text" class="form-control" id="tag">
+								<input name="purchase_url" type="text" class="form-control" id="tag">
 							</div>
 						</div>
 					</div>
@@ -72,11 +72,11 @@
 						<div class="row">
 							<div class="col-xs-6">
 								<label for="facebok">Facebook</label>
-								<input type="url" class="form-control" id="facebook" pattern="https?:\/\/(www\.)?facebook\.com(\/.*)?" title="Enter a valid facebook url (http://facebook.com/page)." placeholder="http://facebook.com/username">
+								<input name="facebook" type="url" class="form-control" id="facebook" pattern="https?:\/\/(www\.)?facebook\.com(\/.*)?" title="Enter a valid facebook url (http://facebook.com/page)." placeholder="http://facebook.com/username">
 							</div>
 							<div class="col-xs-6">
 								<label for="twitter">Twitter</label>
-								<input type="text" class="form-control" id="twitter" pattern="\@(\d|\w|\_|)+" title="Enter a valid username." placeholder="@username">
+								<input name="twitter" type="text" class="form-control" id="twitter" pattern="\@(\d|\w|\_|)+" title="Enter a valid username." placeholder="@username">
 							</div>
 						</div>
 					</div>
@@ -92,7 +92,7 @@
 					<div class="form" id="multimedia">
 						<div class="row" id="multimedia-video">
 							<div class="col-xs-12">
-								<input type="file" name="video" class="btn btn-default" style="display:none">
+								<input name="video" id="video" type="file" class="btn btn-default" style="display:none">
 								<button id="btn-video" class="btn btn-default" style="margin:.2em">
 									<i class="fa fa-laptop"></i> 
 									Select file
@@ -110,7 +110,7 @@
 					<div class="form" id="multimedia">
 						<div class="row" id="multimedia-audio">
 							<div class="col-xs-12">
-								<input type="file" name="audio" class="btn btn-default" style="display:none">
+								<input name="audio" type="file" class="btn btn-default" style="display:none">
 								<button id="btn-audio" class="btn btn-default" style="margin:.2em">
 									<i class="fa fa-laptop"></i> 
 									Select file
@@ -128,7 +128,7 @@
 					<div class="form" id="multimedia">
 						<div class="row" id="multimedia-image">
 							<div class="col-xs-12">
-								<input type="file" name="image" class="btn btn-default" style="display:none">
+								<input name="image" type="file" class="btn btn-default" style="display:none">
 								<button id="btn-image" class="btn btn-default" style="margin:.2em">
 									<i class="fa fa-laptop"></i> 
 									Select file
@@ -148,40 +148,3 @@
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script src="js/map.js"></script>
 <script src="js/addtag.js"></script>
-<script>
-	$("#btn-video").click(function(){
-		$("input[name=video]").trigger("click");
-	});
-	$("input[name=video]").change(function(){
-		if($(this).val() == ""){
-			$("#btn-video").html('<i class="fa fa-laptop"></i> Select file');
-		}
-		else{
-			$("#btn-video").html($(this).val());
-		}
-	});
-
-	$("#btn-audio").click(function(){
-		$("input[name=audio]").trigger("click");
-	});
-	$("input[name=audio]").change(function(){
-		if($(this).val() == ""){
-			$("#btn-audio").html('<i class="fa fa-laptop"></i> Select file');
-		}
-		else{
-			$("#btn-audio").html($(this).val());
-		}
-	});
-
-	$("#btn-image").click(function(){
-		$("input[name=image]").trigger("click");
-	});
-	$("input[name=image]").change(function(){
-		if($(this).val() == ""){
-			$("#btn-image").html('<i class="fa fa-laptop"></i> Select file');
-		}
-		else{
-			$("#btn-image").html($(this).val());
-		}
-	});
-</script>

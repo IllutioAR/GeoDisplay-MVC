@@ -22,7 +22,7 @@ class tag extends database {
 		return "";
 	}
 
-	function add_tag(){
+	function add_new_tag(){
 		return "";
 	}
 }

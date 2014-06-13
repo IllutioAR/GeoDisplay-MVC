@@ -52,3 +52,44 @@ $("#save").click(function(){
 $("#back").click(function(){
 	back();
 });
+
+//Botones para seleccionar archivos
+
+$("#btn-video").click(function(e){
+		e.preventDefault();
+		$("input[name=video]").trigger("click");
+	});
+	$("input[name=video]").change(function(){
+		if($(this).val() == ""){
+			$("#btn-video").html('<i class="fa fa-laptop"></i> Select file');
+		}
+		else{
+			$("#btn-video").html($(this).val());
+		}
+	});
+
+	$("#btn-audio").click(function(){
+		e.preventDefault();
+		$("input[name=audio]").trigger("click");
+	});
+	$("input[name=audio]").change(function(){
+		if($(this).val() == ""){
+			$("#btn-audio").html('<i class="fa fa-laptop"></i> Select file');
+		}
+		else{
+			$("#btn-audio").html($(this).val());
+		}
+	});
+
+	$("#btn-image").click(function(){
+		e.preventDefault();
+		$("input[name=image]").trigger("click");
+	});
+	$("input[name=image]").change(function(){
+		if($(this).val() == ""){
+			$("#btn-image").html('<i class="fa fa-laptop"></i> Select file');
+		}
+		else{
+			$("#btn-image").html($(this).val());
+		}
+	});
