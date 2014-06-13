@@ -17,8 +17,8 @@ class client extends database {
 			$query->bindParam(':email', $email, PDO::PARAM_STR);
 			$query->execute();
 			if($query->rowCount() == 1){
-				$hashedPassword = $query->fetchAll(PDO::FETCH_ASSOC)[0]["password"];
-				if(crypt($password, $hashedPassword) == $hashedPassword){
+				$hashed_password = $query->fetchAll(PDO::FETCH_ASSOC)[0]["password"];
+				if(crypt($password, $hashed_password) == $hashed_password){
 					return true;
 				}
 			}
@@ -37,19 +37,26 @@ class client extends database {
 		return "";
 	}
 
-	function change_password($nick, $password, $new_password, $new_password_confirm){
-		$statement = "SELECT password FROM Client WHERE nick = :nick and password = :password ";
+	function change_password($email, $password, $new_password, $new_password_confirm){
+		$statement = "SELECT password FROM Client WHERE email = :email";
 		$query = $this->db->prepare($statement);
-		$query->bindParam(':nick', $nick, PDO::PARAM_STR);
-		$query->bindParam(':password', $password, PDO::PARAM_STR);
+		$query->bindParam(':email', $email, PDO::PARAM_STR);
 		$query->execute();
 		if($query->rowCount() == 1){
 			if( $new_password === $new_password_confirm ){
-				$statement = "UPDATE Client SET password = :password WHERE nick = :nick";
-				$query = $this->db->prepare($statement);
-				$query->bindParam(':password', $new_password, PDO::PARAM_STR);
-				$query->bindParam(':nick', $nick, PDO::PARAM_STR);
-				$query->execute();
+				$hashed_password = $query->fetchAll(PDO::FETCH_ASSOC)[0]["password"];
+				if(crypt($password, $hashed_password) == $hashed_password){
+					if (defined("CRYPT_BLOWFISH") && CRYPT_BLOWFISH){
+				        $salt = '$2y$11$' . substr(md5(uniqid(rand(), true)), 0, 22);
+				        $new_hashed_password = crypt($new_password, $salt);
+				        $statement = "UPDATE Client SET password = :password WHERE email = :email";
+						$query = $this->db->prepare($statement);
+						$query->bindParam(':password', $new_hashed_password, PDO::PARAM_STR);
+						$query->bindParam(':email', $email, PDO::PARAM_STR);
+						$query->execute();	
+						echo "Cambio";
+				    }
+				}
 			}
 			else{
 				header("Location: profile.php?error=password_confirm");

@@ -77,8 +77,9 @@ class mvc_controller {
 		$this->validate_session();
 		if( isset($_POST["password_form"]) && isset($_POST["password"]) && isset($_POST["new_password"]) && isset($_POST["new_password_confirm"]) ){
 			$client = new client();
-			$client->change_password($_SESSION["client"]["nick"], $_POST["password"], $_POST["new_password"], $_POST["new_password_confirm"]);
-			header("Location: profile.php?success=password");
+			$changed = $client->change_password($_SESSION["client"]["email"], $_POST["password"], $_POST["new_password"], $_POST["new_password_confirm"]);
+			if ( $changed )
+				header("Location: profile.php?success=password");
 		}
 		else{	// No existe ningún post de formularios muestra la vista normal
 
