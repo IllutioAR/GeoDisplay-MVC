@@ -53,16 +53,11 @@ class client extends database {
 						$query = $this->db->prepare($statement);
 						$query->bindParam(':password', $new_hashed_password, PDO::PARAM_STR);
 						$query->bindParam(':email', $email, PDO::PARAM_STR);
-						$query->execute();	
-						echo "Cambio";
+						$query->execute();
+						return true;
 				    }
 				}
 			}
-			else{
-				header("Location: profile.php?error=password_confirm");
-			}
-		}else{
-			header("Location: profile.php?error=wrong_password");
 		}
 	}
 }

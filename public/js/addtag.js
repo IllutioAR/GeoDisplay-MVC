@@ -5,7 +5,6 @@ function next(){
 	if (uploading)
 		return;
 	state++;
-	console.log(state)
 	if (state == 3) {
 		$("#next").hide();
 		$("#save").show();
@@ -22,7 +21,6 @@ function back(){
 	if (uploading)
 		return;
 	state--;
-	console.log(state)
 	if (state == 2){
 		$("#save").hide();
 		$("#next").show();
@@ -37,10 +35,9 @@ function back(){
 function submit_form(){
 	uploading = true;
 	$("#save").click(function(){
-		$("#submit").trigger("click");
+		//$("#upload").trigger("click");
+		$("#form").submit();
 	});
-	$("#form").submit();
-	console.log("submit");
 }
 
 $("#next").click(function(){
@@ -54,42 +51,22 @@ $("#back").click(function(){
 });
 
 //Botones para seleccionar archivos
+function selectFile(e, btn){
+	
+}
 
-$("#btn-video").click(function(e){
-		e.preventDefault();
-		$("input[name=video]").trigger("click");
-	});
-	$("input[name=video]").change(function(){
-		if($(this).val() == ""){
-			$("#btn-video").html('<i class="fa fa-laptop"></i> Select file');
-		}
-		else{
-			$("#btn-video").html($(this).val());
-		}
-	});
+$("#btn-video, #btn-audio, #btn-image").click(function(e){
+	e.preventDefault();
+	media = $(this).attr("id").replace("btn-", "");
+	$("input[name="+ media + "]").trigger("click");
+});
 
-	$("#btn-audio").click(function(){
-		e.preventDefault();
-		$("input[name=audio]").trigger("click");
-	});
-	$("input[name=audio]").change(function(){
-		if($(this).val() == ""){
-			$("#btn-audio").html('<i class="fa fa-laptop"></i> Select file');
-		}
-		else{
-			$("#btn-audio").html($(this).val());
-		}
-	});
-
-	$("#btn-image").click(function(){
-		e.preventDefault();
-		$("input[name=image]").trigger("click");
-	});
-	$("input[name=image]").change(function(){
-		if($(this).val() == ""){
-			$("#btn-image").html('<i class="fa fa-laptop"></i> Select file');
-		}
-		else{
-			$("#btn-image").html($(this).val());
-		}
-	});
+$("input[type=file]").change(function(){
+	media = $(this).attr("name");
+	if($(this).val() == ""){
+		$("#btn-" + media).html('<i class="fa fa-laptop"></i> Select file');
+	}
+	else{
+		$("#btn-" + media).html( $(this).val() );
+	}
+});

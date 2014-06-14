@@ -1,7 +1,6 @@
 <?php
 
 require '../../app/model/tag.model.php';
-require '../../app/model/client.model.php';
 
 class mvc_controller {
 
@@ -19,15 +18,14 @@ class mvc_controller {
 		if( isset($_POST["latitude"]) && 
 			isset($_POST["longitude"]) && 
 			isset($_POST["name"]) && 
-			isset($_POST["description"]) /*&& 
-			isset($_FILES["video"])*/ )
+			isset($_POST["description"]) && 
+			isset($_FILES["video"]) )
 		{
-			echo $_POST["latitude"];
-			echo $_POST["longitude"];
-			echo $_POST["name"];
-			echo $_POST["description"];
+			$tag = new tag();
+			$tag->add_new_tag();
 		}
 		else{
+			echo "No hay datos";
 			header("addtag.php?error=incomplete");
 		}
 	}

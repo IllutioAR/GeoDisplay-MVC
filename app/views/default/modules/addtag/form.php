@@ -1,5 +1,5 @@
 <div>
-	<form id="form" role="form" action="ajax/addtag.php" method="post">
+	<form id="form" role="form" action="ajax/addtag.php" method="post" enctype="multipart/form-data">
 		<div id="1" class="row">
 			<div class="col-xs-12 col-md-8 col-md-offset-2">
 				<div class="seccion">
@@ -44,8 +44,7 @@
 									<i class="fa fa-asterisk"></i>
 									[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Say something about this place."></i>]
 								</label>
-								<textarea name="description" class="form-control" rows="2" id="descripcion" required>
-								</textarea>
+								<textarea name="description" class="form-control" rows="2" id="descripcion" required></textarea>
 							</div>
 							<div class="col-xs-6">
 								<label for="tag">

@@ -80,6 +80,8 @@ class mvc_controller {
 			$changed = $client->change_password($_SESSION["client"]["email"], $_POST["password"], $_POST["new_password"], $_POST["new_password_confirm"]);
 			if ( $changed )
 				header("Location: profile.php?success=password");
+			else 
+				header("Location: profile.php?error");
 		}
 		else{	// No existe ningún post de formularios muestra la vista normal
 
