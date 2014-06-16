@@ -18,7 +18,7 @@ class mvc_controller {
 		if( $_POST["latitude"] != "" && $_POST["longitude"] != "" && $_POST["name"] != "" && $_POST["description"] != "" && isset($_FILES["video"]) )
 		{
 			$tag = new tag();
-			$tag->add_new_tag($_SESSION["client"]["nick"]);
+			$tag->add_new_tag($_SESSION["client"]["nick"], $_SESSION["client"]["tags"], $_SESSION["client"]["space"]);
 		}
 		else{
 			header("Location: ../addtag.php?error=incomplete");

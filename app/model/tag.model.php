@@ -20,6 +20,9 @@ class tag extends database {
 	}
 
 	function move_media_file($nick, $type, $tag_id){
+		if ($_FILES[$type]["size"] > $_SESSION["client"]["space"] ){
+			header("Location: ../addtag.php?error=space");
+		}
 		$path = "../media/".$nick;
 		if( !file_exists($path) ){
 			if( !mkdir($path) ){
@@ -42,6 +45,7 @@ class tag extends database {
 		$path = $base_path.$_FILES[$type]["name"];
 		if ( move_uploaded_file($_FILES[$type]["tmp_name"], $path)) {
 			$size = intval( $_FILES[$type]["size"] ) / (1024*1024);
+			$_SESSION["client"]["space"] -= $size;
 			$statement = "INSERT INTO Multimedia (name, type, size, file_path, client_nick) VALUES (:name, :type, :size, :file_path, :client_nick)";
 			$query = $this->db->prepare($statement);
 			$query->bindParam(':name', $_FILES[$type]["name"], PDO::PARAM_STR);
@@ -63,7 +67,7 @@ class tag extends database {
 		}
 	}
 
-	function add_new_tag($nick, $active = 1){
+	function add_new_tag($nick, $num_tags, $space, $active = 1){
 		/*
 			Pendientes:
 			- Decrementar puntos al insertar.
@@ -71,6 +75,9 @@ class tag extends database {
 			- Decrementar el espacio del usuario al subir archivo.
 		*/
 		echo $_FILES["video"]["tmp_name"]."<br>";
+		if ( $num_tags <= 0){
+			header("Location: ../addtag.php?error=numTags");
+		}
 		$statement = "INSERT INTO Tag (name, description, latitude, longitude, url, url_purchase, facebook, twitter, client_nick, active) VALUES(:name, :description, :latitude, :longitude, :url, :url_purchase, :facebook, :twitter, :client_nick, :active)";
 		$query = $this->db->prepare($statement);
 		$query->bindParam(':name', $_POST["name"], PDO::PARAM_STR);
