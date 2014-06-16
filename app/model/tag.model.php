@@ -23,7 +23,9 @@ class tag extends database {
 		/*
 			Pendientes:
 			- Decrementar puntos al insertar.
-			- 
+			- Revisar que el usuario tenga espacio suficiente.
+			- Decrementar el espacio del usuario al subir archivo.
+			- Reflejar en la BD los archivos subidos, así como su relación con el tag.
 		*/
 		echo $_FILES["video"]["tmp_name"]."<br>";
 		$statement = "INSERT INTO Tag (name, description, latitude, longitude, url, url_purchase, facebook, twitter, client_nick, active) VALUES(:name, :description, :latitude, :longitude, :url, :url_purchase, :facebook, :twitter, :client_nick, :active)";
