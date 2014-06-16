@@ -1,7 +1,7 @@
 <div>
 	<form id="form" role="form" action="ajax/addtag.php" method="post" enctype="multipart/form-data">
 		<div id="1" class="row">
-			<div class="col-xs-12 col-md-8 col-md-offset-2">
+			<div class="col-xs-12 col-md-6">
 				<div class="seccion">
 					<div class="titulo">
 						<strong>Geolocation information</strong>
@@ -21,9 +21,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		<div id="2" class="row" style="display:none">
-			<div class="col-xs-12 col-md-8 col-md-offset-2">
+			<div class="col-xs-12 col-md-6">
 				<div class="seccion">
 					<div class="titulo">
 						<strong>General information</strong>
@@ -82,7 +80,7 @@
 				</div>
 			</div>
 		</div>
-		<div id="3" class="row" style="display:none">
+		<div id="2" class="row" style="display:none">
 			<div class="col-xs-12 col-md-4">
 				<div class="seccion">
 					<div class="titulo">
@@ -138,7 +136,6 @@
 				</div>
 			</div>
 		</div>
-		<input id="upload" type="submit" style="display:none" value="Submit">
 	</form>
 </div>
 <script>

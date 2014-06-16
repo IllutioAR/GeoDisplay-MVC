@@ -1,13 +1,13 @@
 <div>
 	<div class="row">
 		<?php
-			foreach ($tsArray as $data):
+			foreach ($data as $row):
 		?>
 		<div class="col-xs-12 col-md-4">
 			<div class="seccion">
 				<div class="titulo">
 					<span class="titulo-tag">
-						<?php echo $data['name'] ?>
+						<?= $row['name'] ?>
 					</span>
 					<span class="titulo-botones pull-right">
 						<i class="fa fa-ban" data-toggle="tooltip" data-placement="top" title="Disable"></i>
@@ -17,20 +17,20 @@
 					</span>
 				</div>
 				<div class="map">
-                    <img src="<?php echo $data['map'] ?>" alt="<?php echo $data['name'] ?>">
+                    <img src="<?= $row['map'] ?>" alt="<?= $row['name'] ?>">
                 </div>
 				<div class="links">
 					<div>
 						<span><i class="fa fa-fw fa-globe"></i></span>
-						<span><a href="<?php echo $data['url'] ?>"><?php echo $data['url'] ?></a></span>
+						<span><a href="<?= $row['url'] ?>"><?= $row['url'] ?></a></span>
 					</div>
 					<div>
 						<span><i class="fa fa-fw fa-facebook-square"></i></span>
-						<span><a href="<?php echo $data['facebook'] ?>"><?php echo $data['facebook'] ?></a></span>
+						<span><a href="<?= $row['facebook'] ?>"><?= $row['facebook'] ?></a></span>
 					</div>
 					<div>
 						<span><i class="fa fa-fw fa-twitter"></i></span>
-						<span><a href="<?php echo $data['twitter'] ?>"><?php echo $data['twitter'] ?></a></span>
+						<span><a href="<?= $row['twitter'] ?>"><?= $row['twitter'] ?></a></span>
 					</div>
 				</div>
 			</div>

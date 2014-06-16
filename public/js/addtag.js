@@ -5,13 +5,9 @@ function next(){
 	if (uploading)
 		return;
 	state++;
-	if (state == 3) {
+	if (state == 2) {
 		$("#next").hide();
 		$("#save").show();
-	}
-	if (state == 4) {
-		//$("#form").submit();
-		console.log("submit desde boton next???");
 	}
 	$("#" + (state-1) ).hide();
 	$("#" + state ).show();
@@ -21,12 +17,12 @@ function back(){
 	if (uploading)
 		return;
 	state--;
-	if (state == 2){
+	if (state == 1){
 		$("#save").hide();
 		$("#next").show();
 	}
 	else if(state < 1){
-		window.location.href = "index.html";
+		window.location.href = "index.php";
 	}
 	$("#" + (state+1) ).hide();
 	$("#" + state ).show();
@@ -34,10 +30,7 @@ function back(){
 
 function submit_form(){
 	uploading = true;
-	$("#save").click(function(){
-		//$("#upload").trigger("click");
-		$("#form").submit();
-	});
+	$("#form").submit();
 }
 
 $("#next").click(function(){

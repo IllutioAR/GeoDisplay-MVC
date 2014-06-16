@@ -52,18 +52,15 @@ class mvc_controller {
 
 		ob_start();
 		$tag = new tag();
+		$data = array();
 		if( $active == 1 ){
-			$tsArray = $tag->get_tags($_SESSION["client"]["nick"],9,1); // 9 es el número de tags a mostrar, el 1 son los activos
+			$data = $tag->get_tags($_SESSION["client"]["nick"],9,1); // 9 es el número de tags a mostrar, el 1 son los activos
 		}
 		elseif ( $active == 0 ){
-			$tsArray = $tag->get_tags($_SESSION["client"]["nick"],9,0); // 9 es el número de tags a mostrar, el 0 son los inactivos
+			$data = $tag->get_tags($_SESSION["client"]["nick"],9,0); // 9 es el número de tags a mostrar, el 0 son los inactivos
 		}
-		else{
-			$tsArray = "";
-		}
-		
 
-		if($tsArray != ""){
+		if($data != array()){//Revisa que no sea un array vacío
 			include "../app/views/default/modules/tags/tags.php";
 			$table = ob_get_clean();
 			$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms', $table , $pagina);
@@ -84,7 +81,6 @@ class mvc_controller {
 				header("Location: profile.php?error");
 		}
 		else{	// No existe ningún post de formularios muestra la vista normal
-
 			$pagina = $this->load_template("Profile", "en", "profile.css");
 			$contenido = $this->load_page('../app/views/default/modules/profile/profile.php');
 			$pagina = $this->replace_content('/\#{MENU}\#/ms' , "", $pagina);
