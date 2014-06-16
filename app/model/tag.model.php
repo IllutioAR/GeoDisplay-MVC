@@ -19,13 +19,56 @@ class tag extends database {
 		return $query->fetchAll(PDO::FETCH_ASSOC);
 	}
 
+	function move_media_file($nick, $type, $tag_id){
+		$path = "../media/".$nick;
+		if( !file_exists($path) ){
+			if( !mkdir($path) ){
+				header("Location: ../addtag.php?error=fileUpload");
+			}
+			if( !mkdir($path."/video") ){
+				header("Location: ../addtag.php?error=fileUpload");
+			}
+			if( !mkdir($path."/audio") ){
+				header("Location: ../addtag.php?error=fileUpload");
+			}
+			if( !mkdir($path."/image") ){
+				header("Location: ../addtag.php?error=fileUpload");
+			}
+		}
+		$base_path = $path."/".$type."/";
+		while( file_exists( $base_path.$_FILES[$type]["name"] ) ){
+			$base_path = $base_path."copy - ";
+		}
+		$path = $base_path.$_FILES[$type]["name"];
+		if ( move_uploaded_file($_FILES[$type]["tmp_name"], $path)) {
+			$size = intval( $_FILES[$type]["size"] ) / (1024*1024);
+			$statement = "INSERT INTO Multimedia (name, type, size, file_path, client_nick) VALUES (:name, :type, :size, :file_path, :client_nick)";
+			$query = $this->db->prepare($statement);
+			$query->bindParam(':name', $_FILES[$type]["name"], PDO::PARAM_STR);
+			$query->bindParam(':type', $type, PDO::PARAM_STR);
+			$query->bindParam(':size', $size, PDO::PARAM_INT);
+			$query->bindParam(':file_path', $path, PDO::PARAM_STR);
+			$query->bindParam(':client_nick', $nick, PDO::PARAM_STR);
+			$query->execute();
+			$multimedia_id = $this->db->lastInsertId();
+			$statement = "INSERT INTO Multimedia_tag VALUES (:multimedia_id, :tag_id, :type)";
+			$query = $this->db->prepare($statement);
+			$query->bindParam(':multimedia_id', $multimedia_id, PDO::PARAM_INT);
+			$query->bindParam(':tag_id', $tag_id, PDO::PARAM_INT);
+			$query->bindParam(':type', $type, PDO::PARAM_STR);
+			$query->execute();
+		}
+		else{
+			header("Location: ../addtag.php?error=fileUpload");
+		}
+	}
+
 	function add_new_tag($nick, $active = 1){
 		/*
 			Pendientes:
 			- Decrementar puntos al insertar.
 			- Revisar que el usuario tenga espacio suficiente.
 			- Decrementar el espacio del usuario al subir archivo.
-			- Reflejar en la BD los archivos subidos, así como su relación con el tag.
 		*/
 		echo $_FILES["video"]["tmp_name"]."<br>";
 		$statement = "INSERT INTO Tag (name, description, latitude, longitude, url, url_purchase, facebook, twitter, client_nick, active) VALUES(:name, :description, :latitude, :longitude, :url, :url_purchase, :facebook, :twitter, :client_nick, :active)";
@@ -41,47 +84,18 @@ class tag extends database {
 		$query->bindParam(':client_nick', $nick, PDO::PARAM_STR);
 		$query->bindParam(':active', $active, PDO::PARAM_INT);
 		$query->execute();
+		$tag_id = $this->db->lastInsertId();
 
-		function move_media_file($nick, $type){
-			$path = "../media/".$nick;
-			if( !file_exists($path) ){
-				if( !mkdir($path) ){
-					header("Location: ../addtag.php?error=fileUpload");
-				}
-				if( !mkdir($path."/video") ){
-					header("Location: ../addtag.php?error=fileUpload");
-				}
-				if( !mkdir($path."/audio") ){
-					header("Location: ../addtag.php?error=fileUpload");
-				}
-				if( !mkdir($path."/image") ){
-					header("Location: ../addtag.php?error=fileUpload");
-				}
-			}
-			$base_path = $path."/".$type."/";
-			while( file_exists( $base_path.$_FILES[$type]["name"] ) ){
-				$base_path = $base_path."copy - ";
-			}
-			$path = $base_path.$_FILES[$type]["name"];
-			if ( move_uploaded_file($_FILES[$type]["tmp_name"], $path)) {
-				
-				echo "Query para insertar a BD";
-
-			}
-			else{
-				header("Location: ../addtag.php?error=fileUpload");
-			}
-		}
 		if( $_FILES["video"]["name"] != "" ){
-			move_media_file($nick, "video");
+			$this->move_media_file($nick, "video", $tag_id);
 		}else{
 			header("Location: ../addtag.php?error=fileUpload");
 		}
 		if( $_FILES["audio"]["name"] != "" ){
-			move_media_file($nick, "audio");
+			$this->move_media_file($nick, "audio", $tag_id);
 		}
 		if( $_FILES["image"]["name"] != "" ){
-			move_media_file($nick, "image");
+			$this->move_media_file($nick, "image", $tag_id);
 		}
 		
 	}
