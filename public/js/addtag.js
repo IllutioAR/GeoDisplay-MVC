@@ -28,25 +28,43 @@ function back(){
 	$("#" + state ).show();
 }
 
-function submit_form(){
-	uploading = true;
-	$("#form").submit();
-}
-
 $("#next").click(function(){
 	next();
 });
 $("#save").click(function(){
-	submit_form();
+	uploading = true;
+	var message = "Complete the following:\n";
+	if( $("#latitude").val() == "" ){
+		uploading = false;
+		message += "- Latitude\n";
+	}
+	if( $("#longitude").val() == "" ){
+		uploading = false;
+		message += "- Longitude\n";
+	}
+	if( $("#name").val() == "" ){
+		uploading = false;
+		message += "- Name\n";
+	}
+	if( $("#description").val() == "" ){
+		uploading = false;
+		message += "- Description\n";
+	}
+	if( $("#video").val() == "" ){
+		uploading = false;
+		message += "- Video";
+	}
+	if (uploading){
+		$("#form").submit();	
+	}else{
+		alert(message);
+		return;
+	}
+	
 });
 $("#back").click(function(){
 	back();
 });
-
-//Botones para seleccionar archivos
-function selectFile(e, btn){
-	
-}
 
 $("#btn-video, #btn-audio, #btn-image").click(function(e){
 	e.preventDefault();

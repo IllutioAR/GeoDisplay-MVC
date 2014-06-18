@@ -11,11 +11,11 @@
 						<div class="row">
 							<div class="col-xs-6">
 								<label for="latitude">Latitude <i class="fa fa-asterisk"></i></label>
-								<input name="latitude" type="text" class="form-control" id="latitude" pattern="-?\d+\.\d+" title="Enter a decimal number." required>
+								<input name="latitude" type="text" class="form-control" id="latitude" pattern="-?\d+\.\d+" title="Enter a decimal number.">
 							</div>
 							<div class="col-xs-6">
 								<label for="longitude">Longitude <i class="fa fa-asterisk"></i></label>
-								<input name="longitude" type="text" class="form-control" id="longitude" pattern="-?\d+\.\d+" title="Enter a decimal number." required>
+								<input name="longitude" type="text" class="form-control" id="longitude" pattern="-?\d+\.\d+" title="Enter a decimal number.">
 							</div>
 						</div>
 					</div>
@@ -34,7 +34,7 @@
 									<i class="fa fa-asterisk"></i>
 									[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Name the place you want to tag."></i>]
 								</label>
-								<input name="name" type="text" class="form-control" id="tag" required>
+								<input name="name" type="text" class="form-control" id="name">
 							</div>
 							<div class="col-xs-6">
 								<label for="descripcion">
@@ -42,7 +42,7 @@
 									<i class="fa fa-asterisk"></i>
 									[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Say something about this place."></i>]
 								</label>
-								<textarea name="description" class="form-control" rows="2" id="descripcion" required></textarea>
+								<textarea name="description" class="form-control" rows="2" id="description"></textarea>
 							</div>
 							<div class="col-xs-6">
 								<label for="tag">
@@ -144,4 +144,3 @@
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script src="js/map.js"></script>
 <script src="js/addtag.js"></script>
-<script src="js/addtag_validate.js"></script>
