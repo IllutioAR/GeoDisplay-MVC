@@ -62,7 +62,6 @@
 					<section class="seccion">
 						<div class="titulo">
 							<strong>Password</strong>
-							<i class="fa fa-plus-circle fa-lg pull-right"></i>
 						</div>
 						<div>
 							<form action="profile.php" method="post" role="form">
@@ -70,19 +69,19 @@
 								    <div class="col-xs-12 col-md-4">
 									    <div class="form-group">
 										    <label for="actual">Password</label>
-										    <input name="password" type="password" class="form-control" id="actual">
+										    <input name="password" type="password" class="form-control" id="actual" pattern=".{6,}" required title="6 characters minimum" required>
 										</div>
 									</div>
 									<div class="col-xs-12 col-md-4">
 									    <div class="form-group">
 										    <label for="password">New password</label>
-										    <input name="new_password" type="password" class="form-control" id="password">
+										    <input name="new_password" type="password" class="form-control" id="password" pattern=".{6,}" required title="6 characters minimum" required>
 										</div>
 								    </div>
 								    <div class="col-xs-12 col-md-4">
 									    <div class="form-group">
 										    <label for="confirm">Confirm</label>
-										    <input name="new_password_confirm" type="password" class="form-control" id="confirm">
+										    <input name="new_password_confirm" type="password" class="form-control" id="confirm" pattern=".{6,}" required title="6 characters minimum" required>
 										</div>
 								    </div>
 								    <div class="col-xs-12 col-md-12">
@@ -96,52 +95,7 @@
 				<div class="col-md-12">
 					<section class="seccion">
 						<div class="titulo">
-							<strong>Edit profile</strong>
-						</div>
-						<div>
-							<form role="form">
-								<div class="row">
-								    <div class="col-xs-12 col-md-6">
-									    <div class="form-group">
-										    <label for="name">Name</label>
-										    <input type="text" class="form-control" id="name" placeholder="Name">
-										</div>
-									</div>
-									<div class="col-xs-12 col-md-6">
-									    <div class="form-group">
-										    <label for="email">Email</label>
-										    <input type="text" class="form-control" id="nombre" placeholder="Email">
-										</div>
-								    </div>
-								    <div class="col-xs-12 col-md-6">
-									    <div class="form-group">
-										    <label for="country">Country</label>
-										    <select id="country" class="form-control">
-										    	<option>México</option>
-										    	<option>USA</option>
-										    	<option>UK</option>
-										    </select>
-										</div>
-								    </div>
-								    <div class="col-xs-12 col-md-6">
-									    <div class="form-group">
-										    <label for="city">City</label>
-										    <input type="text" class="form-control" id="city" placeholder="City">
-										</div>
-								    </div>
-								    <div class="col-xs-12 col-md-12">
-								    	<button type="button" class="btn btn-success pull-right" style="margin: 1em 0;">Save</button>
-								    </div>
-								</div>
-							</form>
-						</div>
-					</section>
-				</div>
-				<div class="col-md-12">
-					<section class="seccion">
-						<div class="titulo">
 							<strong>Language</strong>
-							<i class="fa fa-plus-circle fa-lg pull-right"></i>
 						</div>
 						<div>
 							<form role="form">

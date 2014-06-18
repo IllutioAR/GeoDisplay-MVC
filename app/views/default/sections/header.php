@@ -8,7 +8,7 @@
 						    <span class="icon-bar"></span>
 						    <span class="icon-bar"></span>
 						</button>
-						<a id="logo" class="navbar-brand" href="index.html">
+						<a id="logo" class="navbar-brand" href="index.php">
 							<img src="img/logo-124x124.png" height="40" width="40">
 							<span>GeoDisplay</span>
 						</a>
