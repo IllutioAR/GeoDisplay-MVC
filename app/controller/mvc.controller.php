@@ -70,6 +70,40 @@ class mvc_controller {
 		$this->view_page($pagina);
 	}
 
+	function get_plan_info($plan){
+		if($plan == "Starter"){
+			$info = array(
+				"total_tags" => 10,
+				"total_space" => 500
+				);
+		}
+		elseif($plan == "Basic"){
+			$info = array(
+				"total_tags" => 50,
+				"total_space" => 500
+				);
+		}
+		elseif($plan == "Medium"){
+			$info = array(
+				"total_tags" => 100,
+				"total_space" => 500
+				);
+		}
+		elseif($plan == "Advanced"){
+			$info = array(
+				"total_tags" => 200,
+				"total_space" => 500
+				);
+		}
+		else{
+			$info = array(
+				"total_tags" => 0,
+				"total_space" => 0
+				);
+		}
+		return $info;
+	}
+
 	function profile(){
 		$this->validate_session();
 		if( isset($_POST["password_form"]) && isset($_POST["password"]) && isset($_POST["new_password"]) && isset($_POST["new_password_confirm"]) ){
@@ -85,6 +119,30 @@ class mvc_controller {
 			$contenido = $this->load_page('../app/views/default/modules/profile/profile.php');
 			$pagina = $this->replace_content('/\#{MENU}\#/ms' , "", $pagina);
 			$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms' ,$contenido , $pagina);
+			$pagina = $this->replace_content('/\#{NAME}\#/ms' ,$_SESSION["client"]["name"] , $pagina);
+			$pagina = $this->replace_content('/\#{CITY}\#/ms' ,$_SESSION["client"]["city"] , $pagina);
+			$pagina = $this->replace_content('/\#{COUNTRY}\#/ms' ,$_SESSION["client"]["country"] , $pagina);
+			$pagina = $this->replace_content('/\#{NICK}\#/ms' , $_SESSION["client"]["nick"] , $pagina);
+			$pagina = $this->replace_content('/\#{EMAIL}\#/ms' ,$_SESSION["client"]["email"] , $pagina);
+			$pagina = $this->replace_content('/\#{PLAN}\#/ms' ,$_SESSION["client"]["plan"] , $pagina);
+
+			$plan_info = $this->get_plan_info($_SESSION["client"]["plan"]);
+
+			$used_tags = $plan_info["total_tags"] - $_SESSION["client"]["tags"];
+			$percentage_tags = $used_tags / $plan_info["total_tags"] * 100;
+
+			$used_space = $plan_info["total_space"] - $_SESSION["client"]["space"];
+			$percentage_space = $used_tags / $plan_info["total_space"] * 100;
+			
+			$pagina = $this->replace_content('/\#{USEDTAGS}\#/ms' ,$used_tags , $pagina);
+			$pagina = $this->replace_content('/\#{TOTALTAGS}\#/ms' ,$plan_info["total_tags"] , $pagina);
+			$pagina = $this->replace_content('/\#{USEDTAGS}\#/ms' ,$used_tags , $pagina);
+			$pagina = $this->replace_content('/\#{PERCENTAGETAGS}\#/ms' ,$percentage_tags , $pagina);
+
+			$pagina = $this->replace_content('/\#{USEDSPACE}\#/ms' ,$used_space , $pagina);
+			$pagina = $this->replace_content('/\#{TOTALSPACE}\#/ms' ,$plan_info["total_space"] , $pagina);
+			$pagina = $this->replace_content('/\#{USEDSPACE}\#/ms' ,$used_space , $pagina);
+			$pagina = $this->replace_content('/\#{PERCENTAGESPACE}\#/ms' ,$percentage_space , $pagina);
 			$this->view_page($pagina);
 		}
 	}

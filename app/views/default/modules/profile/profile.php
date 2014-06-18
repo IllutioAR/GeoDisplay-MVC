@@ -13,22 +13,22 @@
 									<img class="profile-photo" src="media/profile/default-logo.png">
 								</div>
 								<div class="col-xs-9 col-md-8 profile-details">
-									<div>Illutio</div>
-									<div>Guadalajara, México</div>
-									<div>APP ID: illutio</div>
-									<div>dev@illut.io</div>
-									<div>Plan Basic</div>
+									<div>#{NAME}#</div>
+									<div>#{CITY}#, #{COUNTRY}#</div>
+									<div>APP ID: #{NICK}#</div>
+									<div>#{EMAIL}#</div>
+									<div>#{PLAN}#</div>
 								</div>
 								<div class="col-md-12">
 									<hr>
 									<div>
 										<strong>Used tags:</strong>
 										<div class="progress-container">
-											<div><strong>5/20</strong></div>
+											<div><strong>#{USEDTAGS}#/#{TOTALTAGS}#</strong></div>
 											<div class="progress">
 											  <div class="progress">
-												  <div class="progress-bar"  role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%">
-												    <span class="sr-only">25% Complete</span>
+												  <div class="progress-bar"  role="progressbar" aria-valuenow="#{PERCENTAGETAGS}#" aria-valuemin="0" aria-valuemax="100" style="width: #{PERCENTAGETAGS}#%">
+												    <span class="sr-only">#{PERCENTAGETAGS}#% Complete</span>
 												  </div>
 												</div>
 											</div>
@@ -38,11 +38,11 @@
 									<div>
 										<strong>Used space:</strong>
 										<div class="progress-container">
-											<div><strong>300MB/500MB</strong></div>
+											<div><strong>#{USEDSPACE}#MB/#{TOTALSPACE}#MB</strong></div>
 											<div class="progress">
 											  <div class="progress">
-												  <div class="progress-bar"  role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-												    <span class="sr-only">60%</span>
+												  <div class="progress-bar"  role="progressbar" aria-valuenow="#{PERCENTAGESPACE}#" aria-valuemin="0" aria-valuemax="100" style="width: #{PERCENTAGESPACE}#%">
+												    <span class="sr-only">#{PERCENTAGESPACE}#%</span>
 												  </div>
 												</div>
 											</div>
