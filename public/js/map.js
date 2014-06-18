@@ -44,7 +44,7 @@ function initialize() {
 		handleNoGeolocation();
 	}
 
-	function handleNoGeolocation() {
+	function handleNoGeolocation(){
 		var newyork = new google.maps.LatLng(40.69847032728747, -73.9514422416687);
 		map.setCenter(newyork);
 	}

@@ -84,7 +84,7 @@
 			<div class="col-xs-12 col-md-4">
 				<div class="seccion">
 					<div class="titulo">
-						<strong>Video</strong>
+						<strong>Video</strong> <i class="fa fa-asterisk"></i>
 					</div>
 					<div class="form" id="multimedia">
 						<div class="row" id="multimedia-video">
@@ -144,3 +144,4 @@
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script src="js/map.js"></script>
 <script src="js/addtag.js"></script>
+<script src="js/addtag_validate.js"></script>

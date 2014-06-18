@@ -19,25 +19,37 @@ class tag extends database {
 		return $query->fetchAll(PDO::FETCH_ASSOC);
 	}
 
-	function move_media_file($nick, $type, $tag_id){
-		if ($_FILES[$type]["size"] > $_SESSION["client"]["space"] ){
-			header("Location: ../addtag.php?error=space");
+	function create_media_directory($nick, $path = "../media/"){
+		if($path == "../media/"){
+			$path = "../media/".$nick;
 		}
-		$path = "../media/".$nick;
 		if( !file_exists($path) ){
 			if( !mkdir($path) ){
-				header("Location: ../addtag.php?error=fileUpload");
+				header("Location: ../addtag.php?error=mediaDirectory");
 			}
 			if( !mkdir($path."/video") ){
-				header("Location: ../addtag.php?error=fileUpload");
+				header("Location: ../addtag.php?error=mediaDirectory");
 			}
 			if( !mkdir($path."/audio") ){
-				header("Location: ../addtag.php?error=fileUpload");
+				header("Location: ../addtag.php?error=mediaDirectory");
 			}
 			if( !mkdir($path."/image") ){
-				header("Location: ../addtag.php?error=fileUpload");
+				header("Location: ../addtag.php?error=mediaDirectory");
+			}
+			if( !mkdir($path."/map") ){
+				header("Location: ../addtag.php?error=mediaDirectory");
 			}
 		}
+	}
+
+	function move_media_file($nick, $type, $tag_id){
+		if ( ($_FILES[$type]["size"]/(1024*1024)) > $_SESSION["client"]["space"] ){
+			header("Location: ../addtag.php?error=space");
+		}
+		
+		$path = "../media/".$nick;
+		$this->create_media_directory($nick, $path);
+
 		$base_path = $path."/".$type."/";
 		while( file_exists( $base_path.$_FILES[$type]["name"] ) ){
 			$base_path = $base_path."copy - ";
@@ -68,22 +80,33 @@ class tag extends database {
 	}
 
 	function add_new_tag($nick, $num_tags, $space, $active = 1){
-		/*
-			Pendientes:
-			- Decrementar puntos al insertar.
-			- Revisar que el usuario tenga espacio suficiente.
-			- Decrementar el espacio del usuario al subir archivo.
-		*/
 		echo $_FILES["video"]["tmp_name"]."<br>";
 		if ( $num_tags <= 0){
 			header("Location: ../addtag.php?error=numTags");
 		}
-		$statement = "INSERT INTO Tag (name, description, latitude, longitude, url, url_purchase, facebook, twitter, client_nick, active) VALUES(:name, :description, :latitude, :longitude, :url, :url_purchase, :facebook, :twitter, :client_nick, :active)";
+		
+		$url_map = "http://maps.googleapis.com/maps/api/staticmap?center=".$_POST["latitude"].",".$_POST["longitude"]."&zoom=17&size=400x150&markers=color:blue%7Clabel:S%7C11211%7C11206%7C11222&markers=color:red|".$_POST["latitude"].",".$_POST["longitude"]."&maptype=roadmap&sensor=false";
+		$ch = curl_init ($url_map);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	    curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
+	    $data = curl_exec($ch);
+	    curl_close($ch);
+	    if( !file_exists("../media/".$nick) ){
+			$this->create_media_directory($nick);
+		}
+		$map_path = "media/".$nick."/map/".$_POST["name"].".png";
+		$fp = fopen("../".$map_path,"x");
+		fwrite($fp, $data);
+		fclose($fp);
+
+		$statement = "INSERT INTO Tag (name, description, latitude, longitude, map, url, url_purchase, facebook, twitter, client_nick, active) VALUES(:name, :description, :latitude, :longitude, :map, :url, :url_purchase, :facebook, :twitter, :client_nick, :active)";
 		$query = $this->db->prepare($statement);
 		$query->bindParam(':name', $_POST["name"], PDO::PARAM_STR);
 		$query->bindParam(':description', $_POST["description"], PDO::PARAM_STR);
 		$query->bindParam(':latitude', $_POST["latitude"], PDO::PARAM_STR);
 		$query->bindParam(':longitude', $_POST["longitude"], PDO::PARAM_STR);
+		$query->bindParam(':map', $map_path, PDO::PARAM_STR);
 		$query->bindParam(':url', $_POST["url"], PDO::PARAM_STR);
 		$query->bindParam(':url_purchase', $_POST["purchase_url"], PDO::PARAM_STR);
 		$query->bindParam(':facebook', $_POST["facebook"], PDO::PARAM_STR);

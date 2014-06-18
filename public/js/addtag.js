@@ -50,6 +50,8 @@ function selectFile(e, btn){
 
 $("#btn-video, #btn-audio, #btn-image").click(function(e){
 	e.preventDefault();
+	if (uploading)
+		return;
 	media = $(this).attr("id").replace("btn-", "");
 	$("input[name="+ media + "]").trigger("click");
 });
