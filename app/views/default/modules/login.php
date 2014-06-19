@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-		<title>Login - GeoDisplay</title>
+		<title>Iniciar sesión - GeoDisplay</title>
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 		<link href="css/geodisplay.css" rel="stylesheet">
@@ -49,18 +49,18 @@
 							<div>
                                 <form action="login.php" method="post" role="form">
                             		<div class="form-group">
-										<label for="email">Email</label>
-										<input name="email" type="email" class="form-control" id="email" placeholder="Enter email" required focus>
+										<label for="email">Correo electrónico</label>
+										<input name="email" type="email" class="form-control" id="email" placeholder="Escribe tu correo electrónico" required focus>
 									</div>
 									<div class="form-group">
-										<label for="password">Password</label>
-										<input name="password" type="password" class="form-control" id="password" placeholder="Enter password" required>
+										<label for="password">Contraseña</label>
+										<input name="password" type="password" class="form-control" id="password" placeholder="Escribe tu contraseña" required>
 									</div>
 									<div class="form-group">
-										<button type="submit" class="btn btn-primary" style="width: 100%">Login</button>
+										<button type="submit" class="btn btn-primary" style="width: 100%">Iniciar sesión</button>
 									</div>
 									<span class="pass-recovery-container">
-										<a href="login.php" class="pass-recovery pull-right">Forgot password?</a>
+										<a href="login.php" class="pass-recovery pull-right">Olvidé mi contraseña</a>
 									</span>
                                 </form>
                             </div>
@@ -71,8 +71,8 @@
 		</div>
 		<footer class="container login-footer">
 			<span class="pull-left">illut.io</span>
-			<span class="pull-left">Report a problem</span>
-			<span class="pull-left">Help</span>
+			<span class="pull-left">Reporta un problema</span>
+			<span class="pull-left">Ayuda</span>
 			<span class="pull-right">copyright © illut.io</span>
 		</footer>
 		<script src="js/jquery.min.js"></script>

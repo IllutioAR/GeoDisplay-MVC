@@ -5,7 +5,7 @@
 				<div class="col-xs-12 col-md-12">
 					<section class="seccion">
 						<div class="titulo">
-							<strong>Profile details</strong>
+							<strong>Detalles de perfil</strong>
 						</div>
 						<div>
 							<div class="row">
@@ -22,7 +22,7 @@
 								<div class="col-md-12">
 									<hr>
 									<div>
-										<strong>Used tags:</strong>
+										<strong>Puntos usados:</strong>
 										<div class="progress-container">
 											<div><strong>#{USEDTAGS}#/#{TOTALTAGS}#</strong></div>
 											<div class="progress">
@@ -36,7 +36,7 @@
 									</div>
 									<hr>
 									<div>
-										<strong>Used space:</strong>
+										<strong>Espacio utilizado:</strong>
 										<div class="progress-container">
 											<div><strong>#{USEDSPACE}#MB/#{TOTALSPACE}#MB</strong></div>
 											<div class="progress">
@@ -61,31 +61,31 @@
 				<div class="col-md-12">
 					<section class="seccion">
 						<div class="titulo">
-							<strong>Password</strong>
+							<strong>Contraseña</strong>
 						</div>
 						<div>
 							<form action="profile.php" method="post" role="form">
 								<div class="row">
 								    <div class="col-xs-12 col-md-4">
 									    <div class="form-group">
-										    <label for="actual">Password</label>
-										    <input name="password" type="password" class="form-control" id="actual" pattern=".{6,}" required title="6 characters minimum" required>
+										    <label for="actual">Contraseña actual</label>
+										    <input name="password" type="password" class="form-control" id="actual" pattern=".{6,}" required title="6 caracteres mínimo" required>
 										</div>
 									</div>
 									<div class="col-xs-12 col-md-4">
 									    <div class="form-group">
-										    <label for="password">New password</label>
-										    <input name="new_password" type="password" class="form-control" id="password" pattern=".{6,}" required title="6 characters minimum" required>
+										    <label for="password">Nueva contraseña</label>
+										    <input name="new_password" type="password" class="form-control" id="password" pattern=".{6,}" required title="6 caracteres mínimo" required>
 										</div>
 								    </div>
 								    <div class="col-xs-12 col-md-4">
 									    <div class="form-group">
-										    <label for="confirm">Confirm</label>
-										    <input name="new_password_confirm" type="password" class="form-control" id="confirm" pattern=".{6,}" required title="6 characters minimum" required>
+										    <label for="confirm">Confirmar contraseña</label>
+										    <input name="new_password_confirm" type="password" class="form-control" id="confirm" pattern=".{6,}" required title="6 caracteres mínimo" required>
 										</div>
 								    </div>
 								    <div class="col-xs-12 col-md-12">
-								    	<input name="password_form" type="submit" value="Change password" class="btn btn-success pull-right" style="margin: 1em 0;">
+								    	<input name="password_form" type="submit" value="Cambiar contraseña" class="btn btn-success pull-right" style="margin: 1em 0;">
 								    </div>
 								</div>
 							</form>
@@ -95,7 +95,7 @@
 				<div class="col-md-12">
 					<section class="seccion">
 						<div class="titulo">
-							<strong>Language</strong>
+							<strong>Idioma</strong>
 						</div>
 						<div>
 							<form role="form">
@@ -103,14 +103,14 @@
 								    <div class="col-xs-12 col-md-6">
 									    <div class="form-group" style="margin:1em 0 !important">
 										    <select id="language" class="form-control">
-										    	<option>Spanish</option>
-										    	<option>English</option>
-										    	<option>German</option>
+										    	<option>Español</option>
+										    	<option>Inglés</option>
+										    	<option>Alemán</option>
 										    </select>
 										</div>
 									</div>
 									<div class="col-xs-12 col-md-6">
-										<button type="button" class="btn btn-success pull-right" style="margin: 1em 0;">Select language</button>
+										<button type="button" class="btn btn-success pull-right" style="margin: 1em 0;">Seleccionar idioma</button>
 									</div>
 								</div>
 							</form>

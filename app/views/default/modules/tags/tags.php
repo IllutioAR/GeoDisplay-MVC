@@ -10,10 +10,10 @@
 						<?= $row['name'] ?>
 					</span>
 					<span class="titulo-botones pull-right">
-						<i class="fa fa-ban" data-toggle="tooltip" data-placement="top" title="Disable"></i>
-						<i class="fa fa-copy" data-toggle="tooltip" data-placement="top" title="Clone"></i>
-						<i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="Edit"></i>
-						<i class="fa fa-trash-o" data-toggle="tooltip" data-placement="top" title="Delete"></i>
+						<i class="fa fa-ban" data-toggle="tooltip" data-placement="top" title="Deshabilitar"></i>
+						<i class="fa fa-copy" data-toggle="tooltip" data-placement="top" title="Copiar"></i>
+						<i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="Editar"></i>
+						<i class="fa fa-trash-o" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
 					</span>
 				</div>
 				<div class="map">

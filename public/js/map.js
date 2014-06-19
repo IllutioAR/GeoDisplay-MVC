@@ -45,8 +45,8 @@ function initialize() {
 	}
 
 	function handleNoGeolocation(){
-		var newyork = new google.maps.LatLng(40.69847032728747, -73.9514422416687);
-		map.setCenter(newyork);
+		var illutio = new google.maps.LatLng(20.680985099999997, -103.38298850000001);
+		map.setCenter(illutio);
 	}
 }
 

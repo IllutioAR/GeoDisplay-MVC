@@ -4,20 +4,20 @@
 		    <li>
 		    	<a id="back">
 		    		<i class="fa fa-arrow-left"></i>
-		    		Back
+		    		Atrás
 		    	</a>
 		    </li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 			<li id="save" style="display:none">
 				<a href="#" class="green">
-		    		<i class="fa fa-save"></i>
-		    		Finish
+		    		<i class="fa fa-check"></i>
+		    		Listo
 		    	</a>
 			</li>
 		    <li id="next">
 		    	<a href="#" class="green">
-		    		Next
+		    		Siguiente
 		    		<i class="fa fa-arrow-right"></i>
 		    	</a>
 		    </li>

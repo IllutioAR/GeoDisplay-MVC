@@ -12,13 +12,13 @@
 			<ul class="nav navbar-nav">
 			    <li #{ACTIVE}#>
 			    	<a href="index.php">
-			    		Active
+			    		Activos
 			    		<span class="badge">4</span>
 			    	</a>
 			    </li>
 			    <li #{INACTIVE}#>
 			    	<a href="index.php?tags=inactive">
-			    		Inactive
+			    		Inactivos
 			    		<span class="badge">2</span>
 			    	</a>
 			    </li>
@@ -41,7 +41,7 @@
 			    <li>
 			    	<a href="addtag.php" class="green">
 			    		<i class="fa fa-plus-circle"></i>
-			    		Add tag
+			    		Agregar punto
 			    	</a>
 			    </li>
 			</ul>

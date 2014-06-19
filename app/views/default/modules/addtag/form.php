@@ -4,17 +4,17 @@
 			<div class="col-xs-12 col-md-6">
 				<div class="seccion">
 					<div class="titulo">
-						<strong>Geolocation information</strong>
+						<strong>Información de geolocalización</strong>
 					</div>
 					<div id="map"></div>
 					<div class="form">
 						<div class="row">
 							<div class="col-xs-6">
-								<label for="latitude">Latitude <i class="fa fa-asterisk"></i></label>
+								<label for="latitude">Latitud <i class="fa fa-asterisk"></i></label>
 								<input name="latitude" type="text" class="form-control" id="latitude" pattern="-?\d+\.\d+" title="Enter a decimal number.">
 							</div>
 							<div class="col-xs-6">
-								<label for="longitude">Longitude <i class="fa fa-asterisk"></i></label>
+								<label for="longitude">Longitud <i class="fa fa-asterisk"></i></label>
 								<input name="longitude" type="text" class="form-control" id="longitude" pattern="-?\d+\.\d+" title="Enter a decimal number.">
 							</div>
 						</div>
@@ -24,37 +24,37 @@
 			<div class="col-xs-12 col-md-6">
 				<div class="seccion">
 					<div class="titulo">
-						<strong>General information</strong>
+						<strong>Informacion general</strong>
 					</div>
 					<div class="form">
 						<div class="row">
 							<div class="col-xs-6">
 								<label for="tag">
-									Tag name
+									Nombre del tag
 									<i class="fa fa-asterisk"></i>
-									[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Name the place you want to tag."></i>]
+									[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Pon un nombre al lugar que quieres etiquetar."></i>]
 								</label>
 								<input name="name" type="text" class="form-control" id="name">
 							</div>
 							<div class="col-xs-6">
 								<label for="descripcion">
-									Description
+									Descripción
 									<i class="fa fa-asterisk"></i>
-									[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Say something about this place."></i>]
+									[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Agrega una breve descripción de este lugar."></i>]
 								</label>
 								<textarea name="description" class="form-control" rows="2" id="description"></textarea>
 							</div>
 							<div class="col-xs-6">
 								<label for="tag">
-									URL
-									[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="A link to your website."></i>]
+									Sitio web
+									[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Dirección a tu sitio web."></i>]
 								</label>
 								<input name="url" type="text" class="form-control" id="tag">
 							</div>
 							<div class="col-xs-6">
 								<label for="tag">
-									Purchase URL
-									[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="A link to buy a product or service."></i>]
+									Dirección de compra
+									[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Dirección para comprar un producto o servicio."></i>]
 								</label>
 								<input name="purchase_url" type="text" class="form-control" id="tag">
 							</div>
@@ -63,17 +63,17 @@
 				</div>
 				<div class="seccion">
 					<div class="titulo">
-						<strong>Social media</strong>
+						<strong>Redes sociales</strong>
 					</div>
 					<div class="form">
 						<div class="row">
 							<div class="col-xs-6">
 								<label for="facebok">Facebook</label>
-								<input name="facebook" type="url" class="form-control" id="facebook" pattern="https?:\/\/(www\.)?facebook\.com(\/.*)?" title="Enter a valid facebook url (http://facebook.com/page)." placeholder="http://facebook.com/username">
+								<input name="facebook" type="url" class="form-control" id="facebook" pattern="https?:\/\/(www\.)?facebook\.com(\/.*)?" title="Ingresa una dirección válida de facebook (http://facebook.com/pagina)." placeholder="http://facebook.com/mipagina">
 							</div>
 							<div class="col-xs-6">
 								<label for="twitter">Twitter</label>
-								<input name="twitter" type="text" class="form-control" id="twitter" pattern="\@(\d|\w|\_|)+" title="Enter a valid username." placeholder="@username">
+								<input name="twitter" type="text" class="form-control" id="twitter" pattern="\@(\d|\w|\_|)+" title="Enter a valid username." placeholder="@usuario">
 							</div>
 						</div>
 					</div>
@@ -92,7 +92,7 @@
 								<input name="video" id="video" type="file" class="btn btn-default" style="display:none">
 								<button id="btn-video" class="btn btn-default" style="margin:.2em">
 									<i class="fa fa-laptop"></i> 
-									Select file
+									Selecciona una archivo
 								</button>
 							</div>
 						</div>
@@ -110,7 +110,7 @@
 								<input name="audio" type="file" class="btn btn-default" style="display:none">
 								<button id="btn-audio" class="btn btn-default" style="margin:.2em">
 									<i class="fa fa-laptop"></i> 
-									Select file
+									Selecciona una archivo
 								</button>
 							</div>
 						</div>
@@ -120,7 +120,7 @@
 			<div class="col-xs-12 col-md-4">
 				<div class="seccion">
 					<div class="titulo">
-						<strong>Image</strong>
+						<strong>Imagen</strong>
 					</div>
 					<div class="form" id="multimedia">
 						<div class="row" id="multimedia-image">
@@ -128,7 +128,7 @@
 								<input name="image" type="file" class="btn btn-default" style="display:none">
 								<button id="btn-image" class="btn btn-default" style="margin:.2em">
 									<i class="fa fa-laptop"></i> 
-									Select file
+									Selecciona una archivo
 								</button>
 							</div>
 						</div>

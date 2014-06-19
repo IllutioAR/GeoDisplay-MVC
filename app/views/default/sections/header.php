@@ -18,7 +18,7 @@
 						    <li>
 						    	<a href="index.php">
 						    		<i class="fa fa-map-marker"></i>
-						    		Tags
+						    		Puntos
 						    	</a>
 						    </li>
 						    <li>
@@ -37,7 +37,7 @@
 						    <li>
 						    	<a href="logout.php">
 						    		<i class="fa fa-sign-out"></i>
-						    		Log out
+						    		Cerrar sesión
 						    	</a>
 						    </li>
 						</ul>
