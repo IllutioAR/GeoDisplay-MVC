@@ -10,7 +10,7 @@
 						<div>
 							<div class="row">
 								<div class="col-xs-3 col-md-4">
-									<img class="profile-photo" src="media/profile/default-logo.png">
+									<img class="profile-photo" src="#{LOGO}#">
 								</div>
 								<div class="col-xs-9 col-md-8 profile-details">
 									<div>#{NAME}#</div>

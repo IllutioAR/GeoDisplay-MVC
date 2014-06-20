@@ -37,6 +37,27 @@ class client extends database {
 		return "";
 	}
 
+	function get_num_files($nick){
+		$path = "media/".$nick."/";
+		$video = count(scandir($path."video/")) - 2;
+		$audio = count(scandir($path."audio")) - 2;
+		$image = count(scandir($path."image")) - 2;
+		$total = $video + $audio + $image;
+		return array("video" => $video, "audio" => $audio, "image" => $image, "total" => $total);
+	}
+
+	function get_files($nick, $type){
+		$path = "media/".$nick."/".$type."/";
+		$files = scandir($path);
+		if(($key = array_search("..", $files)) !== false) {
+			unset($files[$key]);
+		}
+		if(($key = array_search(".", $files)) !== false) {
+			unset($files[$key]);
+		}
+		return $files;
+	}
+
 	function change_password($email, $password, $new_password, $new_password_confirm){
 		$statement = "SELECT password FROM Client WHERE email = :email";
 		$query = $this->db->prepare($statement);

@@ -38,7 +38,7 @@ class mvc_controller {
 	{
 		$this->validate_session();
 
-		$pagina = $this->load_template("Index", "en", "index.css");
+		$pagina = $this->load_template("Index", "es", "index.css");
 		$menu = $this->load_page('../app/views/default/modules/tags/menu.php');
 		$pagina = $this->replace_content('/\#{MENU}\#/ms' ,$menu , $pagina);
 		if ( $active == 1 ){
@@ -115,10 +115,11 @@ class mvc_controller {
 				header("Location: profile.php?error");
 		}
 		else{	// No existe ningún post de formularios muestra la vista normal
-			$pagina = $this->load_template("Profile", "en", "profile.css");
+			$pagina = $this->load_template("Profile", "es", "profile.css");
 			$contenido = $this->load_page('../app/views/default/modules/profile/profile.php');
 			$pagina = $this->replace_content('/\#{MENU}\#/ms' , "", $pagina);
 			$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms' ,$contenido , $pagina);
+			$pagina = $this->replace_content('/\#{LOGO}\#/ms' ,$_SESSION["client"]["logo"] , $pagina);
 			$pagina = $this->replace_content('/\#{NAME}\#/ms' ,$_SESSION["client"]["name"] , $pagina);
 			$pagina = $this->replace_content('/\#{CITY}\#/ms' ,$_SESSION["client"]["city"] , $pagina);
 			$pagina = $this->replace_content('/\#{COUNTRY}\#/ms' ,$_SESSION["client"]["country"] , $pagina);
@@ -132,7 +133,7 @@ class mvc_controller {
 			$percentage_tags = $used_tags / $plan_info["total_tags"] * 100;
 
 			$used_space = $plan_info["total_space"] - $_SESSION["client"]["space"];
-			$percentage_space = $used_tags / $plan_info["total_space"] * 100;
+			$percentage_space = $used_space / $plan_info["total_space"] * 100;
 			
 			$pagina = $this->replace_content('/\#{USEDTAGS}\#/ms' ,$used_tags , $pagina);
 			$pagina = $this->replace_content('/\#{TOTALTAGS}\#/ms' ,$plan_info["total_tags"] , $pagina);
@@ -141,7 +142,6 @@ class mvc_controller {
 
 			$pagina = $this->replace_content('/\#{USEDSPACE}\#/ms' ,$used_space , $pagina);
 			$pagina = $this->replace_content('/\#{TOTALSPACE}\#/ms' ,$plan_info["total_space"] , $pagina);
-			$pagina = $this->replace_content('/\#{USEDSPACE}\#/ms' ,$used_space , $pagina);
 			$pagina = $this->replace_content('/\#{PERCENTAGESPACE}\#/ms' ,$percentage_space , $pagina);
 			$this->view_page($pagina);
 		}
@@ -150,7 +150,7 @@ class mvc_controller {
 	function add_tag(){
 		$this->validate_session();
 
-		$pagina = $this->load_template("Add tag", "en", "addtag.css");
+		$pagina = $this->load_template("Add tag", "es", "addtag.css");
 		$menu = $this->load_page('../app/views/default/modules/addtag/menu.php');
 		$pagina = $this->replace_content('/\#{MENU}\#/ms' ,$menu , $pagina);
 		$form = $this->load_page('../app/views/default/modules/addtag/form.php');
@@ -159,9 +159,48 @@ class mvc_controller {
 		$this->view_page($pagina);
 	}
 
+	function multimedia(){
+		$this->validate_session();
+
+		$pagina = $this->load_template("Multimedia", "es", "media.css");
+		$menu = $this->load_page("../app/views/default/modules/multimedia/menu.php");
+		$pagina = $this->replace_content('/\#{MENU}\#/ms' ,$menu , $pagina);
+		$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms' ,"<div><div class=\"row\">#{SIDEBAR}##{CONTENIDO}#</div></div>" , $pagina);
+
+		$overview = $this->load_page("../app/views/default/modules/multimedia/overview.php");
+		$pagina = $this->replace_content('/\#{SIDEBAR}\#/ms' ,$overview , $pagina);
+
+		//$files = $this->load_page("../app/views/default/modules/multimedia/files.php");
+		//$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms' ,$files , $pagina);
+
+		$plan_info = $this->get_plan_info($_SESSION["client"]["plan"]);
+		$used_space = $plan_info["total_space"] - $_SESSION["client"]["space"];
+		$percentage_space = $used_space / $plan_info["total_space"] * 100;
+
+		$pagina = $this->replace_content('/\#{USEDSPACE}\#/ms' ,$used_space , $pagina);
+		$pagina = $this->replace_content('/\#{TOTALSPACE}\#/ms' ,$plan_info["total_space"] , $pagina);
+		$pagina = $this->replace_content('/\#{PERCENTAGESPACE}\#/ms' ,$percentage_space , $pagina);
+
+		$client = new client();
+		$num_files = $client->get_num_files($_SESSION["client"]["nick"]);
+		
+		$pagina = $this->replace_content('/\#{VIDEO}\#/ms' ,$num_files["video"] , $pagina);
+		$pagina = $this->replace_content('/\#{AUDIO}\#/ms' ,$num_files["audio"] , $pagina);
+		$pagina = $this->replace_content('/\#{IMAGE}\#/ms' ,$num_files["image"] , $pagina);
+		$pagina = $this->replace_content('/\#{TOTAL}\#/ms' ,$num_files["total"] , $pagina);		
+		ob_start();
+		$files = $client->get_files($_SESSION["client"]["nick"], "video");
+		include "../app/views/default/modules/multimedia/files.php";
+		$table = ob_get_clean();
+		$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms', $table , $pagina);
+		
+
+		$this->view_page($pagina);
+	}
+
 	function principal()
 	{
-		$pagina=$this->load_template('Index', 'en', 'index.css');
+		$pagina=$this->load_template('Index', 'es', 'index.css');
 		$html = $this->load_page('../app/views/default/modules/tags.php');
 		$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms' ,$html , $pagina);
 		$this->view_page($pagina);
