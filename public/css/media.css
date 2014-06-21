@@ -1,3 +1,6 @@
+table{
+	text-align: left;
+}
 .file-container{
 	border-radius: .2em;
 	cursor: pointer;
