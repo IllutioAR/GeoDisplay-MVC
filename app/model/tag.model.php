@@ -19,6 +19,15 @@ class tag extends database {
 		return $query->fetchAll(PDO::FETCH_ASSOC);
 	}
 
+	function get_num_tags($nick, $status){
+		$statement = "SELECT count(*) FROM tag WHERE client_nick = :nick and active = :status";
+		$query = $this->db->prepare($statement);
+		$query->bindParam(':nick', $nick);
+		$query->bindParam(':status', $status, PDO::PARAM_INT);
+		$query->execute();
+		return $query->fetchAll(PDO::FETCH_ASSOC)[0]["count(*)"];
+	}
+
 	function create_media_directory($nick, $path = "../media/"){
 		if($path == "../media/"){
 			$path = "../media/".$nick;

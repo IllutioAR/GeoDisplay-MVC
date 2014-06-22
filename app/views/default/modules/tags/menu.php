@@ -13,13 +13,13 @@
 			    <li #{ACTIVE}#>
 			    	<a href="index.php">
 			    		Activos
-			    		<span class="badge">4</span>
+			    		<span class="badge">#{NUMACTIVE}#</span>
 			    	</a>
 			    </li>
 			    <li #{INACTIVE}#>
 			    	<a href="index.php?tags=inactive">
 			    		Inactivos
-			    		<span class="badge">2</span>
+			    		<span class="badge">#{NUMINACTIVE}#</span>
 			    	</a>
 			    </li>
 			    <!--

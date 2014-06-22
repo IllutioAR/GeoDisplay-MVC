@@ -59,13 +59,16 @@ class mvc_controller {
 		elseif ( $active == 0 ){
 			$data = $tag->get_tags($_SESSION["client"]["nick"],9,0); // 9 es el número de tags a mostrar, el 0 son los inactivos
 		}
-
+		$active_tags = $tag->get_num_tags($_SESSION["client"]["nick"], 1);
+		$inactive_tags = $tag->get_num_tags($_SESSION["client"]["nick"], 0);
+		$pagina = $this->replace_content('/\#{NUMACTIVE}\#/ms', $active_tags , $pagina);
+		$pagina = $this->replace_content('/\#{NUMINACTIVE}\#/ms', $inactive_tags , $pagina);
 		if($data != array()){//Revisa que no sea un array vacío
 			include "../app/views/default/modules/tags/tags.php";
 			$table = ob_get_clean();
 			$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms', $table , $pagina);
 		}else{
-			$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms' ,"<h1>No hay tags</h1>" , $pagina);
+			$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms' ," " , $pagina);
 		}
 		$this->view_page($pagina);
 	}
