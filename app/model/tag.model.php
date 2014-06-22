@@ -13,7 +13,7 @@ class tag extends database {
 	function get_tags($nick, $limit_tags=9, $status = 1){
 		$statement = "SELECT * FROM tag WHERE client_nick = :nick and active = :status";
 		$query = $this->db->prepare($statement);
-		$query->bindParam(':nick', $nick, PDO::PARAM_STR);
+		$query->bindParam(':nick', $nick);
 		$query->bindParam(':status', $status, PDO::PARAM_INT);
 		$query->execute();
 		return $query->fetchAll(PDO::FETCH_ASSOC);
@@ -58,20 +58,21 @@ class tag extends database {
 		if ( move_uploaded_file($_FILES[$type]["tmp_name"], $path)) {
 			$size = intval( $_FILES[$type]["size"] ) / (1024*1024);
 			$_SESSION["client"]["space"] -= $size;
-			$statement = "INSERT INTO Multimedia (name, type, size, file_path, client_nick) VALUES (:name, :type, :size, :file_path, :client_nick)";
+
+			$statement = "INSERT INTO Multimedia (name, type, size, file_path, client_nick, created_at, updated_at) VALUES (:name, :type, :size, :file_path, :client_nick, NOW(), NOW())";
 			$query = $this->db->prepare($statement);
-			$query->bindParam(':name', $_FILES[$type]["name"], PDO::PARAM_STR);
-			$query->bindParam(':type', $type, PDO::PARAM_STR);
+			$query->bindParam(':name', $_FILES[$type]["name"]);
+			$query->bindParam(':type', $type);
 			$query->bindParam(':size', $size, PDO::PARAM_INT);
-			$query->bindParam(':file_path', $path, PDO::PARAM_STR);
-			$query->bindParam(':client_nick', $nick, PDO::PARAM_STR);
+			$query->bindParam(':file_path', $path);
+			$query->bindParam(':client_nick', $nick);
 			$query->execute();
 			$multimedia_id = $this->db->lastInsertId();
 			$statement = "INSERT INTO Multimedia_tag VALUES (:multimedia_id, :tag_id, :type)";
 			$query = $this->db->prepare($statement);
-			$query->bindParam(':multimedia_id', $multimedia_id, PDO::PARAM_INT);
+			$query->bindParam(':multimedia_id', $multimedia_id);
 			$query->bindParam(':tag_id', $tag_id, PDO::PARAM_INT);
-			$query->bindParam(':type', $type, PDO::PARAM_STR);
+			$query->bindParam(':type', $type);
 			$query->execute();
 		}
 		else{
@@ -102,16 +103,16 @@ class tag extends database {
 
 		$statement = "INSERT INTO Tag (name, description, latitude, longitude, map, url, url_purchase, facebook, twitter, client_nick, active) VALUES(:name, :description, :latitude, :longitude, :map, :url, :url_purchase, :facebook, :twitter, :client_nick, :active)";
 		$query = $this->db->prepare($statement);
-		$query->bindParam(':name', $_POST["name"], PDO::PARAM_STR);
-		$query->bindParam(':description', $_POST["description"], PDO::PARAM_STR);
-		$query->bindParam(':latitude', $_POST["latitude"], PDO::PARAM_STR);
-		$query->bindParam(':longitude', $_POST["longitude"], PDO::PARAM_STR);
-		$query->bindParam(':map', $map_path, PDO::PARAM_STR);
-		$query->bindParam(':url', $_POST["url"], PDO::PARAM_STR);
-		$query->bindParam(':url_purchase', $_POST["purchase_url"], PDO::PARAM_STR);
-		$query->bindParam(':facebook', $_POST["facebook"], PDO::PARAM_STR);
-		$query->bindParam(':twitter', $_POST["twitter"], PDO::PARAM_STR);
-		$query->bindParam(':client_nick', $nick, PDO::PARAM_STR);
+		$query->bindParam(':name', $_POST["name"]);
+		$query->bindParam(':description', $_POST["description"]);
+		$query->bindParam(':latitude', $_POST["latitude"]);
+		$query->bindParam(':longitude', $_POST["longitude"]);
+		$query->bindParam(':map', $map_path);
+		$query->bindParam(':url', $_POST["url"]);
+		$query->bindParam(':url_purchase', $_POST["purchase_url"]);
+		$query->bindParam(':facebook', $_POST["facebook"]);
+		$query->bindParam(':twitter', $_POST["twitter"]);
+		$query->bindParam(':client_nick', $nick);
 		$query->bindParam(':active', $active, PDO::PARAM_INT);
 		$query->execute();
 		$tag_id = $this->db->lastInsertId();

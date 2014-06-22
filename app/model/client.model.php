@@ -52,7 +52,16 @@ class client extends database {
 		$query->bindParam(":nick", $nick);
 		$query->bindParam(":type", $type);
 		$query->execute();
-		return $query->fetchAll(PDO::FETCH_ASSOC);
+		$files = $query->fetchAll(PDO::FETCH_ASSOC);
+		$return = array();
+		foreach ($files as $file) {
+			list($fecha, $hora) = split(" ", $file["created_at"]);
+			$return[] = array("name" => $file["name"],
+					"size" => $file["size"],
+					"created_at" => $fecha
+				);
+		}
+		return $return;
 	}
 
 	function get_num_files_dir($nick){
