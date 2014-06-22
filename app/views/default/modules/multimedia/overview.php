@@ -7,7 +7,7 @@
 				</div>
 				<div>
 					<div><strong>Used space:</strong></div>
-					<div>#{USEDSPACE}#MB/#{TOTALSPACE}#MB</div>
+					<div>#{USEDSPACE}#/#{TOTALSPACE}# MB</div>
 					<div class="progress">
 						<div class="progress-bar" style="width:#{PERCENTAGESPACE}#%">
 						<span class="sr-only">#{PERCENTAGESPACE}#%</span>

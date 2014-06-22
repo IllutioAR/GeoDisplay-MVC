@@ -10,30 +10,32 @@
 		</div>
 		<div class="collapse navbar-collapse" id="navbar-menu">
 			<ul class="nav navbar-nav">
-				<li>
-			    	<a href="#">
+				<li #{MENUVIDEO}#>
+			    	<a href="multimedia.php?type=video">
 			    		<i class="fa fa-film"></i>
 			    		Video
 			    	</a>
 			    </li>
-			    <li>
-			    	<a href="#">
+			    <li #{MENUAUDIO}#>
+			    	<a href="multimedia.php?type=audio">
 			    		<i class="fa fa-music"></i>
 			    		Audio
 			    	</a>
 			    </li>
-			    <li>
-			    	<a href="#">
+			    <li #{MENUIMAGE}#>
+			    	<a href="multimedia.php?type=image">
 			    		<i class="fa fa-picture-o"></i>
 			    		Imagen
 			    	</a>
 			    </li>
-			    <li>
+			    <!--
+			    <li #{MENURENDER}#>
 			    	<a href="#">
 			    		<i class="fa fa-cube"></i>
 			    		3D Render
 			    	</a>
 			    </li>
+				-->
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<!--

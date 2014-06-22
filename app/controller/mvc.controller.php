@@ -132,15 +132,15 @@ class mvc_controller {
 			$used_tags = $plan_info["total_tags"] - $_SESSION["client"]["tags"];
 			$percentage_tags = $used_tags / $plan_info["total_tags"] * 100;
 
-			$used_space = $plan_info["total_space"] - $_SESSION["client"]["space"];
-			$percentage_space = $used_space / $plan_info["total_space"] * 100;
+			$used_space = number_format($plan_info["total_space"] - $_SESSION["client"]["space"], 2);
+			$percentage_space = round($used_space / $plan_info["total_space"] * 100);
 			
 			$pagina = $this->replace_content('/\#{USEDTAGS}\#/ms' ,$used_tags , $pagina);
 			$pagina = $this->replace_content('/\#{TOTALTAGS}\#/ms' ,$plan_info["total_tags"] , $pagina);
 			$pagina = $this->replace_content('/\#{USEDTAGS}\#/ms' ,$used_tags , $pagina);
 			$pagina = $this->replace_content('/\#{PERCENTAGETAGS}\#/ms' ,$percentage_tags , $pagina);
 
-			$pagina = $this->replace_content('/\#{USEDSPACE}\#/ms' ,$used_space , $pagina);
+			$pagina = $this->replace_content('/\#{USEDSPACE}\#/ms' , $used_space , $pagina);
 			$pagina = $this->replace_content('/\#{TOTALSPACE}\#/ms' ,$plan_info["total_space"] , $pagina);
 			$pagina = $this->replace_content('/\#{PERCENTAGESPACE}\#/ms' ,$percentage_space , $pagina);
 			$this->view_page($pagina);
@@ -159,12 +159,26 @@ class mvc_controller {
 		$this->view_page($pagina);
 	}
 
-	function multimedia(){
+	function multimedia($type){
 		$this->validate_session();
 
 		$pagina = $this->load_template("Multimedia", "es", "media.css");
 		$menu = $this->load_page("../app/views/default/modules/multimedia/menu.php");
 		$pagina = $this->replace_content('/\#{MENU}\#/ms' ,$menu , $pagina);
+		
+		if ( $type == "video" ){
+			$pagina = $this->replace_content('/\#{MENUVIDEO}\#/ms' ,"class='active'" , $pagina);
+		}
+		elseif ( $type == "audio" ){
+			$pagina = $this->replace_content('/\#{MENUAUDIO}\#/ms' ,"class='active'" , $pagina);
+		}
+		elseif ( $type == "image" ){
+			$pagina = $this->replace_content('/\#{MENUIMAGE}\#/ms' ,"class='active'" , $pagina);
+		}
+		$pagina = $this->replace_content('/\#{MENUVIDEO}\#/ms' ,"" , $pagina);
+		$pagina = $this->replace_content('/\#{MENUAUDIO}\#/ms' ,"" , $pagina);
+		$pagina = $this->replace_content('/\#{MENUIMAGE}\#/ms' ,"" , $pagina);
+
 		$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms' ,"<div><div class=\"row\">#{SIDEBAR}##{CONTENIDO}#</div></div>" , $pagina);
 
 		$overview = $this->load_page("../app/views/default/modules/multimedia/overview.php");
@@ -174,8 +188,8 @@ class mvc_controller {
 		//$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms' ,$files , $pagina);
 
 		$plan_info = $this->get_plan_info($_SESSION["client"]["plan"]);
-		$used_space = $plan_info["total_space"] - $_SESSION["client"]["space"];
-		$percentage_space = $used_space / $plan_info["total_space"] * 100;
+		$used_space = number_format($plan_info["total_space"] - $_SESSION["client"]["space"], 2);
+		$percentage_space = round($used_space / $plan_info["total_space"] * 100);
 
 		$pagina = $this->replace_content('/\#{USEDSPACE}\#/ms' ,$used_space , $pagina);
 		$pagina = $this->replace_content('/\#{TOTALSPACE}\#/ms' ,$plan_info["total_space"] , $pagina);
@@ -189,7 +203,7 @@ class mvc_controller {
 		$pagina = $this->replace_content('/\#{IMAGE}\#/ms' ,$num_files["image"] , $pagina);
 		$pagina = $this->replace_content('/\#{TOTAL}\#/ms' ,$num_files["total"] , $pagina);		
 		ob_start();
-		$files = $client->get_files($_SESSION["client"]["nick"], "video");
+		$files = $client->get_files($_SESSION["client"]["nick"], $type);
 		include "../app/views/default/modules/multimedia/files.php";
 		$table = ob_get_clean();
 		$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms', $table , $pagina);

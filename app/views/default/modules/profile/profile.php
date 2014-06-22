@@ -28,7 +28,7 @@
 											<div class="progress">
 											  <div class="progress">
 												  <div class="progress-bar"  role="progressbar" aria-valuenow="#{PERCENTAGETAGS}#" aria-valuemin="0" aria-valuemax="100" style="width: #{PERCENTAGETAGS}#%">
-												    <span class="sr-only">#{PERCENTAGETAGS}#% Complete</span>
+												    <span class="sr-only">#{PERCENTAGETAGS}#%</span>
 												  </div>
 												</div>
 											</div>
@@ -38,7 +38,7 @@
 									<div>
 										<strong>Espacio utilizado:</strong>
 										<div class="progress-container">
-											<div><strong>#{USEDSPACE}#MB/#{TOTALSPACE}#MB</strong></div>
+											<div><strong>#{USEDSPACE}#MB/#{TOTALSPACE}# MB</strong></div>
 											<div class="progress">
 											  <div class="progress">
 												  <div class="progress-bar"  role="progressbar" aria-valuenow="#{PERCENTAGESPACE}#" aria-valuemin="0" aria-valuemax="100" style="width: #{PERCENTAGESPACE}#%">
