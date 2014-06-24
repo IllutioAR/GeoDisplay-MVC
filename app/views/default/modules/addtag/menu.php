@@ -12,7 +12,7 @@
 			<li id="save" style="display:none">
 				<a href="#" class="green">
 		    		<i class="fa fa-check"></i>
-		    		Listo
+		    		Guardar
 		    	</a>
 			</li>
 		    <li id="next">

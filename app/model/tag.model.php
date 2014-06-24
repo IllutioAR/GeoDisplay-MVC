@@ -136,8 +136,106 @@ class tag extends database {
 		}
 		if( $_FILES["image"]["name"] != "" ){
 			$this->move_media_file($nick, "image", $tag_id);
+		}	
+	}
+
+	function enable_tag($nick, $id){
+		try{
+			$statement = "SELECT active FROM tag WHERE id = :id AND client_nick = :nick";
+			$query = $this->db->prepare($statement);
+			$query->bindParam(':id', $id, PDO::PARAM_INT);
+			$query->bindParam(':nick', $nick);
+			$query->execute();
+			$stat = ($query->fetchAll(PDO::FETCH_ASSOC));
+			$stat = $stat[0]["active"];
+			
+
+			if ($stat == 0){
+				$statement = "UPDATE tag SET active = 1 WHERE id = :id AND client_nick = :nick";
+				$query = $this->db->prepare($statement);
+				$query->bindParam(':id', $id, PDO::PARAM_INT);
+				$query->bindParam(':nick', $_SESSION["client"]["nick"]);
+				$query->execute();
+				
+			}
+			else if ($stat == 1){
+				$statement = "UPDATE tag SET active = 0 WHERE id = :id AND client_nick = :nick";
+				$query = $this->db->prepare($statement);
+				$query->bindParam(':id', $id, PDO::PARAM_INT);
+				$query->bindParam(':nick', $_SESSION["client"]["nick"]);
+				$query->execute();
+			}
+			else {
+				throw new Exception("No se logró habilitar, datos inválidos", 1);		
+			}	
 		}
-		
+		catch (Exception $e){
+			echo json_encode(array(
+		        'error' => array(
+		            'msg' => $e->getMessage(),
+		            'code' => $e->getCode(),
+		        ),
+    		));
+		}
+	}
+
+	function clone_tag($nick, $id){
+		try{
+			$statement = "INSERT INTO Tag (name, description, latitude, longitude, map, url, url_purchase, facebook, twitter, client_nick, active) SELECT name, description, latitude, longitude, map, url, url_purchase, facebook, twitter, client_nick, active FROM Tag WHERE id = :id AND client_nick = :nick";
+
+			$query = $this->db->prepare($statement);
+			$query->bindParam(':id',$id, PDO::PARAM_INT);
+			$query->bindParam(':nick',$nick);
+			$query->execute();
+
+			$newId = $this->db->lastInsertId();
+
+			$tryer = "SELECT multimedia_id, type FROM multimedia_tag WHERE tag_id = :id";
+			$query = $this->db->prepare($tryer);
+			$query->bindParam(':id',$id, PDO::PARAM_INT);
+			$query->execute();
+			$tag_data = ($query->fetchAll(PDO::FETCH_ASSOC));
+			foreach ($tag_data as $tag){
+				$statement = "INSERT INTO Multimedia_tag (multimedia_id, tag_id, type) VALUES (:multimedia_id, :tag_id, :type)";
+				$query = $this->db->prepare($statement);
+				$query->bindParam(':multimedia_id', $tag["multimedia_id"], PDO::PARAM_INT);
+				$query->bindParam(':tag_id',$newId, PDO::PARAM_INT);
+				$query->bindParam(':type',$tag["type"]);
+				$query->execute();
+			}
+			exit();
+		}
+		catch(Exception $e){
+			echo json_encode(array(
+		        'error' => array(
+		            'msg' => $e->getMessage(),
+		            'code' => $e->getCode(),
+		        ),
+    		));
+		}
+	}
+
+	function delete_tag($nick, $id){
+		try {
+			$statement2 = "DELETE FROM Multimedia_tag WHERE tag_id = :id";
+			$query2 = $this->db->prepare($statement2); 
+			$query2->bindParam(':id', $id, PDO::PARAM_INT);
+			$query2 -> execute();
+
+			$statement = "DELETE FROM Tag WHERE id = :id AND client_nick = :nick";
+			$query = $this->db->prepare($statement);
+			$query->bindParam(':id', $id, PDO::PARAM_INT);
+			$query->bindParam(':nick', $nick);
+			$query->execute();
+		}
+		catch(Exception $e){
+			echo json_encode(array(
+		        'error' => array(
+		            'msg' => $e->getMessage(),
+		            'code' => $e->getCode(),
+		        ),
+    		));
+		}	
 	}
 }
 ?>

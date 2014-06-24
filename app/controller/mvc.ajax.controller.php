@@ -25,5 +25,23 @@ class mvc_controller {
 		}
 	}
 
+	function enable_tag(){
+		$this->validate_session();
+		$tag = new tag();
+		$tag->enable_tag($_SESSION["client"]["nick"], $_POST["id"]);
+	}
+
+	function clone_tag(){
+		$this->validate_session();
+		$tag = new tag();
+		$tag->clone_tag($_SESSION["client"]["nick"], $_POST["id"]);	
+	}
+
+	function delete_tag(){
+		$this->validate_session();
+		$tag = new tag();
+		$tag->delete_tag($_SESSION["client"]["nick"], $_POST["id"]);	
+	}
+
 }
 ?>

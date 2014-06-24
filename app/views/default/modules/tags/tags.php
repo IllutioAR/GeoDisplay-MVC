@@ -9,11 +9,11 @@
 					<span class="titulo-tag">
 						<?= $row['name'] ?>
 					</span>
-					<span class="titulo-botones pull-right">
-						<i class="fa fa-ban" data-toggle="tooltip" data-placement="top" title="Deshabilitar"></i>
-						<i class="fa fa-copy" data-toggle="tooltip" data-placement="top" title="Copiar"></i>
-						<i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="Editar"></i>
-						<i class="fa fa-trash-o" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
+					<span class="titulo-botones pull-right" tag-id="<?= $row['id'] ?>">
+						<i id="disable" class="fa fa-ban" data-toggle="tooltip" data-placement="top" title="Deshabilitar"></i>
+						<i id="clone" class="fa fa-copy" data-toggle="tooltip" data-placement="top" title="Copiar"></i>
+						<i id="edit" class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="Editar"></i>
+						<i id="delete" class="fa fa-trash-o" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
 					</span>
 				</div>
 				<div class="map">
@@ -38,3 +38,4 @@
 		<?php endforeach; ?>
 	</div>
 </div>
+<script src="js/tags.js"></script>
