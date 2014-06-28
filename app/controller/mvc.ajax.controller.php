@@ -43,5 +43,13 @@ class mvc_controller {
 		$tag->delete_tag($_SESSION["client"]["nick"], $_POST["id"]);	
 	}
 
+	function password_recovery(){
+		require '../../app/model/client.model.php';
+		$client = new client();
+		if(filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
+			$client->password_recovery($_POST["email"]);
+		}
+	}
+
 }
 ?>

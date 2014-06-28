@@ -60,7 +60,7 @@
 										<button type="submit" class="btn btn-primary" style="width: 100%">Iniciar sesión</button>
 									</div>
 									<span class="pass-recovery-container">
-										<a href="login.php" class="pass-recovery pull-right">Olvidé mi contraseña</a>
+										<a id="passwordRecovery" class="pass-recovery pull-right">Olvidé mi contraseña</a>
 									</span>
                                 </form>
                             </div>
@@ -111,6 +111,27 @@
                 }
             }//Finish initialize
             google.maps.event.addDomListener(window, 'load', initialize);
+        </script>
+        <script>
+        	$("#passwordRecovery").click(function (){
+        		var email = $("#email").val();
+        		var data = {"email" : email};
+				$.ajax({
+			        data:  data,
+			        url:   'ajax/passwordRecovery.php',
+			        type:  'post',
+			        beforeSend: function (){
+			            console.log("Procesando, espere por favor...");
+			        },
+			        success: function (response){
+			            console.log("Servidor: " + response);
+			            //location.reload();
+			        },
+			        fail: function(){
+			        	console.log("Error:");
+			        }
+			    });
+        	});
         </script>
 	</body>
 </html>

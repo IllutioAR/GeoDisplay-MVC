@@ -12,7 +12,7 @@ class client extends database {
 
 	function validate_client($email, $password){
 		if(filter_var($email,FILTER_VALIDATE_EMAIL)){
-			$statement = "SELECT password FROM client WHERE email = :email";
+			$statement = "SELECT password FROM Client WHERE email = :email";
 			$query = $this->db->prepare($statement);
 			$query->bindParam(':email', $email);
 			$query->execute();
@@ -107,6 +107,33 @@ class client extends database {
 				}
 			}
 		}
+	}
+
+	function password_recovery($email){
+		$email_to = $email;
+		$characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	    $newPassword = "";
+	    for ($i = 0; $i < 8; $i++) {
+	        $newPassword .= $characters[rand(0, strlen($characters) - 1)];
+	    }
+	    $newPass = $newPassword;
+		if (defined("CRYPT_BLOWFISH") && CRYPT_BLOWFISH){
+	        $salt = '$2y$11$' . substr(md5(uniqid(rand(), true)), 0, 22);
+	        $newPass = crypt($newPass, $salt);
+	        $statement = "UPDATE Client SET password = :newPass WHERE email = :email";
+			$query = $this->db->prepare($statement);
+			$query->bindParam(':email',$email);
+			$query->bindParam(':newPass',$newPass);
+			$query->execute();
+
+			$email_message = "Su nueva contraseña es: " .$newPassword;
+			$email_from = 'support@illut.io';
+
+			$headers = 'From: '.$email_from."\r\n".
+			'Reply-To: '.$email_from."\r\n" .
+			'X-Mailer: PHP/' . phpversion();
+			@mail ($email, "", $email_message, $headers);
+	    }
 	}
 }
 
