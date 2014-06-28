@@ -24,7 +24,7 @@ class mvc_controller {
 				$_SESSION["client"] = $user->get_client_data( $_POST["email"] )[0];
 				header("Location: index.php");
 			}else{
-				header("Location: login.php");
+				header("Location: login.php?error");
 			}
 		}else if( isset($_SESSION["logged"]) && $_SESSION["logged"] ){
 			header("Location: index.php");

@@ -11,7 +11,7 @@ class tag extends database {
 	}
 
 	function get_tags($nick, $limit_tags=9, $status = 1){
-		$statement = "SELECT * FROM tag WHERE client_nick = :nick and active = :status";
+		$statement = "SELECT * FROM Tag WHERE client_nick = :nick and active = :status";
 		$query = $this->db->prepare($statement);
 		$query->bindParam(':nick', $nick);
 		$query->bindParam(':status', $status, PDO::PARAM_INT);
@@ -20,7 +20,7 @@ class tag extends database {
 	}
 
 	function get_num_tags($nick, $status){
-		$statement = "SELECT count(*) FROM tag WHERE client_nick = :nick and active = :status";
+		$statement = "SELECT count(*) FROM Tag WHERE client_nick = :nick and active = :status";
 		$query = $this->db->prepare($statement);
 		$query->bindParam(':nick', $nick);
 		$query->bindParam(':status', $status, PDO::PARAM_INT);
@@ -77,9 +77,9 @@ class tag extends database {
 			$query->bindParam(':client_nick', $nick);
 			$query->execute();
 			$multimedia_id = $this->db->lastInsertId();
-			$statement = "INSERT INTO Multimedia_tag VALUES (:multimedia_id, :tag_id, :type)";
+			$statement = "INSERT INTO Multimedia_Tag VALUES (:multimedia_id, :tag_id, :type)";
 			$query = $this->db->prepare($statement);
-			$query->bindParam(':multimedia_id', $multimedia_id);
+			$query->bindParam(':multimedia_id', $multimedia_id, PDO::PARAM_INT);
 			$query->bindParam(':tag_id', $tag_id, PDO::PARAM_INT);
 			$query->bindParam(':type', $type);
 			$query->execute();
@@ -90,7 +90,6 @@ class tag extends database {
 	}
 
 	function add_new_tag($nick, $num_tags, $space, $active = 1){
-		echo $_FILES["video"]["tmp_name"]."<br>";
 		if ( $num_tags <= 0){
 			header("Location: ../addtag.php?error=numTags");
 		}
@@ -136,12 +135,13 @@ class tag extends database {
 		}
 		if( $_FILES["image"]["name"] != "" ){
 			$this->move_media_file($nick, "image", $tag_id);
-		}	
+		}
+		header("Location: ../index.php");
 	}
 
 	function enable_tag($nick, $id){
 		try{
-			$statement = "SELECT active FROM tag WHERE id = :id AND client_nick = :nick";
+			$statement = "SELECT active FROM Tag WHERE id = :id AND client_nick = :nick";
 			$query = $this->db->prepare($statement);
 			$query->bindParam(':id', $id, PDO::PARAM_INT);
 			$query->bindParam(':nick', $nick);
@@ -151,7 +151,7 @@ class tag extends database {
 			
 
 			if ($stat == 0){
-				$statement = "UPDATE tag SET active = 1 WHERE id = :id AND client_nick = :nick";
+				$statement = "UPDATE Tag SET active = 1 WHERE id = :id AND client_nick = :nick";
 				$query = $this->db->prepare($statement);
 				$query->bindParam(':id', $id, PDO::PARAM_INT);
 				$query->bindParam(':nick', $_SESSION["client"]["nick"]);
@@ -159,7 +159,7 @@ class tag extends database {
 				
 			}
 			else if ($stat == 1){
-				$statement = "UPDATE tag SET active = 0 WHERE id = :id AND client_nick = :nick";
+				$statement = "UPDATE Tag SET active = 0 WHERE id = :id AND client_nick = :nick";
 				$query = $this->db->prepare($statement);
 				$query->bindParam(':id', $id, PDO::PARAM_INT);
 				$query->bindParam(':nick', $_SESSION["client"]["nick"]);
@@ -190,13 +190,13 @@ class tag extends database {
 
 			$newId = $this->db->lastInsertId();
 
-			$tryer = "SELECT multimedia_id, type FROM multimedia_tag WHERE tag_id = :id";
+			$tryer = "SELECT multimedia_id, type FROM Multimedia_tag WHERE tag_id = :id";
 			$query = $this->db->prepare($tryer);
 			$query->bindParam(':id',$id, PDO::PARAM_INT);
 			$query->execute();
 			$tag_data = ($query->fetchAll(PDO::FETCH_ASSOC));
 			foreach ($tag_data as $tag){
-				$statement = "INSERT INTO Multimedia_tag (multimedia_id, tag_id, type) VALUES (:multimedia_id, :tag_id, :type)";
+				$statement = "INSERT INTO Multimedia_Tag (multimedia_id, tag_id, type) VALUES (:multimedia_id, :tag_id, :type)";
 				$query = $this->db->prepare($statement);
 				$query->bindParam(':multimedia_id', $tag["multimedia_id"], PDO::PARAM_INT);
 				$query->bindParam(':tag_id',$newId, PDO::PARAM_INT);
@@ -217,7 +217,7 @@ class tag extends database {
 
 	function delete_tag($nick, $id){
 		try {
-			$statement2 = "DELETE FROM Multimedia_tag WHERE tag_id = :id";
+			$statement2 = "DELETE FROM Multimedia_Tag WHERE tag_id = :id";
 			$query2 = $this->db->prepare($statement2); 
 			$query2->bindParam(':id', $id, PDO::PARAM_INT);
 			$query2 -> execute();

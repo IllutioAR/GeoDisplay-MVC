@@ -29,11 +29,13 @@
 						    </li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
+						    <!--
 						    <li>
 						    	<a href="analytics.php">
 						    		<i class="fa fa-bar-chart-o"></i> Analytics
 						    	</a>
 						    </li>
+							-->
 						    <li>
 						    	<a href="profile.php">
 						    		<i class="fa fa-user"></i> #{USER}#
