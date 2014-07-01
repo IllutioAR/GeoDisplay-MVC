@@ -35,7 +35,7 @@
 								<?php foreach($files as $file): ?>
 								<tr>
 									<td><?= $file["name"] ?></td>
-									<td><?= $file["size"] ?></td>
+									<td><?= number_format($file["size"], 2) ?></td>
 									<td><?= $file["created_at"] ?></td>
 								</tr>
 								<?php endforeach; ?>

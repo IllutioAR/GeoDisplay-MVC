@@ -104,7 +104,7 @@ class tag extends database {
 	    if( !file_exists("../media/".$nick) ){
 			$this->create_media_directory($nick);
 		}
-		$map_path = "media/".$nick."/map/".$_POST["name"].".png";
+		$map_path = "media/".$nick."/map/".$_POST["name"].$_POST["latitude"].$_POST["longitude"].".png";
 		$fp = fopen("../".$map_path,"x");
 		fwrite($fp, $data);
 		fclose($fp);

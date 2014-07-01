@@ -19,7 +19,7 @@ hr{
 
 header nav{
 	background: #1b75ce !important;
-	background: linear-gradient(to bottom,#1b75ce 0,#155ba1 150%) !important;
+	/*background: linear-gradient(to bottom,#1b75ce 0,#155ba1 150%) !important;*/
 	border: 0 !important;
 }
 
@@ -61,7 +61,8 @@ header nav button[class = "navbar-toggle"] > span[class = "icon-bar"]{
 */
 
 #menu-secundario{
-	background: linear-gradient(to bottom,#fff 0,#f2f2f2 150%);
+	background: #fff;
+	/*background: linear-gradient(to bottom,#fff 0,#f2f2f2 150%);*/
 	border: 0 !important;
 }
 
@@ -70,13 +71,13 @@ header nav button[class = "navbar-toggle"] > span[class = "icon-bar"]{
 }
 
 #menu-secundario ul > li a[class = "green"]{
-	background: #4c9220;
-	background: linear-gradient(top, #4c9220 0, #366817 150%);
+	background: #60af31;
+	/*background: linear-gradient(top, #4c9220 0, #366817 150%);*/
 	color: #FFF;
 }
 
 #menu-secundario ul > li a[class = "green"]:hover{
-	background: #366817;
+	background: #4c9220;
 }
 
 #menu-secundario ul > li a:hover{
@@ -102,12 +103,6 @@ footer > span{
 
 .seccion{
 	background: white;
-	border: 1px solid;
-	/*border-color: #e5e6e9 #dfe0e4 #d0d1d5;*/
-	border-top-color: rgb(229, 230, 233);
-	border-right-color: rgb(223, 224, 228);
-	border-bottom-color: rgb(208, 209, 213);
-	border-left-color: rgb(223, 224, 228);
 	box-shadow:	2px 2px 2px 0 rgba(0, 0, 0, 0.3);
 	margin-bottom: 1em;
 	/*padding: 	.5em;*/
@@ -120,10 +115,10 @@ footer > span{
 .seccion > .titulo{
 	background: white;
 	/*background: linear-gradient(white, #f2f2f2);*/
-	border-top: 3px solid #29abe2;
+	border-top: 3px solid #2dabe1;
 	border-bottom: 2px solid #e5e5e5;
 	border-radius: inherit;
-	max-height: 2.5em;
+	max-height: 2.8em;
 }
 
 /*

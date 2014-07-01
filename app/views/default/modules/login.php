@@ -126,9 +126,6 @@
 			        success: function (response){
 			            console.log("Servidor: " + response);
 			            //location.reload();
-			        },
-			        fail: function(){
-			        	console.log("Error:");
 			        }
 			    });
         	});
