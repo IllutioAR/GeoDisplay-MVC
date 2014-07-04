@@ -2,23 +2,9 @@ var map;
 var initialLocation;
 var marker;
 
-var infowindow = null;
-
-function openInfoWindow() {
-  var markerLatLng = marker.getPosition();
-	document.getElementById('latitude').value = markerLatLng.lat();
-	document.getElementById('longitude').value = markerLatLng.lng();
-    infowindow.setContent([
-      'Your position is: ',
-      markerLatLng.lat(),
-      markerLatLng.lng()
-    ].join(''));
-    infowindow.open(map, marker);
-}
-
 function initialize() {
 	var mapOptions = {
-		zoom: 14,
+		zoom: 16,
 		zoomControl: true,
 		streetViewControl: false
 	};
@@ -53,18 +39,14 @@ function initialize() {
 function setPositionForm(){
 	if ( marker != null ){
 		var markerLatLng = marker.getPosition();
-		document.getElementById('latitude').value = markerLatLng.lat();
-		document.getElementById('longitude').value = markerLatLng.lng();
-		infowindow = new google.maps.InfoWindow({
-			maxWidth: 140
-		});
-		google.maps.event.addListener(marker, 'mouseup', function() {
-			openInfoWindow();
-		});
+		document.getElementById('latitude').value = markerLatLng.lat().toFixed(6);
+		document.getElementById('longitude').value = markerLatLng.lng().toFixed(6);
 	}else{
-		window.setTimeout("setPositionForm();",100);
+		window.setTimeout("setPositionForm();",10);
 	}
-	openInfoWindow();
+	google.maps.event.addListener(marker, 'mouseup', function() {
+		setPositionForm();
+	});
 } 
 
 google.maps.event.addDomListener(window, 'load', initialize);
