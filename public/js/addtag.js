@@ -50,9 +50,19 @@ $("#save").click(function(){
 		uploading = false;
 		message += "- Description\n";
 	}
-	if( $("#video").val() == "" ){
+	
+	var filename = $("#video").val();
+	if( filename != "" ){
+		alert(filename.split(".").pop());
+		if( filename.split(".").pop() !== "mp4"){
+			uploading = false;
+			message += "- Video (Must be a mp4 file)";	
+		}
+	}
+	
+	else{
 		uploading = false;
-		message += "- Video";
+		message += "- Video";	
 	}
 	if (uploading){
 		$("#form").submit();	

@@ -46,3 +46,29 @@
 .seccion .links a{
 	color: inherit;
 }
+
+.seccion .new-tag{
+	height: 258px;
+}
+
+.parent-container{
+	display: table; 
+	height:260px; 
+	width:100%;
+}
+
+.child-container{
+	color:#60af31;
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	width:100%
+}
+
+.add-icon-lg{
+	font-size: 9em;
+}
+
+.add-text-lg{
+	font-size: 2em;
+}
