@@ -1,13 +1,9 @@
 body{
-	background: #eee;
+	background: #EEE;
 	-webkit-user-select: none; /* Chrome/Safari */        
 	   -moz-user-select: none; /* Firefox */
 		-ms-user-select: none; /* IE10+ */
 	cursor: default;
-}
-
-nav{
-	/*box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) !important;*/
 }
 
 hr{
@@ -18,8 +14,7 @@ hr{
 */
 
 header nav{
-	background: #1b75ce !important;
-	/*background: linear-gradient(to bottom,#1b75ce 0,#155ba1 150%) !important;*/
+	background: #1B75CE !important;
 	border: 0 !important;
 }
 
@@ -31,25 +26,17 @@ header nav a{
 	color: #FFF !important;
 }
 
-header nav ul > li a:hover{
-	background-color: #0a4f92 !important;
-}
-
-header nav ul > li[class = "active"] > a{
-	background-color: #0a4f92 !important;
+header nav ul > li a:hover,
+header nav ul > li[class = "active"] > a,
+header nav button[class = "navbar-toggle"]:hover,
+header nav button[class = "navbar-toggle"]:focus
+{
+	background-color: #0A4F92 !important;
 }
 
 header nav button[class = "navbar-toggle"]{
 	background-color: inherit;
 	border-color: #FFF !important;
-}
-
-header nav button[class = "navbar-toggle"]:hover{
-	background-color: #0a4f92 !important;
-}
-
-header nav button[class = "navbar-toggle"]:focus{
-	background-color: #0a4f92 !important;
 }
 
 header nav button[class = "navbar-toggle"] > span[class = "icon-bar"]{
@@ -61,9 +48,8 @@ header nav button[class = "navbar-toggle"] > span[class = "icon-bar"]{
 */
 
 #menu-secundario{
-	background: #fff;
-	/*background: linear-gradient(to bottom,#fff 0,#f2f2f2 150%);*/
-	border: 1px solid #ddd !important;
+	background: #FFF;
+	border: 1px solid #DDD !important;
 }
 
 #menu-secundario ul > li a{
@@ -71,21 +57,20 @@ header nav button[class = "navbar-toggle"] > span[class = "icon-bar"]{
 }
 
 #menu-secundario ul > li a[class = "green"]{
-	background: #60af31;
-	/*background: linear-gradient(top, #4c9220 0, #366817 150%);*/
+	background: #60AF31;
 	color: #FFF;
 }
 
 #menu-secundario ul > li a[class = "green"]:hover{
-	background: #4c9220;
+	background: #4C9220;
 }
 
 #menu-secundario ul > li a:hover{
-	background-color: rgb(231, 231, 231);
+	background-color: #E7E7E7;
 }
 
 #menu-secundario .badge{
-	background-color: #0f75da;
+	background-color: #0F75DA;
 }
 
 /*
@@ -104,7 +89,7 @@ footer > span{
 .seccion{
 	background: white;
 	/*box-shadow:	2px 2px 2px 0 rgba(0, 0, 0, 0.3);*/
-	border: 1px solid #ddd;
+	border: 1px solid #DDD;
 	margin-bottom: 1em;
 	/*padding: 	.5em;*/
 }
@@ -115,9 +100,8 @@ footer > span{
 
 .seccion > .titulo{
 	background: white;
-	/*background: linear-gradient(white, #f2f2f2);*/
-	border-top: 3px solid #2dabe1;
-	border-bottom: 2px solid #e5e5e5;
+	border-top: 3px solid #2DABE1;
+	border-bottom: 2px solid #E7E7E7;
 	border-radius: inherit;
 	max-height: 2.8em;
 }
