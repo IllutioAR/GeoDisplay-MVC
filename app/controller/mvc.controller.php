@@ -162,6 +162,29 @@ class mvc_controller {
 		$this->view_page($pagina);
 	}
 
+	function edit_tag($id){
+		$this->validate_session();
+
+		$pagina = $this->load_template("Edit tag", "es", "edittag.css");
+		$menu = $this->load_page('../app/views/default/modules/edittag/menu.php');
+		$pagina = $this->replace_content('/\#{MENU}\#/ms' ,$menu , $pagina);
+
+		ob_start();
+
+		$tag = new tag();
+		
+		$tag = $tag->get_full_data($_SESSION["client"]["nick"], $id);
+		
+		if($tag == array()){
+			header("Location: index.php?error=edit");
+		}
+		include "../app/views/default/modules/edittag/form.php";
+		$form = ob_get_clean();
+		$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms', $form , $pagina);
+
+		$this->view_page($pagina);
+	}
+
 	function multimedia($type){
 		$this->validate_session();
 
@@ -186,9 +209,6 @@ class mvc_controller {
 
 		$overview = $this->load_page("../app/views/default/modules/multimedia/overview.php");
 		$pagina = $this->replace_content('/\#{SIDEBAR}\#/ms' ,$overview , $pagina);
-
-		//$files = $this->load_page("../app/views/default/modules/multimedia/files.php");
-		//$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms' ,$files , $pagina);
 
 		$plan_info = $this->get_plan_info($_SESSION["client"]["plan"]);
 		$used_space = number_format($plan_info["total_space"] - $_SESSION["client"]["space"], 2);

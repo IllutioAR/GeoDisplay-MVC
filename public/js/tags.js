@@ -48,7 +48,7 @@ function clone_tag(id){
 }
 
 function edit_tag(id){
-	
+	window.location.href = "edit_tag.php?tag=" + id;
 }
 
 function delete_tag(id){

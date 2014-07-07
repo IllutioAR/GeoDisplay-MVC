@@ -107,6 +107,7 @@
 						<div class="preview-container">
 							<video class="video-preview" controls>
 								<source src="<?= $tag['video_path'] ?>" type="video/mp4">
+								Tu navegador no tiene soporte para HTML5.
 							</video>
 						</div>
 					</div>
@@ -155,6 +156,9 @@
 					<div class="titulo">
 						<strong>Imagen</strong>
 					</div>
+					<?php 
+						if( !isset($tag['image_path']) ):
+					?>
 					<div class="form" id="multimedia">
 						<div class="row" id="multimedia-image">
 							<div class="col-xs-12">
@@ -166,6 +170,17 @@
 							</div>
 						</div>
 					</div>
+					<?php 
+						else:
+					?>
+					<div>
+						<div class="preview-container">
+							<img src="<?= $tag['image_path'] ?>" class="image-preview">
+						</div>
+					</div>
+					<?php 
+						endif;
+					?>
 				</div>
 			</div>
 		</div>

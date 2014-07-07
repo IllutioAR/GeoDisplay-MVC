@@ -19,6 +19,41 @@ class tag extends database {
 		return $query->fetchAll(PDO::FETCH_ASSOC);
 	}
 
+	function get_full_data($nick, $id){
+		$statement = "SELECT name, description, url, url_purchase, latitude, longitude, client_nick, facebook, twitter FROM Tag WHERE client_nick = :nick AND id = :id";
+		$query = $this->db->prepare($statement);
+		$query->bindParam(':nick', $nick, PDO::PARAM_STR);
+		$query->bindParam(':id', $id, PDO::PARAM_INT);
+		$query->execute();
+		$num = $query->rowCount();
+		$result = $query->fetchAll(PDO::FETCH_ASSOC);
+		
+		if ($num == 0) return array();
+		
+		$statementVideo = "SELECT file_path, type FROM Multimedia WHERE id IN (SELECT multimedia_id FROM Multimedia_Tag WHERE tag_id = :tag_id)";
+		$query = $this->db->prepare($statementVideo);
+		$query->bindParam(':tag_id', $id, PDO::PARAM_INT);
+		$query->execute();
+		$result_multimedia = $query->fetchAll(PDO::FETCH_ASSOC);
+
+		$rows = array(
+			"name" => utf8_encode($result[0]["name"]),
+			"description" => utf8_encode($result[0]["description"]),
+			"url" => $result[0]["url"],
+			"url_purchase" => $result[0]["url_purchase"],
+			"latitude" => $result[0]["latitude"],
+			"longitude"=> $result[0]["longitude"],
+			"facebook"=>$result[0]["facebook"],
+			"twitter"=>$result[0]["twitter"]
+		);
+		foreach ($result_multimedia as $row) {
+			$type = $row["type"];
+			$rows[$type."_path"] = $row["file_path"];
+		}
+		
+		return $rows;
+	}
+
 	function get_num_tags($nick, $status){
 		$statement = "SELECT count(*) FROM Tag WHERE client_nick = :nick and active = :status";
 		$query = $this->db->prepare($statement);
@@ -97,11 +132,11 @@ class tag extends database {
 		$url_map = "http://maps.googleapis.com/maps/api/staticmap?center=".$_POST["latitude"].",".$_POST["longitude"]."&zoom=17&size=400x150&markers=color:blue%7Clabel:S%7C11211%7C11206%7C11222&markers=color:red|".$_POST["latitude"].",".$_POST["longitude"]."&maptype=roadmap&sensor=false";
 		$ch = curl_init ($url_map);
 		curl_setopt($ch, CURLOPT_HEADER, 0);
-	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	    curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
-	    $data = curl_exec($ch);
-	    curl_close($ch);
-	    if( !file_exists("../media/".$nick) ){
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
+		$data = curl_exec($ch);
+		curl_close($ch);
+		if( !file_exists("../media/".$nick) ){
 			$this->create_media_directory($nick);
 		}
 		$map_path = "media/".$nick."/map/".$_POST["name"].$_POST["latitude"].$_POST["longitude"].".png";
@@ -171,11 +206,11 @@ class tag extends database {
 		}
 		catch (Exception $e){
 			echo json_encode(array(
-		        'error' => array(
-		            'msg' => $e->getMessage(),
-		            'code' => $e->getCode(),
-		        ),
-    		));
+				'error' => array(
+					'msg' => $e->getMessage(),
+					'code' => $e->getCode(),
+				),
+			));
 		}
 	}
 
@@ -207,11 +242,11 @@ class tag extends database {
 		}
 		catch(Exception $e){
 			echo json_encode(array(
-		        'error' => array(
-		            'msg' => $e->getMessage(),
-		            'code' => $e->getCode(),
-		        ),
-    		));
+				'error' => array(
+					'msg' => $e->getMessage(),
+					'code' => $e->getCode(),
+				),
+			));
 		}
 	}
 
@@ -230,11 +265,11 @@ class tag extends database {
 		}
 		catch(Exception $e){
 			echo json_encode(array(
-		        'error' => array(
-		            'msg' => $e->getMessage(),
-		            'code' => $e->getCode(),
-		        ),
-    		));
+				'error' => array(
+					'msg' => $e->getMessage(),
+					'code' => $e->getCode(),
+				),
+			));
 		}	
 	}
 }

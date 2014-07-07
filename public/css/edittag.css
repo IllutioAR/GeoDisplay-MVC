@@ -29,6 +29,6 @@ input, textarea{
 	padding: .5em;
 }
 
-.video-preview, .audio-preview{
+.video-preview, .audio-preview, .image-preview{
 	width: 100%;
 }
