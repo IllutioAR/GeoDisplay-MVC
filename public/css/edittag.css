@@ -1,0 +1,34 @@
+.seccion #map{
+	height: 246px;
+}
+
+.form{
+	margin: .5em;
+}
+
+input, textarea{
+	margin-bottom: 1em;
+}
+
+#multimedia div > button{
+	height: 3em;
+	width: 100%;
+}
+
+#multimedia #multimedia-image,
+#multimedia #multimedia-audio,
+#multimedia #multimedia-video{
+	margin-bottom: 1em;
+}
+
+.progress{
+	margin-bottom: 0;
+}
+
+.preview-container{
+	padding: .5em;
+}
+
+.video-preview, .audio-preview{
+	width: 100%;
+}
