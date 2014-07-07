@@ -11,11 +11,11 @@
 						<div class="row">
 							<div class="col-xs-6">
 								<label for="latitude">Latitud <i class="fa fa-asterisk"></i></label>
-								<input name="latitude" type="text" class="form-control" id="latitude" pattern="-?\d+\.\d+" title="Enter a decimal number.">
+								<input name="latitude" type="text" class="form-control" id="latitude">
 							</div>
 							<div class="col-xs-6">
 								<label for="longitude">Longitud <i class="fa fa-asterisk"></i></label>
-								<input name="longitude" type="text" class="form-control" id="longitude" pattern="-?\d+\.\d+" title="Enter a decimal number.">
+								<input name="longitude" type="text" class="form-control" id="longitude">
 							</div>
 						</div>
 					</div>
@@ -69,11 +69,11 @@
 						<div class="row">
 							<div class="col-xs-6">
 								<label for="facebok">Facebook</label>
-								<input name="facebook" type="url" class="form-control" id="facebook" pattern="https?:\/\/(www\.)?facebook\.com(\/.*)?" title="Ingresa una dirección válida de facebook (http://facebook.com/pagina)." placeholder="http://facebook.com/mipagina">
+								<input name="facebook" type="url" class="form-control" id="facebook">
 							</div>
 							<div class="col-xs-6">
 								<label for="twitter">Twitter</label>
-								<input name="twitter" type="text" class="form-control" id="twitter" pattern="\@(\d|\w|\_|)+" title="Enter a valid username." placeholder="@usuario">
+								<input name="twitter" type="text" class="form-control" id="twitter">
 							</div>
 						</div>
 					</div>
@@ -84,7 +84,7 @@
 			<div class="col-xs-12 col-md-4">
 				<div class="seccion">
 					<div class="titulo">
-						<strong>Video</strong> <i class="fa fa-asterisk"></i>
+						<strong>Video</strong><i class="fa fa-asterisk"></i>
 					</div>
 					<div class="form" id="multimedia">
 						<div class="row" id="multimedia-video">
@@ -92,7 +92,7 @@
 								<input name="video" id="video" type="file" class="btn btn-default" style="display:none">
 								<button id="btn-video" class="btn btn-default" style="margin:.2em">
 									<i class="fa fa-laptop"></i> 
-									Selecciona una archivo
+									Seleccionar una archivo
 								</button>
 							</div>
 						</div>

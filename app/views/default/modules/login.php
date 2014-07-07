@@ -87,7 +87,7 @@
                     disableDefaultUI: true,
                     draggable: false,
                     scrollWheel: false,
-                    zoom: 11
+                    zoom: 14
                 };
                 map = new google.maps.Map(document.getElementById("map"),
                       mapOptions);

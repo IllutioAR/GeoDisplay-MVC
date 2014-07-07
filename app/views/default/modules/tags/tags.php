@@ -1,5 +1,21 @@
 <div>
 	<div class="row">
+		<div class="col-xs-12 col-md-4">
+			<div class="seccion" onclick="window.location.href = 'addtag.php'" style="cursor:pointer">
+				<div class="new-tag">
+					<div class="parent-container">
+						<div class="child-container">
+							<div>
+								<i class="fa fa-plus-circle add-icon-lg"></i>
+							</div>
+							<div class="add-text-lg">
+								Agrega un lugar
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<?php
 			foreach ($data as $row):
 		?>
@@ -36,24 +52,6 @@
 			</div>
 		</div>
 		<?php endforeach; ?>
-		<div class="col-xs-12 col-md-4">
-			<div class="seccion">
-				<div class="titulo">
-					<span class="titulo-tag">
-						Nombre
-					</span>
-					<span class="titulo-botones pull-right">
-						<i class="fa fa-flag"></i>
-						<i class="fa fa-copy"></i>
-						<i class="fa fa-pencil"></i>
-						<i class="fa fa-trash-o"></i>
-					</span>
-				</div>
-				<div class="links">
-					
-				</div>
-			</div>
-		</div>
 	</div>
 </div>
 <script src="js/tags.js"></script>
