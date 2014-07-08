@@ -32,3 +32,9 @@ input, textarea{
 .video-preview, .audio-preview, .image-preview{
 	width: 100%;
 }
+
+.close-icon{
+	color: red;
+	cursor: pointer;
+	padding: 4px;
+}

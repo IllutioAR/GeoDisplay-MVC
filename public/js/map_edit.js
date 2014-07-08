@@ -11,7 +11,8 @@ function initialize() {
 	map = new google.maps.Map(document.getElementById("map"),
 		mapOptions);
 
-	initialLocation = new google.maps.LatLng(document.getElementById('latitude').value, document.getElementById('longitude').value);
+	initialLocation = new google.maps.LatLng(document.getElementById('latitude').value, 
+											 document.getElementById('longitude').value);
 	map.setCenter(initialLocation);
 	marker = new google.maps.Marker({
 	    position: initialLocation,

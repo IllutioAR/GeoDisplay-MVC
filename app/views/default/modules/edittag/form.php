@@ -84,31 +84,40 @@
 			<div class="col-xs-12 col-md-4">
 				<div class="seccion">
 					<div class="titulo">
-						<strong>Video</strong><i class="fa fa-asterisk"></i>
+						<strong>Video</strong>
+						<i class="fa fa-asterisk"></i>
+						<?php 
+							if( isset($tag['video_path']) )
+								echo '<i id="close-video-preview" type="video" class="fa fa-times fa-lg pull-right close-icon"></i>';
+						?>
 					</div>
 					<?php 
 						if( !isset($tag['video_path']) ):
 					?>
-					<div class="form" id="multimedia">
-						<div class="row" id="multimedia-video">
-							<div class="col-xs-12">
-								<input name="video" id="video" type="file" class="btn btn-default" style="display:none">
-								<button id="btn-video" class="btn btn-default" style="margin:.2em">
-									<i class="fa fa-laptop"></i> 
-									Seleccionar una archivo
-								</button>
+					<div id="video-field">
+						<div class="form" id="multimedia">
+							<div class="row" id="multimedia-video">
+								<div class="col-xs-12">
+									<input name="video" id="video" type="file" class="btn btn-default" style="display:none">
+									<button id="btn-video" class="btn btn-default" style="margin:.2em">
+										<i class="fa fa-laptop"></i> 
+										Seleccionar una archivo
+									</button>
+								</div>
 							</div>
 						</div>
 					</div>
 					<?php
 						else:
 					?>
-					<div>
-						<div class="preview-container">
-							<video class="video-preview" controls>
-								<source src="<?= $tag['video_path'] ?>" type="video/mp4">
-								Tu navegador no tiene soporte para HTML5.
-							</video>
+					<div id="video-field">
+						<div id="video-preview">
+							<div class="preview-container">
+								<video class="video-preview" controls>
+									<source src="<?= $tag['video_path'] ?>" type="video/mp4">
+									Tu navegador no tiene soporte para HTML5.
+								</video>
+							</div>
 						</div>
 					</div>
 					<?php
@@ -120,30 +129,38 @@
 				<div class="seccion">
 					<div class="titulo">
 						<strong>Audio</strong>
+						<?php 
+							if( isset($tag['audio_path']) )
+								echo '<i id="close-audio-preview" type="audio" class="fa fa-times fa-lg pull-right close-icon"></i>';
+						?>
 					</div>
 					<?php 
 						if( !isset($tag['audio_path']) ):
 					?>
-					<div class="form" id="multimedia">
-						<div class="row" id="multimedia-audio">
-							<div class="col-xs-12">
-								<input name="audio" type="file" class="btn btn-default" style="display:none">
-								<button id="btn-audio" class="btn btn-default" style="margin:.2em">
-									<i class="fa fa-laptop"></i> 
-									Selecciona una archivo
-								</button>
+					<div id="audio-field">
+						<div class="form" id="multimedia">
+							<div class="row" id="multimedia-audio">
+								<div class="col-xs-12">
+									<input name="audio" type="file" class="btn btn-default" style="display:none">
+									<button id="btn-audio" class="btn btn-default" style="margin:.2em">
+										<i class="fa fa-laptop"></i> 
+										Selecciona una archivo
+									</button>
+								</div>
 							</div>
 						</div>
 					</div>
 					<?php
 						else:
 					?>
-					<div>
-						<div class="preview-container">
-							<audio class="audio-preview" controls>
-								<source src="<?= $tag['audio_path'] ?>" type="audio/mpeg">
-								Tu navegador no tiene soporte para HTML5.
-							</audio>
+					<div id="audio-field">
+						<div id="audio-preview">
+							<div class="preview-container">
+								<audio class="audio-preview" controls>
+									<source src="<?= $tag['audio_path'] ?>" type="audio/mpeg">
+									Tu navegador no tiene soporte para HTML5.
+								</audio>
+							</div>
 						</div>
 					</div>
 					<?php
@@ -155,27 +172,35 @@
 				<div class="seccion">
 					<div class="titulo">
 						<strong>Imagen</strong>
+						<?php 
+							if( isset($tag['image_path']) )
+								echo '<i id="close-image-preview" type="image" class="fa fa-times fa-lg pull-right close-icon"></i>';
+						?>
 					</div>
 					<?php 
 						if( !isset($tag['image_path']) ):
 					?>
-					<div class="form" id="multimedia">
-						<div class="row" id="multimedia-image">
-							<div class="col-xs-12">
-								<input name="image" type="file" class="btn btn-default" style="display:none">
-								<button id="btn-image" class="btn btn-default" style="margin:.2em">
-									<i class="fa fa-laptop"></i> 
-									Selecciona una archivo
-								</button>
+					<div id="image-field">
+						<div class="form" id="multimedia">
+							<div class="row" id="multimedia-image">
+								<div class="col-xs-12">
+									<input name="image" type="file" class="btn btn-default" style="display:none">
+									<button id="btn-image" class="btn btn-default" style="margin:.2em">
+										<i class="fa fa-laptop"></i> 
+										Selecciona una archivo
+									</button>
+								</div>
 							</div>
 						</div>
 					</div>
 					<?php 
 						else:
 					?>
-					<div>
-						<div class="preview-container">
-							<img src="<?= $tag['image_path'] ?>" class="image-preview">
+					<div id="image-field">
+						<div id="image-preview">
+							<div class="preview-container">
+								<img src="<?= $tag['image_path'] ?>" class="image-preview">
+							</div>
 						</div>
 					</div>
 					<?php 
@@ -191,4 +216,4 @@
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script src="js/map_edit.js"></script>
-<script src="js/addtag.js"></script>
+<script src="js/edittag.js"></script>
