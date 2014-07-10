@@ -50,20 +50,21 @@ $("#save").click(function(){
 		uploading = false;
 		message += "- Description\n";
 	}
-	
-	var filename = $("#video").val();
-	if( filename != "" ){
-		alert(filename.split(".").pop());
-		if( filename.split(".").pop() !== "mp4"){
+	if( $("#video").length > 0 ) {
+		var filename = $("#video").val();
+		if( filename != "" ){
+			alert(filename.split(".").pop());
+			if( filename.split(".").pop() !== "mp4"){
+				uploading = false;
+				message += "- Video (Must be a mp4 file)";	
+			}
+		}
+		else{
 			uploading = false;
-			message += "- Video (Must be a mp4 file)";	
+			message += "- Video";	
 		}
 	}
 	
-	else{
-		uploading = false;
-		message += "- Video";	
-	}
 	if (uploading){
 		$("#form").submit();	
 	}else{
@@ -77,12 +78,16 @@ $("#back").click(function(){
 });
 
 $("#btn-video, #btn-audio, #btn-image").click(function(e){
+	preventFileSelect($(this), e);
+});
+
+function preventFileSelect(element, e){
 	e.preventDefault();
 	if (uploading)
 		return;
-	media = $(this).attr("id").replace("btn-", "");
+	media = element.attr("id").replace("btn-", "");
 	$("input[name="+ media + "]").trigger("click");
-});
+}
 
 $("input[type=file]").change(function(){
 	media = $(this).attr("name");
@@ -98,14 +103,11 @@ $("#close-video-preview, #close-audio-preview, #close-image-preview").click(func
 	var type = $(this).attr("type");
 	var element = "#" + type + "-field";
 	$(element).empty();
-	var html = '<div id="DEFAULT-field"><div class="form" id="multimedia"><div class="row" id="multimedia-DEFAULT"><div class="col-xs-12"><input name="DEFAULT" id="DEFAULT" type="file" class="btn btn-default" style="display:none"><button id="btn-DEFAULT" class="btn btn-default" style="margin:.2em"><i class="fa fa-laptop"></i> Seleccionar una archivo</button></div></div></div></div>';
+	var html = '<div class="form" id="multimedia"><div class="row" id="multimedia-DEFAULT"><div class="col-xs-12"><input name="DEFAULT" id="DEFAULT" type="file" class="btn btn-default" style="display:none"><button id="btn-DEFAULT" class="btn btn-default" style="margin:.2em"><i class="fa fa-laptop"></i> Seleccionar una archivo</button></div></div></div>';
 	var html = html.split("DEFAULT").join(type);
 	$(element).html(html);
+	$(this).remove();
 	$("#btn-video, #btn-audio, #btn-image").click(function(e){
-		e.preventDefault();
-		if (uploading)
-			return;
-		media = $(this).attr("id").replace("btn-", "");
-		$("input[name="+ media + "]").trigger("click");
+		preventFileSelect($(this), e);
 	});
 });
