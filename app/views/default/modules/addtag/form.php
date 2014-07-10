@@ -1,5 +1,5 @@
 <div>
-	<form id="form" role="form" action="ajax/addtag.php" method="post" enctype="multipart/form-data">
+	<form id="form" role="form" action="ajax/add_tag.php" method="post" enctype="multipart/form-data">
 		<div id="1" class="row">
 			<div class="col-xs-12 col-md-6">
 				<div class="seccion">

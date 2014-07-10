@@ -15,9 +15,9 @@ function initialize() {
 											 document.getElementById('longitude').value);
 	map.setCenter(initialLocation);
 	marker = new google.maps.Marker({
-	    position: initialLocation,
-	    draggable: true,
-	    animation: google.maps.Animation.DROP
+		position: initialLocation,
+		draggable: true,
+		animation: google.maps.Animation.DROP
 	});
 	marker.setMap(map);
 	google.maps.event.addListener(marker, 'mouseup', function() {

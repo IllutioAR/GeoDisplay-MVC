@@ -1,5 +1,5 @@
 <div>
-	<form id="form" role="form" action="ajax/edittag.php" method="post" enctype="multipart/form-data">
+	<form id="form" role="form" action="ajax/edit_tag.php" method="post" enctype="multipart/form-data">
 		<div id="1" class="row">
 			<div class="col-xs-12 col-md-6">
 				<div class="seccion">
@@ -29,7 +29,7 @@
 					<div class="form">
 						<div class="row">
 							<div class="col-xs-6">
-								<label for="tag">
+								<label for="name">
 									Nombre del tag
 									<i class="fa fa-asterisk"></i>
 									[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Pon un nombre al lugar que quieres etiquetar."></i>]
@@ -37,7 +37,7 @@
 								<input name="name" type="text" class="form-control" id="name" value="<?= $tag['name'] ?>">
 							</div>
 							<div class="col-xs-6">
-								<label for="descripcion">
+								<label for="description">
 									Descripción
 									<i class="fa fa-asterisk"></i>
 									[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Agrega una breve descripción de este lugar."></i>]
@@ -45,18 +45,18 @@
 								<textarea name="description" class="form-control" rows="2" id="description"><?= $tag['description'] ?></textarea>
 							</div>
 							<div class="col-xs-6">
-								<label for="tag">
+								<label for="url">
 									Sitio web
 									[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Dirección a tu sitio web."></i>]
 								</label>
-								<input name="url" type="text" class="form-control" id="tag" value="<?= $tag['url'] ?>">
+								<input name="url" type="text" class="form-control" id="url" value="<?= $tag['url'] ?>">
 							</div>
 							<div class="col-xs-6">
-								<label for="tag">
+								<label for="purchase_url">
 									Dirección de compra
 									[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Dirección para comprar un producto o servicio."></i>]
 								</label>
-								<input name="purchase_url" type="text" class="form-control" id="tag" value="<?= $tag['url_purchase'] ?>">
+								<input name="purchase_url" type="text" class="form-control" id="purchase_url" value="<?= $tag['url_purchase'] ?>">
 							</div>
 						</div>
 					</div>
@@ -68,7 +68,7 @@
 					<div class="form">
 						<div class="row">
 							<div class="col-xs-6">
-								<label for="facebok">Facebook</label>
+								<label for="facebook">Facebook</label>
 								<input name="facebook" type="url" class="form-control" id="facebook" value="<?= $tag['facebook'] ?>">
 							</div>
 							<div class="col-xs-6">
@@ -199,7 +199,7 @@
 					<div id="image-field">
 						<div id="image-preview">
 							<div class="preview-container">
-								<img src="<?= $tag['image_path'] ?>" class="image-preview">
+								<img src="<?= $tag['image_path'] ?>" alt="<?= $tag['name'] ?>" class="image-preview">
 							</div>
 						</div>
 					</div>

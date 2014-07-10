@@ -128,21 +128,6 @@ class tag extends database {
 		if ( $num_tags <= 0){
 			header("Location: ../addtag.php?error=numTags");
 		}
-		
-		$url_map = "http://maps.googleapis.com/maps/api/staticmap?center=".$_POST["latitude"].",".$_POST["longitude"]."&zoom=17&size=400x150&markers=color:blue%7Clabel:S%7C11211%7C11206%7C11222&markers=color:red|".$_POST["latitude"].",".$_POST["longitude"]."&maptype=roadmap&sensor=false";
-		$ch = curl_init ($url_map);
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
-		$data = curl_exec($ch);
-		curl_close($ch);
-		if( !file_exists("../media/".$nick) ){
-			$this->create_media_directory($nick);
-		}
-		$map_path = "media/".$nick."/map/".$_POST["name"].$_POST["latitude"].$_POST["longitude"].".png";
-		$fp = fopen("../".$map_path,"x");
-		fwrite($fp, $data);
-		fclose($fp);
 
 		$statement = "INSERT INTO Tag (name, description, latitude, longitude, map, url, url_purchase, facebook, twitter, client_nick, active) VALUES(:name, :description, :latitude, :longitude, :map, :url, :url_purchase, :facebook, :twitter, :client_nick, :active)";
 		$query = $this->db->prepare($statement);
@@ -160,6 +145,27 @@ class tag extends database {
 		$query->execute();
 		$tag_id = $this->db->lastInsertId();
 
+		$url_map = "http://maps.googleapis.com/maps/api/staticmap?center=".$_POST["latitude"].",".$_POST["longitude"]."&zoom=17&size=400x150&markers=color:blue%7Clabel:S%7C11211%7C11206%7C11222&markers=color:red|".$_POST["latitude"].",".$_POST["longitude"]."&maptype=roadmap&sensor=false";
+		$ch = curl_init ($url_map);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
+		$data = curl_exec($ch);
+		curl_close($ch);
+		if( !file_exists("../media/".$nick) ){
+			$this->create_media_directory($nick);
+		}
+		$map_path = "media/".$nick."/map/".$tag_id."-".$_POST["latitude"]."-".$_POST["longitude"].".png";
+		$fp = fopen("../".$map_path,"x");
+		fwrite($fp, $data);
+		fclose($fp);
+
+		$statement = "UPDATE Tag SET map = :map WHERE id = :id";
+		$query = $this->db->prepare($statement);
+		$query->bindParam(':map', $map_path);
+		$query->bindParam(':id', $tag_id, PDO::PARAM_INT);
+		$query->execute();
+
 		if( $_FILES["video"]["name"] != "" ){
 			$this->move_media_file($nick, "video", $tag_id);
 		}else{
@@ -174,6 +180,21 @@ class tag extends database {
 		header("Location: ../index.php");
 	}
 
+	function edit_tag($nick, $space){
+		/*
+		EDITAR:
+		- Eliminar mapa anterior.
+		- Guardar nuevo mapa.
+		- MULTIMEDIA (CASOS):
+			- El archivo no se modifica.
+			- El archivo se modifica.
+			- El archivo se elimina (sólo aplica para imágenes y audio).
+		-
+		*/
+
+		
+	}
+
 	function enable_tag($nick, $id){
 		try{
 			$statement = "SELECT active FROM Tag WHERE id = :id AND client_nick = :nick";
@@ -181,10 +202,9 @@ class tag extends database {
 			$query->bindParam(':id', $id, PDO::PARAM_INT);
 			$query->bindParam(':nick', $nick);
 			$query->execute();
-			$stat = ($query->fetchAll(PDO::FETCH_ASSOC));
+			$stat = $query->fetchAll(PDO::FETCH_ASSOC);
 			$stat = $stat[0]["active"];
 			
-
 			if ($stat == 0){
 				$statement = "UPDATE Tag SET active = 1 WHERE id = :id AND client_nick = :nick";
 				$query = $this->db->prepare($statement);
@@ -215,7 +235,22 @@ class tag extends database {
 	}
 
 	function clone_tag($nick, $id){
+		/*
+		PENDIENTES:
+		- Copiar el mapa del tag anterior (No referenciar al mismo mapa).
+		*/
 		try{
+
+			$statement = "SELECT latitude, longitude FROM Tag WHERE id = :id AND client_nick = :nick";
+
+			$query = $this->db->prepare($statement);
+			$query->bindParam(':id',$id, PDO::PARAM_INT);
+			$query->bindParam(':nick',$nick);
+			$query->execute();
+			$position = $query->fetchAll(PDO::FETCH_ASSOC)[0];
+			$latitude = $position["latitude"];
+			$longitude = $position["longitude"];
+
 			$statement = "INSERT INTO Tag (name, description, latitude, longitude, map, url, url_purchase, facebook, twitter, client_nick, active) SELECT name, description, latitude, longitude, map, url, url_purchase, facebook, twitter, client_nick, active FROM Tag WHERE id = :id AND client_nick = :nick";
 
 			$query = $this->db->prepare($statement);
@@ -224,6 +259,24 @@ class tag extends database {
 			$query->execute();
 
 			$newId = $this->db->lastInsertId();
+
+			$url_map = "http://maps.googleapis.com/maps/api/staticmap?center=".$latitude.",".$longitude."&zoom=17&size=400x150&markers=color:blue%7Clabel:S%7C11211%7C11206%7C11222&markers=color:red|".$latitude.",".$longitude."&maptype=roadmap&sensor=false";
+			$ch = curl_init ($url_map);
+			curl_setopt($ch, CURLOPT_HEADER, 0);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
+			$data = curl_exec($ch);
+			curl_close($ch);
+			$map_path = "media/".$nick."/map/".$newId."-".$latitude."-".$longitude.".png";
+			$fp = fopen("../".$map_path,"x");
+			fwrite($fp, $data);
+			fclose($fp);
+
+			$statement = "UPDATE Tag SET map = :map WHERE id = :id";
+			$query = $this->db->prepare($statement);
+			$query->bindParam(':map', $map_path);
+			$query->bindParam(':id', $newId, PDO::PARAM_INT);
+			$query->execute();
 
 			$tryer = "SELECT multimedia_id, type FROM Multimedia_tag WHERE tag_id = :id";
 			$query = $this->db->prepare($tryer);
@@ -252,16 +305,25 @@ class tag extends database {
 
 	function delete_tag($nick, $id){
 		try {
-			$statement2 = "DELETE FROM Multimedia_Tag WHERE tag_id = :id";
-			$query2 = $this->db->prepare($statement2); 
-			$query2->bindParam(':id', $id, PDO::PARAM_INT);
-			$query2 -> execute();
+			$statement = "SELECT map FROM Tag WHERE id = :id";
+			$query = $this->db->prepare($statement); 
+			$query->bindParam(':id', $id, PDO::PARAM_INT);
+			$query -> execute();
+			$map = $query->fetchAll(PDO::FETCH_ASSOC)[0]["map"];
+			
+			$statement = "DELETE FROM Multimedia_Tag WHERE tag_id = :id";
+			$query = $this->db->prepare($statement); 
+			$query->bindParam(':id', $id, PDO::PARAM_INT);
+			$query -> execute();
 
 			$statement = "DELETE FROM Tag WHERE id = :id AND client_nick = :nick";
 			$query = $this->db->prepare($statement);
 			$query->bindParam(':id', $id, PDO::PARAM_INT);
 			$query->bindParam(':nick', $nick);
 			$query->execute();
+			if ($query->rowCount() > 0){
+				unlink("../".$map);
+			}
 		}
 		catch(Exception $e){
 			echo json_encode(array(
