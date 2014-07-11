@@ -29,6 +29,7 @@
 					<div class="form">
 						<div class="row">
 							<div class="col-xs-6">
+								<input type="hidden" name="id" value="<?= $tag['id'] ?>">
 								<label for="name">
 									Nombre del tag
 									<i class="fa fa-asterisk"></i>

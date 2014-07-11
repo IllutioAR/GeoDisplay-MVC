@@ -53,7 +53,6 @@ $("#save").click(function(){
 	if( $("#video").length > 0 ) {
 		var filename = $("#video").val();
 		if( filename != "" ){
-			alert(filename.split(".").pop());
 			if( filename.split(".").pop() !== "mp4"){
 				uploading = false;
 				message += "- Video (Must be a mp4 file)";	

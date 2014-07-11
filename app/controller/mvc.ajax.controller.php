@@ -15,7 +15,11 @@ class mvc_controller {
 
 	function add_tag(){
 		$this->validate_session();
-		if( $_POST["latitude"] != "" && $_POST["longitude"] != "" && $_POST["name"] != "" && $_POST["description"] != "" && isset($_FILES["video"]) )
+		if( strlen($_POST["latitude"]) > 0 && 
+			strlen($_POST["longitude"]) > 0 && 
+			strlen($_POST["name"]) > 0 && 
+			strlen($_POST["description"]) > 0 && 
+			isset($_FILES["video"]) )
 		{
 			$tag = new tag();
 			$tag->add_new_tag($_SESSION["client"]["nick"], $_SESSION["client"]["tags"], $_SESSION["client"]["space"]);
@@ -23,6 +27,22 @@ class mvc_controller {
 		else{
 			header("Location: ../addtag.php?error=incomplete");
 		}
+	}
+
+	function edit_tag(){
+		$this->validate_session();
+		if( strlen($_POST["latitude"]) > 0 && 
+			strlen($_POST["longitude"]) > 0 && 
+			strlen($_POST["name"]) > 0 && 
+			strlen($_POST["description"]) > 0
+		  )
+		{
+			$tag = new tag();
+			$tag->edit_tag($_SESSION["client"]["nick"], $_SESSION["client"]["space"]);
+		}
+		else{
+			header("Location: ../index.php?error=edit_incomplete");
+		}	
 	}
 
 	function enable_tag(){

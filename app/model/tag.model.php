@@ -20,7 +20,7 @@ class tag extends database {
 	}
 
 	function get_full_data($nick, $id){
-		$statement = "SELECT name, description, url, url_purchase, latitude, longitude, client_nick, facebook, twitter FROM Tag WHERE client_nick = :nick AND id = :id";
+		$statement = "SELECT id, name, description, url, url_purchase, latitude, longitude, client_nick, facebook, twitter FROM Tag WHERE client_nick = :nick AND id = :id";
 		$query = $this->db->prepare($statement);
 		$query->bindParam(':nick', $nick, PDO::PARAM_STR);
 		$query->bindParam(':id', $id, PDO::PARAM_INT);
@@ -37,6 +37,7 @@ class tag extends database {
 		$result_multimedia = $query->fetchAll(PDO::FETCH_ASSOC);
 
 		$rows = array(
+			"id" => $result[0]["id"],
 			"name" => utf8_encode($result[0]["name"]),
 			"description" => utf8_encode($result[0]["description"]),
 			"url" => $result[0]["url"],
@@ -46,11 +47,10 @@ class tag extends database {
 			"facebook"=>$result[0]["facebook"],
 			"twitter"=>$result[0]["twitter"]
 		);
-		foreach ($result_multimedia as $row) {
+		foreach ($result_multimedia as $row){
 			$type = $row["type"];
 			$rows[$type."_path"] = $row["file_path"];
 		}
-		
 		return $rows;
 	}
 
@@ -68,19 +68,8 @@ class tag extends database {
 			$path = "../media/".$nick;
 		}
 		if( !file_exists($path) ){
-			if( !mkdir($path) ){
-				header("Location: ../addtag.php?error=mediaDirectory");
-			}
-			if( !mkdir($path."/video") ){
-				header("Location: ../addtag.php?error=mediaDirectory");
-			}
-			if( !mkdir($path."/audio") ){
-				header("Location: ../addtag.php?error=mediaDirectory");
-			}
-			if( !mkdir($path."/image") ){
-				header("Location: ../addtag.php?error=mediaDirectory");
-			}
-			if( !mkdir($path."/map") ){
+			if( !(mkdir($path) && mkdir($path."/video") && mkdir($path."/audio") && mkdir($path."/image") && mkdir($path."/map")) )
+			{
 				header("Location: ../addtag.php?error=mediaDirectory");
 			}
 		}
@@ -112,6 +101,7 @@ class tag extends database {
 			$query->bindParam(':client_nick', $nick);
 			$query->execute();
 			$multimedia_id = $this->db->lastInsertId();
+
 			$statement = "INSERT INTO Multimedia_Tag VALUES (:multimedia_id, :tag_id, :type)";
 			$query = $this->db->prepare($statement);
 			$query->bindParam(':multimedia_id', $multimedia_id, PDO::PARAM_INT);
@@ -124,12 +114,30 @@ class tag extends database {
 		}
 	}
 
+	function save_map($nick, $tag_id, $latitude, $longitude){
+		$url_map = "http://maps.googleapis.com/maps/api/staticmap?center=".$latitude.",".$longitude."&zoom=17&size=400x150&markers=color:blue%7Clabel:S%7C11211%7C11206%7C11222&markers=color:red|".$latitude.",".$longitude."&maptype=roadmap&sensor=false";
+		$ch = curl_init ($url_map);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
+		$data = curl_exec($ch);
+		curl_close($ch);
+		if( !file_exists("../media/".$nick) ){
+			$this->create_media_directory($nick);
+		}
+		$map_path = "media/".$nick."/map/".$tag_id."-".$latitude."-".$longitude.".png";
+		$fp = fopen("../".$map_path,"x");
+		fwrite($fp, $data);
+		fclose($fp);
+		return $map_path;
+	}
+
 	function add_new_tag($nick, $num_tags, $space, $active = 1){
 		if ( $num_tags <= 0){
 			header("Location: ../addtag.php?error=numTags");
 		}
 
-		$statement = "INSERT INTO Tag (name, description, latitude, longitude, map, url, url_purchase, facebook, twitter, client_nick, active) VALUES(:name, :description, :latitude, :longitude, :map, :url, :url_purchase, :facebook, :twitter, :client_nick, :active)";
+		$statement = "INSERT INTO Tag (name, description, latitude, longitude, map, url, url_purchase, facebook, twitter, client_nick, created_at, updated_at, active) VALUES(:name, :description, :latitude, :longitude, :map, :url, :url_purchase, :facebook, :twitter, :client_nick, NOW(), NOW(), :active)";
 		$query = $this->db->prepare($statement);
 		$query->bindParam(':name', $_POST["name"]);
 		$query->bindParam(':description', $_POST["description"]);
@@ -145,20 +153,7 @@ class tag extends database {
 		$query->execute();
 		$tag_id = $this->db->lastInsertId();
 
-		$url_map = "http://maps.googleapis.com/maps/api/staticmap?center=".$_POST["latitude"].",".$_POST["longitude"]."&zoom=17&size=400x150&markers=color:blue%7Clabel:S%7C11211%7C11206%7C11222&markers=color:red|".$_POST["latitude"].",".$_POST["longitude"]."&maptype=roadmap&sensor=false";
-		$ch = curl_init ($url_map);
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
-		$data = curl_exec($ch);
-		curl_close($ch);
-		if( !file_exists("../media/".$nick) ){
-			$this->create_media_directory($nick);
-		}
-		$map_path = "media/".$nick."/map/".$tag_id."-".$_POST["latitude"]."-".$_POST["longitude"].".png";
-		$fp = fopen("../".$map_path,"x");
-		fwrite($fp, $data);
-		fclose($fp);
+		$map_path = $this->save_map($nick, $tag_id, $_POST["latitude"], $_POST["longitude"]);
 
 		$statement = "UPDATE Tag SET map = :map WHERE id = :id";
 		$query = $this->db->prepare($statement);
@@ -180,6 +175,63 @@ class tag extends database {
 		header("Location: ../index.php");
 	}
 
+	function edit_media_file($nick, $type, $id){
+		//If 0 edit file, if 4 delete file from server.
+		$event = $_FILES[$type]["error"];
+		if( $event == 0 ){
+			if ( ($_FILES[$type]["size"]/(1024*1024)) > $_SESSION["client"]["space"] ){
+				header("Location: ../edit_tag.php?tag=".$id."&error=space");
+			}
+			$path = "../media/".$nick;
+
+			$base_path = $path."/".$type."/";
+			while( file_exists( $base_path.$_FILES[$type]["name"] ) ){
+				$base_path = $base_path."copy - ";
+			}
+
+			$path = $base_path.$_FILES[$type]["name"];
+			if ( !move_uploaded_file($_FILES[$type]["tmp_name"], $path) ) {
+				header("Location: ../edit_tag.php?tag=".$id."&error=fileUpload");
+			}
+			$size = intval( $_FILES[$type]["size"] ) / (1024*1024);
+			$_SESSION["client"]["space"] -= $size;
+
+			$statement = "INSERT INTO Multimedia (name, type, size, file_path, client_nick, created_at, updated_at) VALUES (:name, :type, :size, :file_path, :client_nick, NOW(), NOW())";
+			$query = $this->db->prepare($statement);
+			$query->bindParam(':name', $_FILES[$type]["name"]);
+			$query->bindParam(':type', $type);
+			$query->bindParam(':size', $size, PDO::PARAM_INT);
+			$query->bindParam(':file_path', $path);
+			$query->bindParam(':client_nick', $nick);
+			$query->execute();
+			$multimedia_id = $this->db->lastInsertId();
+
+			$statement = "DELETE FROM Multimedia_Tag WHERE tag_id = :tag_id AND type = :type";
+			$query = $this->db->prepare($statement);
+			$query->bindParam(':tag_id', $id, PDO::PARAM_INT);
+			$query->bindParam(':type', $type);
+			$query->execute();
+
+			$statement = "INSERT INTO Multimedia_Tag VALUES (:multimedia_id, :tag_id, :type)";
+			$query = $this->db->prepare($statement);
+			$query->bindParam(':multimedia_id', $multimedia_id, PDO::PARAM_INT);
+			$query->bindParam(':tag_id', $id, PDO::PARAM_INT);
+			$query->bindParam(':type', $type);
+			$query->execute();
+		}elseif( $event == 4 ){
+			if( $type == "video" ){
+				return;
+			}
+			$statement = "DELETE FROM Multimedia_Tag WHERE tag_id = :tag_id AND type = :type";
+			$query = $this->db->prepare($statement);
+			$query->bindParam(':tag_id', $id, PDO::PARAM_INT);
+			$query->bindParam(':type', $type);
+			$query->execute();
+		}else{
+			header("Location: ../edit_tag.php?tag=".$id."&error=fileUpload");
+		}
+	}
+
 	function edit_tag($nick, $space){
 		/*
 		EDITAR:
@@ -191,7 +243,26 @@ class tag extends database {
 			- El archivo se elimina (sólo aplica para imágenes y audio).
 		-
 		*/
-
+		echo "<pre>";
+		print_r($_POST);
+		print_r($_FILES);
+		print isset($_FILES["audio"]);
+		echo "</pre>";
+		
+		if( isset($_FILES["video"]["name"]) ){
+			if( $_FILES["video"]["error"] == 0 ){
+				$this->edit_media_file($nick, "video", $_POST["id"]);
+			}
+			else{
+				header("Location: ../edit_tag.php?tag=".$_POST["id"]."&error=video");
+			}
+		}
+		if( isset($_FILES["audio"]["name"]) ){
+			$this->edit_media_file($nick, "audio", $_POST["id"]);
+		}
+		if( isset($_FILES["image"]["name"]) ){
+			$this->edit_media_file($nick, "image", $_POST["id"]);
+		}
 		
 	}
 
@@ -235,12 +306,7 @@ class tag extends database {
 	}
 
 	function clone_tag($nick, $id){
-		/*
-		PENDIENTES:
-		- Copiar el mapa del tag anterior (No referenciar al mismo mapa).
-		*/
 		try{
-
 			$statement = "SELECT latitude, longitude FROM Tag WHERE id = :id AND client_nick = :nick";
 
 			$query = $this->db->prepare($statement);
@@ -260,17 +326,7 @@ class tag extends database {
 
 			$newId = $this->db->lastInsertId();
 
-			$url_map = "http://maps.googleapis.com/maps/api/staticmap?center=".$latitude.",".$longitude."&zoom=17&size=400x150&markers=color:blue%7Clabel:S%7C11211%7C11206%7C11222&markers=color:red|".$latitude.",".$longitude."&maptype=roadmap&sensor=false";
-			$ch = curl_init ($url_map);
-			curl_setopt($ch, CURLOPT_HEADER, 0);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
-			$data = curl_exec($ch);
-			curl_close($ch);
-			$map_path = "media/".$nick."/map/".$newId."-".$latitude."-".$longitude.".png";
-			$fp = fopen("../".$map_path,"x");
-			fwrite($fp, $data);
-			fclose($fp);
+			$map_path = $this->save_map($nick, $newId, $latitude, $longitude);
 
 			$statement = "UPDATE Tag SET map = :map WHERE id = :id";
 			$query = $this->db->prepare($statement);
