@@ -63,13 +63,9 @@ class mvc_controller {
 		$inactive_tags = $tag->get_num_tags($_SESSION["client"]["nick"], 0);
 		$pagina = $this->replace_content('/\#{NUMACTIVE}\#/ms', $active_tags , $pagina);
 		$pagina = $this->replace_content('/\#{NUMINACTIVE}\#/ms', $inactive_tags , $pagina);
-		if($data != array()){//Revisa que no sea un array vacío
-			include "../app/views/default/modules/tags/tags.php";
-			$table = ob_get_clean();
-			$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms', $table , $pagina);
-		}else{
-			$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms' ," " , $pagina);
-		}
+		include "../app/views/default/modules/tags/tags.php";
+		$table = ob_get_clean();
+		$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms', $table , $pagina);
 		$this->view_page($pagina);
 	}
 
