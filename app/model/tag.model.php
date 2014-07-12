@@ -245,10 +245,23 @@ class tag extends database {
 		*/
 		echo "<pre>";
 		print_r($_POST);
-		print_r($_FILES);
-		print isset($_FILES["audio"]);
 		echo "</pre>";
 		
+		$statement = "UPDATE Tag SET name = :name, description = :description, latitude = :latitude, longitude = :longitude, url = :url, url_purchase = :url_purchase, facebook = :facebook, twitter = :twitter WHERE id = :id AND client_nick = :nick";
+		$query = $this->db->prepare($statement);
+		$query->bindParam(":name", $_POST["name"]);
+		$query->bindParam(":description", $_POST["description"]);
+		$query->bindParam(":latitude", $_POST["latitude"]);
+		$query->bindParam(":longitude", $_POST["longitude"]);
+		$query->bindParam(":url", $_POST["url"]);
+		$query->bindParam(":url_purchase", $_POST["purchase_url"]);
+		$query->bindParam(":facebook", $_POST["facebook"]);
+		$query->bindParam(":twitter", $_POST["twitter"]);
+		$query->bindParam(":id", $_POST["id"], PDO::PARAM_INT);
+		$query->bindParam(":nick", $nick);
+		$query->execute();
+		var_dump($query->errorInfo());
+
 		if( isset($_FILES["video"]["name"]) ){
 			if( $_FILES["video"]["error"] == 0 ){
 				$this->edit_media_file($nick, "video", $_POST["id"]);
