@@ -21,8 +21,8 @@ class mvc_controller {
 			strlen($_POST["description"]) > 0 && 
 			isset($_FILES["video"]) )
 		{
-			$tag = new tag();
-			$tag->add_new_tag($_SESSION["client"]["nick"], $_SESSION["client"]["tags"], $_SESSION["client"]["space"]);
+			$tag = new tag($_SESSION["client"]["nick"]);
+			$tag->add_new_tag($_SESSION["client"]["tags"], $_SESSION["client"]["space"]);
 		}
 		else{
 			header("Location: ../addtag.php?error=incomplete");
@@ -37,8 +37,9 @@ class mvc_controller {
 			strlen($_POST["description"]) > 0
 		  )
 		{
-			$tag = new tag();
-			$tag->edit_tag($_SESSION["client"]["nick"], $_SESSION["client"]["space"]);
+			$tag = new tag($_SESSION["client"]["nick"]);
+			$tag->edit_tag($_SESSION["client"]["space"]);
+			header("Location: ../index.php?edit=success");
 		}
 		else{
 			header("Location: ../index.php?error=edit_incomplete");
@@ -47,20 +48,20 @@ class mvc_controller {
 
 	function enable_tag(){
 		$this->validate_session();
-		$tag = new tag();
-		$tag->enable_tag($_SESSION["client"]["nick"], $_POST["id"]);
+		$tag = new tag($_SESSION["client"]["nick"]);
+		$tag->enable_tag($_POST["id"]);
 	}
 
 	function clone_tag(){
 		$this->validate_session();
-		$tag = new tag();
-		$tag->clone_tag($_SESSION["client"]["nick"], $_POST["id"]);	
+		$tag = new tag($_SESSION["client"]["nick"]);
+		$tag->clone_tag($_POST["id"]);	
 	}
 
 	function delete_tag(){
 		$this->validate_session();
-		$tag = new tag();
-		$tag->delete_tag($_SESSION["client"]["nick"], $_POST["id"]);	
+		$tag = new tag($_SESSION["client"]["nick"]);
+		$tag->delete_tag($_POST["id"]);	
 	}
 
 	function password_recovery(){

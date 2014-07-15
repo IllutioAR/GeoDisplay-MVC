@@ -2,6 +2,7 @@
 
 require '../app/model/tag.model.php';
 require '../app/model/client.model.php';
+require '../app/model/multimedia.model.php';
 
 class mvc_controller {
 
@@ -51,16 +52,16 @@ class mvc_controller {
 		}
 
 		ob_start();
-		$tag = new tag();
+		$tag = new tag($_SESSION["client"]["nick"]);
 		$data = array();
 		if( $active == 1 ){
-			$data = $tag->get_tags($_SESSION["client"]["nick"],9,1); // 9 es el número de tags a mostrar, el 1 son los activos
+			$data = $tag->get_tags(); // get_tags(9, 1); 9 es el número de tags a mostrar, el 1 son los activos
 		}
 		elseif ( $active == 0 ){
-			$data = $tag->get_tags($_SESSION["client"]["nick"],9,0); // 9 es el número de tags a mostrar, el 0 son los inactivos
+			$data = $tag->get_tags(9, 0); // 9 es el número de tags a mostrar, el 0 son los inactivos
 		}
-		$active_tags = $tag->get_num_tags($_SESSION["client"]["nick"], 1);
-		$inactive_tags = $tag->get_num_tags($_SESSION["client"]["nick"], 0);
+		$active_tags = $tag->get_num_tags(1);
+		$inactive_tags = $tag->get_num_tags(0);
 		$pagina = $this->replace_content('/\#{NUMACTIVE}\#/ms', $active_tags , $pagina);
 		$pagina = $this->replace_content('/\#{NUMINACTIVE}\#/ms', $inactive_tags , $pagina);
 		include "../app/views/default/modules/tags/tags.php";
@@ -167,9 +168,9 @@ class mvc_controller {
 
 		ob_start();
 
-		$tag = new tag();
+		$tag = new tag($_SESSION["client"]["nick"]);
 		
-		$tag = $tag->get_full_data($_SESSION["client"]["nick"], $id);
+		$tag = $tag->get_full_data($id);
 		
 		if($tag == array()){
 			header("Location: index.php?error=edit");
@@ -214,15 +215,15 @@ class mvc_controller {
 		$pagina = $this->replace_content('/\#{TOTALSPACE}\#/ms' ,$plan_info["total_space"] , $pagina);
 		$pagina = $this->replace_content('/\#{PERCENTAGESPACE}\#/ms' ,$percentage_space , $pagina);
 
-		$client = new client();
-		$num_files = $client->get_num_files($_SESSION["client"]["nick"]);
+		$multimedia = new multimedia($_SESSION["client"]["nick"]);
+		$num_files = $multimedia->get_num_files();
 		
 		$pagina = $this->replace_content('/\#{VIDEO}\#/ms' ,$num_files["video"] , $pagina);
 		$pagina = $this->replace_content('/\#{AUDIO}\#/ms' ,$num_files["audio"] , $pagina);
 		$pagina = $this->replace_content('/\#{IMAGE}\#/ms' ,$num_files["image"] , $pagina);
 		$pagina = $this->replace_content('/\#{TOTAL}\#/ms' ,$num_files["total"] , $pagina);		
 		ob_start();
-		$files = $client->get_files($_SESSION["client"]["nick"], $type);
+		$files = $multimedia->get_files($type);
 		include "../app/views/default/modules/multimedia/files.php";
 		$table = ob_get_clean();
 		$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms', $table , $pagina);

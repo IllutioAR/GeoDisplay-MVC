@@ -37,54 +37,6 @@ class client extends database {
 		return "";
 	}
 
-	function get_num_files($nick){
-		$path = "media/".$nick."/";
-		$video = count(scandir($path."video/")) - 2;
-		$audio = count(scandir($path."audio")) - 2;
-		$image = count(scandir($path."image")) - 2;
-		$total = $video + $audio + $image;
-		return array("video" => $video, "audio" => $audio, "image" => $image, "total" => $total);
-	}
-
-	function get_files($nick, $type){
-		$statement = "SELECT name, size, created_at FROM Multimedia WHERE client_nick = :nick AND type = :type";
-		$query = $this->db->prepare($statement);
-		$query->bindParam(":nick", $nick);
-		$query->bindParam(":type", $type);
-		$query->execute();
-		$files = $query->fetchAll(PDO::FETCH_ASSOC);
-		$return = array();
-		foreach ($files as $file) {
-			list($fecha, $hora) = explode(" ", $file["created_at"]);
-			$return[] = array("name" => $file["name"],
-					"size" => $file["size"],
-					"created_at" => $fecha
-				);
-		}
-		return $return;
-	}
-
-	function get_num_files_dir($nick){
-		$path = "media/".$nick."/";
-		$video = count(scandir($path."video/")) - 2;
-		$audio = count(scandir($path."audio")) - 2;
-		$image = count(scandir($path."image")) - 2;
-		$total = $video + $audio + $image;
-		return array("video" => $video, "audio" => $audio, "image" => $image, "total" => $total);
-	}
-
-	function get_files_dir($nick, $type){
-		$path = "media/".$nick."/".$type."/";
-		$files = scandir($path);
-		if(($key = array_search("..", $files)) !== false) {
-			unset($files[$key]);
-		}
-		if(($key = array_search(".", $files)) !== false) {
-			unset($files[$key]);
-		}
-		return $files;
-	}
-
 	function change_password($email, $password, $new_password, $new_password_confirm){
 		$statement = "SELECT password FROM Client WHERE email = :email";
 		$query = $this->db->prepare($statement);
