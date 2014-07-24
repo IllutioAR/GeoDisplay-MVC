@@ -27,16 +27,22 @@
 							<thead>
 								<tr>
 									<th>Name</th>
-									<th>Size</th>
+									<th style="text-align:right">Size</th>
 									<th>Uploaded</th>
+									<th>Action</th>
 								</tr>
 							</thead>
 							<tbody>
 								<?php foreach($files as $file): ?>
 								<tr>
-									<td><?= $file["name"] ?></td>
-									<td><?= number_format($file["size"], 2) ?></td>
-									<td><?= $file["created_at"] ?></td>
+									<td style="vertical-align: middle"><?= $file["name"] ?></td>
+									<td style="vertical-align: middle; text-align:right"><?= number_format($file["size"], 2) ?>MB</td>
+									<td style="vertical-align: middle"><?= $file["created_at"] ?></td>
+									<td><button class="btn btn-danger btn-sm" 
+											<?= ( isset($file["id"]) )? 'id="'.$file['id'].'"' : '' ?>
+											<?= ( !isset($file["id"]) )? "disabled" : "" ?>
+										>
+										<i id="delete" class="fa fa-trash-o"></i> Delete</button></td>
 								</tr>
 								<?php endforeach; ?>
 							</tbody>
@@ -47,3 +53,4 @@
 		</div>
 	</section>
 </div>
+<script src="js/multimedia.js"></script>

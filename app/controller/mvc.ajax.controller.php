@@ -1,6 +1,7 @@
 <?php
 
 require '../../app/model/tag.model.php';
+require '../../app/model/multimedia.model.php';
 
 class mvc_controller {
 
@@ -12,6 +13,10 @@ class mvc_controller {
 		}
 		header("Location: login.php");
 	}
+
+	/*
+		TAGS
+	*/
 
 	function add_tag(){
 		$this->validate_session();
@@ -62,6 +67,16 @@ class mvc_controller {
 		$this->validate_session();
 		$tag = new tag($_SESSION["client"]["nick"]);
 		$tag->delete_tag($_POST["id"]);	
+	}
+
+	/*
+		MULTIMEDIA
+	*/
+
+	function delete_file(){
+		$this->validate_session();
+		$multimedia = new multimedia($_SESSION["client"]["nick"]);
+		$multimedia->delete_file($_POST["id"]);
 	}
 
 	function password_recovery(){

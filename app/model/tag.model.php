@@ -169,19 +169,6 @@ class tag extends database {
 	}
 
 	function edit_tag($space){
-		/*
-		EDITAR:
-		- Eliminar mapa anterior.
-		- Guardar nuevo mapa.
-		- MULTIMEDIA (CASOS):
-			- El archivo no se modifica.
-			- El archivo se modifica.
-			- El archivo se elimina (sólo aplica para imágenes y audio).
-		-
-		*/
-		echo "<pre>";
-		print_r($_POST);
-		echo "</pre>";
 		
 		$statement = "UPDATE Tag SET name = :name, description = :description, latitude = :latitude, longitude = :longitude, url = :url, url_purchase = :url_purchase, facebook = :facebook, twitter = :twitter WHERE id = :id AND client_nick = :nick";
 		$query = $this->db->prepare($statement);
@@ -196,7 +183,6 @@ class tag extends database {
 		$query->bindParam(":id", $_POST["id"], PDO::PARAM_INT);
 		$query->bindParam(":nick", $this->nick);
 		$query->execute();
-		var_dump($query->errorInfo());
 
 		if( isset($_FILES["video"]["name"]) ){
 			if( $_FILES["video"]["error"] == 0 ){

@@ -12,6 +12,32 @@ class multimedia extends database {
 		$this->nick = $nick;
 	}
 
+	function delete_file($id){
+		echo "\nNick: ".$this->nick."\n";
+		echo "Id: ".$id;
+
+		$statement = "SELECT file_path, size FROM Multimedia WHERE id = :id AND client_nick = :nick AND id NOT IN (SELECT multimedia_id FROM Multimedia_Tag)";
+		$query = $this->db->prepare($statement);
+		$query->bindParam(":nick", $this->nick);
+		$query->bindParam(":id", $id);
+		$query->execute();
+		if ( $query->rowCount() != 1 ){
+			return;
+		}
+
+		$file = $query->fetchAll(PDO::FETCH_ASSOC)[0];
+		echo $file["file_path"];
+		echo $file["size"];
+		if( unlink("../media/".$file["file_path"]) ){
+			$_SESSION["client"]["space"] += $file["size"];
+			$statement = "DELETE FROM Multimedia WHERE id = :id AND client_nick = :nick";
+			$query = $this->db->prepare($statement);
+			$query->bindParam(":id", $id);
+			$query->bindParam(":nick", $this->nick);
+			$query->execute();
+		}
+	}
+
 	function create_media_directory(){
 		$path = "../media/".$this->nick;
 		if( !(mkdir($path) && mkdir($path."/video") && mkdir($path."/audio") && mkdir($path."/image") && mkdir($path."/map")) )
@@ -42,7 +68,7 @@ class multimedia extends database {
 			$query->bindParam(':name', $_FILES[$type]["name"]);
 			$query->bindParam(':type', $type);
 			$query->bindParam(':size', $size, PDO::PARAM_INT);
-			$query->bindParam(':file_path', $path);
+			$query->bindParam(':file_path', str_replace("../media/", "", $path) );
 			$query->bindParam(':client_nick', $this->nick);
 			$query->execute();
 			$multimedia_id = $this->db->lastInsertId();
@@ -87,7 +113,7 @@ class multimedia extends database {
 	}
 
 	function get_files($type){
-		$statement = "SELECT name, size, created_at FROM Multimedia WHERE client_nick = :nick AND type = :type";
+		$statement = "SELECT id, name, size, created_at FROM Multimedia WHERE client_nick = :nick AND type = :type AND id IN (SELECT multimedia_id FROM Multimedia_Tag)";
 		$query = $this->db->prepare($statement);
 		$query->bindParam(":nick", $this->nick);
 		$query->bindParam(":type", $type);
@@ -96,11 +122,28 @@ class multimedia extends database {
 		$return = array();
 		foreach ($files as $file) {
 			list($fecha, $hora) = explode(" ", $file["created_at"]);
-			$return[] = array("name" => $file["name"],
+			$return[] = array(
+					"name" => $file["name"],
 					"size" => $file["size"],
-					"created_at" => $fecha
+					"created_at" => $fecha,
 				);
 		}
+		$statement = "SELECT id, name, size, created_at FROM Multimedia WHERE client_nick = :nick AND type = :type AND id NOT IN (SELECT multimedia_id FROM Multimedia_Tag)";
+		$query = $this->db->prepare($statement);
+		$query->bindParam(":nick", $this->nick);
+		$query->bindParam(":type", $type);
+		$query->execute();
+		$files = $query->fetchAll(PDO::FETCH_ASSOC);
+		foreach ($files as $file) {
+			list($fecha, $hora) = explode(" ", $file["created_at"]);
+			$return[] = array(
+					"id" => $file["id"],
+					"name" => $file["name"],
+					"size" => $file["size"],
+					"created_at" => $fecha,
+				);
+		}
+		sort($return);
 		return $return;
 	}
 
