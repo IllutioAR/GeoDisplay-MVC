@@ -19,7 +19,7 @@
 		<?php
 			foreach ($data as $row):
 		?>
-		<div class="col-xs-12 col-md-4">
+		<div class="col-xs-12 col-md-4" id="tagInfo">
 			<div class="seccion">
 				<div class="titulo">
 					<span class="titulo-tag">
@@ -55,3 +55,4 @@
 	</div>
 </div>
 <script src="js/tags.js"></script>
+<script src="js/search.js"></script>

@@ -22,6 +22,14 @@
 			    		<span class="badge">#{NUMINACTIVE}#</span>
 			    	</a>
 			    </li>
+			    <li style="padding:8px">
+			    	<form class="form-inline" role="form">
+  						<div class="form-group">
+			    			<input id="search_tag" type="text" placeholder="Busca un lugar" class="form-control">
+			    			<button id="search_button" class="btn btn-default"><span class="fa fa-search"></span></button>
+			    		</div>
+			    	</form>
+			    </li>
 			    <!--
 			    <li>
 			    	<form class="navbar-form navbar-left">
@@ -41,7 +49,7 @@
 			    <li>
 			    	<a href="addtag.php" class="green">
 			    		<i class="fa fa-plus-circle"></i>
-			    		Agregar punto
+			    		Agregar lugar
 			    	</a>
 			    </li>
 			</ul>

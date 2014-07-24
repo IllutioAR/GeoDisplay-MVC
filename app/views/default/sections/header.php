@@ -18,7 +18,7 @@
 						    <li>
 						    	<a href="index.php">
 						    		<i class="fa fa-map-marker"></i>
-						    		Puntos
+						    		Lugares
 						    	</a>
 						    </li>
 						    <li>
