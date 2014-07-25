@@ -108,6 +108,7 @@ class tag extends database {
 		if( $_FILES["image"]["error"] == 0){
 			$multimedia->move_media_file("image", $tag_id);
 		}
+		$_SESSION["client"]["tags"] -= 1;
 		header("Location: ../index.php");
 	}
 
@@ -284,7 +285,7 @@ class tag extends database {
 				$query->bindParam(':type',$tag["type"]);
 				$query->execute();
 			}
-			exit();
+			$_SESSION["client"]["tags"] -= 1;
 		}
 		catch(Exception $e){
 			echo json_encode(array(
@@ -317,6 +318,7 @@ class tag extends database {
 			if ($query->rowCount() > 0){
 				unlink("../".$map);
 			}
+			$_SESSION["client"]["tags"] += 1;
 		}
 		catch(Exception $e){
 			echo json_encode(array(
