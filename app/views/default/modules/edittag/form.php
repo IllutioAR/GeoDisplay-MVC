@@ -115,7 +115,7 @@
 						<div id="video-preview">
 							<div class="preview-container">
 								<video class="video-preview" controls>
-									<source src="<?= $tag['video_path'] ?>" type="video/mp4">
+									<source src="<?= 'media/'.$tag['video_path'] ?>" type="video/mp4">
 									Tu navegador no tiene soporte para HTML5.
 								</video>
 							</div>
@@ -158,7 +158,7 @@
 						<div id="audio-preview">
 							<div class="preview-container">
 								<audio class="audio-preview" controls>
-									<source src="<?= $tag['audio_path'] ?>" type="audio/mpeg">
+									<source src="<?= 'media/'.$tag['audio_path'] ?>" type="audio/mpeg">
 									Tu navegador no tiene soporte para HTML5.
 								</audio>
 							</div>
@@ -200,11 +200,11 @@
 					<div id="image-field">
 						<div id="image-preview">
 							<div class="preview-container">
-								<img src="<?= $tag['image_path'] ?>" alt="<?= $tag['name'] ?>" class="image-preview">
+								<img src="<?= 'media/'.$tag['image_path'] ?>" alt="<?= $tag['name'] ?>" class="image-preview">
 							</div>
 						</div>
 					</div>
-					<?php 
+					<?php
 						endif;
 					?>
 				</div>
