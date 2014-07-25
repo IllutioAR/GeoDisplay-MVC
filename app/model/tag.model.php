@@ -170,13 +170,26 @@ class tag extends database {
 	}
 
 	function edit_tag($space){
-		
-		$statement = "UPDATE Tag SET name = :name, description = :description, latitude = :latitude, longitude = :longitude, url = :url, url_purchase = :url_purchase, facebook = :facebook, twitter = :twitter WHERE id = :id AND client_nick = :nick";
+		$statement = "SELECT map FROM Tag WHERE id = :id AND client_nick = :nick";
+		$query = $this->db->prepare($statement);
+		$query->bindParam(':id', $_POST["id"], PDO::PARAM_INT);
+		$query->bindParam(':nick', $this->nick);
+		$query->execute();
+		$result = $query->fetchAll(PDO::FETCH_ASSOC)[0];
+		unlink("../".$result["map"]);
+
+		require_once "multimedia.model.php";
+		$multimedia = new multimedia($_SESSION["client"]["nick"]);
+
+		$map_path = $multimedia->save_map($tag_id, $_POST["latitude"], $_POST["longitude"]);
+
+		$statement = "UPDATE Tag SET name = :name, description = :description, latitude = :latitude, longitude = :longitude, map = :map, url = :url, url_purchase = :url_purchase, facebook = :facebook, twitter = :twitter WHERE id = :id AND client_nick = :nick";
 		$query = $this->db->prepare($statement);
 		$query->bindParam(":name", $_POST["name"]);
 		$query->bindParam(":description", $_POST["description"]);
 		$query->bindParam(":latitude", $_POST["latitude"]);
 		$query->bindParam(":longitude", $_POST["longitude"]);
+		$query->bindParam(":map", $map_path);
 		$query->bindParam(":url", $_POST["url"]);
 		$query->bindParam(":url_purchase", $_POST["purchase_url"]);
 		$query->bindParam(":facebook", $_POST["facebook"]);
