@@ -38,8 +38,12 @@ class mvc_controller {
 	function show_tags($active = 1)
 	{
 		$this->validate_session();
-
-		$pagina = $this->load_template("Index", "es", "index.css");
+		$css = array("index.css");
+		$js = array(
+				"js/tags.js", 
+				"js/search.js"
+			);
+		$pagina = $this->load_template("Index", "es", $css, $js );
 		$menu = $this->load_page('../app/views/default/modules/tags/menu.php');
 		$pagina = $this->replace_content('/\#{MENU}\#/ms' ,$menu , $pagina);
 		if ( $active == 1 ){
@@ -70,40 +74,6 @@ class mvc_controller {
 		$this->view_page($pagina);
 	}
 
-	function get_plan_info($plan){
-		if($plan == "Starter"){
-			$info = array(
-				"total_tags" => 10,
-				"total_space" => 500
-				);
-		}
-		elseif($plan == "Basic"){
-			$info = array(
-				"total_tags" => 50,
-				"total_space" => 500
-				);
-		}
-		elseif($plan == "Medium"){
-			$info = array(
-				"total_tags" => 100,
-				"total_space" => 500
-				);
-		}
-		elseif($plan == "Advanced"){
-			$info = array(
-				"total_tags" => 200,
-				"total_space" => 500
-				);
-		}
-		else{
-			$info = array(
-				"total_tags" => 0,
-				"total_space" => 0
-				);
-		}
-		return $info;
-	}
-
 	function profile(){
 		$this->validate_session();
 		if( isset($_POST["password_form"]) && isset($_POST["password"]) && isset($_POST["new_password"]) && isset($_POST["new_password_confirm"]) ){
@@ -115,7 +85,9 @@ class mvc_controller {
 				header("Location: profile.php?error");
 		}
 		else{	// No existe ningún post de formularios muestra la vista normal
-			$pagina = $this->load_template("Profile", "es", "profile.css");
+			$css = array("profile.css");
+			$js = array();
+			$pagina = $this->load_template("Profile", "es", $css, $js );
 			$contenido = $this->load_page('../app/views/default/modules/profile/profile.php');
 			$pagina = $this->replace_content('/\#{MENU}\#/ms' , "", $pagina);
 			$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms' ,$contenido , $pagina);
@@ -149,8 +121,13 @@ class mvc_controller {
 
 	function add_tag(){
 		$this->validate_session();
-
-		$pagina = $this->load_template("Add tag", "es", "addtag.css");
+		$css = array("addtag.css");
+		$js = array(
+					"https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false",
+					"js/map.js",
+					"js/addtag.js"
+				);
+		$pagina = $this->load_template("Add tag", "es", $css, $js );
 		$menu = $this->load_page('../app/views/default/modules/addtag/menu.php');
 		$pagina = $this->replace_content('/\#{MENU}\#/ms' ,$menu , $pagina);
 		$form = $this->load_page('../app/views/default/modules/addtag/form.php');
@@ -161,8 +138,13 @@ class mvc_controller {
 
 	function edit_tag($id){
 		$this->validate_session();
-
-		$pagina = $this->load_template("Edit tag", "es", "edittag.css");
+		$css = array("edittag.css");
+		$js = array(
+					"https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false",
+					"js/map_edit.js",
+					"js/edittag.js"
+				);
+		$pagina = $this->load_template("Edit tag", "es", $css, $js );
 		$menu = $this->load_page('../app/views/default/modules/edittag/menu.php');
 		$pagina = $this->replace_content('/\#{MENU}\#/ms' ,$menu , $pagina);
 
@@ -184,8 +166,9 @@ class mvc_controller {
 
 	function multimedia($type){
 		$this->validate_session();
-
-		$pagina = $this->load_template("Multimedia", "es", "media.css");
+		$css = array("media.css");
+		$js = array("js/multimedia.js");
+		$pagina = $this->load_template("Multimedia", "es", $css, $js );
 		$menu = $this->load_page("../app/views/default/modules/multimedia/menu.php");
 		$pagina = $this->replace_content('/\#{MENU}\#/ms' ,$menu , $pagina);
 		
@@ -232,21 +215,21 @@ class mvc_controller {
 		$this->view_page($pagina);
 	}
 
-	function principal()
-	{
-		$pagina=$this->load_template('Index', 'es', 'index.css');
-		$html = $this->load_page('../app/views/default/modules/tags.php');
-		$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms' ,$html , $pagina);
-		$this->view_page($pagina);
-	}
-
-	function load_template($title='', $lang='en', $css='index.css'){
+	private function load_template($title, $lang, $css, $js){
 		$pagina = $this->load_page('../app/views/default/page.php');
 		$header = $this->load_page('../app/views/default/sections/header.php');
 		$footer = $this->load_page('../app/views/default/sections/footer.php');
 		$pagina = $this->replace_content('/\#{LANG}\#/ms' ,$lang , $pagina);
 		$pagina = $this->replace_content('/\#{TITLE}\#/ms',$title , $pagina);
-		$pagina = $this->replace_content('/\#{CSS}\#/ms' ,$css , $pagina);
+		$css_string = $js_string = "";
+		foreach ($css as $file) {
+			$css_string .= "<link href='css/".$file."' rel='stylesheet'>";
+		}
+		$pagina = $this->replace_content('/\#{CSS}\#/ms' ,$css_string , $pagina);
+		foreach ($js as $file) {
+			$js_string .= "<script src='".$file."'></script>";
+		}
+		$pagina = $this->replace_content('/\#{JS}\#/ms' ,$js_string , $pagina);
 		$pagina = $this->replace_content('/\#{HEADER}\#/ms' ,$header , $pagina);
 		$pagina = $this->replace_content('/\#{USER}\#/ms' , $_SESSION["client"]["nick"], $pagina);
 		$pagina = $this->replace_content('/\#{FOOTER}\#/ms' ,$footer , $pagina);
@@ -263,6 +246,40 @@ class mvc_controller {
 
 	private function replace_content($in='/\#{CONTENIDO}\#/ms', $out, $pagina){
 		return preg_replace($in, $out, $pagina);
+	}
+
+	private function get_plan_info($plan){
+		if($plan == "Starter"){
+			$info = array(
+				"total_tags" => 10,
+				"total_space" => 500
+				);
+		}
+		elseif($plan == "Basic"){
+			$info = array(
+				"total_tags" => 50,
+				"total_space" => 500
+				);
+		}
+		elseif($plan == "Medium"){
+			$info = array(
+				"total_tags" => 100,
+				"total_space" => 500
+				);
+		}
+		elseif($plan == "Advanced"){
+			$info = array(
+				"total_tags" => 200,
+				"total_space" => 500
+				);
+		}
+		else{
+			$info = array(
+				"total_tags" => 0,
+				"total_space" => 0
+				);
+		}
+		return $info;
 	}
 
 }

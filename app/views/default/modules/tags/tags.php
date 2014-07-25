@@ -54,5 +54,3 @@
 		<?php endforeach; ?>
 	</div>
 </div>
-<script src="js/tags.js"></script>
-<script src="js/search.js"></script>

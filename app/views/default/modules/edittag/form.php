@@ -212,9 +212,3 @@
 		</div>
 	</form>
 </div>
-<script>
-	$(".fa").tooltip();
-</script>
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-<script src="js/map_edit.js"></script>
-<script src="js/edittag.js"></script>

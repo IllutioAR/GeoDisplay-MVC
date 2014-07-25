@@ -53,4 +53,3 @@
 		</div>
 	</section>
 </div>
-<script src="js/multimedia.js"></script>

@@ -8,7 +8,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="css/geodisplay.css" rel="stylesheet">
-    <link href="css/#{CSS}#" rel="stylesheet">
+    #{CSS}#
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -24,5 +24,6 @@
       #{CONTENIDO}#
     </div>
     #{FOOTER}#
+    #{JS}#
   </body>
 </html>
