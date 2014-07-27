@@ -36,6 +36,14 @@
 			    	</a>
 			    </li>
 				-->
+				<li style="padding:8px">
+			    	<form class="form-inline" role="form">
+  						<div class="form-group">
+			    			<input id="search_file" type="text" placeholder="Busca un archivo" class="form-control">
+			    			<button id="search_button" class="btn btn-default"><span class="fa fa-search"></span></button>
+			    		</div>
+			    	</form>
+			    </li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<!--

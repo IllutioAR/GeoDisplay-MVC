@@ -34,7 +34,7 @@
 							</thead>
 							<tbody>
 								<?php foreach($files as $file): ?>
-								<tr>
+								<tr id="file">
 									<td style="vertical-align: middle"><?= $file["name"] ?></td>
 									<td style="vertical-align: middle; text-align:right"><?= number_format($file["size"], 2) ?>MB</td>
 									<td style="vertical-align: middle"><?= $file["created_at"] ?></td>
