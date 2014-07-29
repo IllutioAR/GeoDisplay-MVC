@@ -1,5 +1,5 @@
 .seccion #map{
-	height: 246px;
+	height: 249px;
 }
 
 .form{
@@ -25,6 +25,42 @@ input, textarea{
 	margin-bottom: 0;
 }
 
-#multimedia .progress-container{
-	
+#multimedia button{
+	margin-bottom: 1em;
+}
+
+#multimedia button:last-child{
+	margin-bottom: 0;
+}
+
+.close-icon{
+	color: red;
+	cursor: pointer;
+	padding: 4px;
+}
+
+#multimedia .file-list{
+	max-height: 400px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+#multimedia .file-list > div{
+	background: #FFF;
+	border: 1px #CCC solid; 
+	border-radius: 3px;
+	cursor: pointer;
+	margin-bottom: .5em;
+	padding: 5px;
+}
+
+#multimedia .file-list > .file-details:hover{
+	background: #EEE;
+}
+
+#multimedia .file-list > .selected{
+	background: #1B75CE;
+	border-color: #3B95EE;
+	color: #FFF;
+	cursor: pointer;
 }

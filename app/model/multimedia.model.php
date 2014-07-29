@@ -85,6 +85,15 @@ class multimedia extends database {
 		}
 	}
 
+	function set_existing_file($type, $tag_id, $multimedia_id){
+		$statement = "INSERT INTO Multimedia_Tag VALUES (:multimedia_id, :tag_id, :type)";
+		$query = $this->db->prepare($statement);
+		$query->bindParam(':multimedia_id', $multimedia_id, PDO::PARAM_INT);
+		$query->bindParam(':tag_id', $tag_id, PDO::PARAM_INT);
+		$query->bindParam(':type', $type);
+		$query->execute();
+	}
+
 	function save_map($tag_id, $latitude, $longitude){
 		$url_map = "http://maps.googleapis.com/maps/api/staticmap?center=".$latitude.",".$longitude."&zoom=17&size=400x150&markers=color:blue%7Clabel:S%7C11211%7C11206%7C11222&markers=color:red|".$latitude.",".$longitude."&maptype=roadmap&sensor=false";
 		$ch = curl_init ($url_map);
@@ -144,6 +153,25 @@ class multimedia extends database {
 				);
 		}
 		sort($return);
+		return $return;
+	}
+
+	function get_form_files($type){
+		$statement = "SELECT id, name, size, created_at FROM Multimedia WHERE client_nick = :nick AND type = :type";
+		$query = $this->db->prepare($statement);
+		$query->bindParam(":nick", $this->nick);
+		$query->bindParam(":type", $type);
+		$query->execute();
+		$files = $query->fetchAll(PDO::FETCH_ASSOC);
+		foreach ($files as $file) {
+			list($fecha, $hora) = explode(" ", $file["created_at"]);
+			$return[] = array(
+					"id" => $file["id"],
+					"name" => $file["name"],
+					"size" => number_format($file["size"], 2),
+					"created_at" => $fecha,
+				);
+		}
 		return $return;
 	}
 

@@ -84,15 +84,21 @@
 			<div class="col-xs-12 col-md-4">
 				<div class="seccion">
 					<div class="titulo">
-						<strong>Video</strong><i class="fa fa-asterisk"></i>
+						<strong>Video</strong>
+						<i class="fa fa-asterisk"></i>
+						<i id="close-video-select" type="video" class="fa fa-times fa-lg pull-right close-icon" style="display:none"></i>
 					</div>
 					<div class="form" id="multimedia">
-						<div class="row" id="multimedia-video">
+						<div class="row" id="multimedia-video" style="margin-bottom:0">
 							<div class="col-xs-12">
-								<input name="video" id="video" type="file" class="btn btn-default" style="display:none">
-								<button id="btn-video" class="btn btn-default" style="margin:.2em">
+								<input name="video" id="video" type="file" style="display:none">
+								<button id="btn-video" class="btn btn-default">
 									<i class="fa fa-laptop"></i> 
-									Seleccionar una archivo
+									Seleccionar desde equipo
+								</button>
+								<button id="btn-video-cloud" class="btn btn-default">
+									<i class="fa fa-cloud"></i> 
+									Seleccionar de multimedia
 								</button>
 							</div>
 						</div>
@@ -103,14 +109,19 @@
 				<div class="seccion">
 					<div class="titulo">
 						<strong>Audio</strong>
+						<i id="close-audio-select" type="audio" class="fa fa-times fa-lg pull-right close-icon" style="display:none"></i>
 					</div>
 					<div class="form" id="multimedia">
-						<div class="row" id="multimedia-audio">
+						<div class="row" id="multimedia-audio" style="margin-bottom:0">
 							<div class="col-xs-12">
-								<input name="audio" type="file" class="btn btn-default" style="display:none">
-								<button id="btn-audio" class="btn btn-default" style="margin:.2em">
+								<input name="audio" id="audio" type="file" style="display:none">
+								<button id="btn-audio" class="btn btn-default">
 									<i class="fa fa-laptop"></i> 
-									Selecciona una archivo
+									Seleccionar desde equipo
+								</button>
+								<button id="btn-audio-cloud" class="btn btn-default">
+									<i class="fa fa-cloud"></i> 
+									Seleccionar de multimedia
 								</button>
 							</div>
 						</div>
@@ -121,14 +132,19 @@
 				<div class="seccion">
 					<div class="titulo">
 						<strong>Imagen</strong>
+						<i id="close-image-select" type="image" class="fa fa-times fa-lg pull-right close-icon" style="display:none"></i>
 					</div>
 					<div class="form" id="multimedia">
-						<div class="row" id="multimedia-image">
+						<div class="row" id="multimedia-image" style="margin-bottom:0">
 							<div class="col-xs-12">
-								<input name="image" type="file" class="btn btn-default" style="display:none">
-								<button id="btn-image" class="btn btn-default" style="margin:.2em">
+								<input name="image" id="image" type="file" style="display:none">
+								<button id="btn-image" class="btn btn-default">
 									<i class="fa fa-laptop"></i> 
-									Selecciona una archivo
+									Seleccionar desde equipo
+								</button>
+								<button id="btn-image-cloud" class="btn btn-default">
+									<i class="fa fa-cloud"></i> 
+									Seleccionar de multimedia
 								</button>
 							</div>
 						</div>

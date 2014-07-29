@@ -123,9 +123,9 @@ class mvc_controller {
 		$this->validate_session();
 		$css = array("addtag.css");
 		$js = array(
-					"js/map.js",
 					"js/addtag.js",
-					"https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"
+					"https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false",
+					"js/map.js"
 				);
 		$pagina = $this->load_template("Add tag", "es", $css, $js );
 		$menu = $this->load_page('../app/views/default/modules/addtag/menu.php');

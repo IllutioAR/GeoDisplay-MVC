@@ -38,3 +38,11 @@ input, textarea{
 	cursor: pointer;
 	padding: 4px;
 }
+
+#multimedia button{
+	margin-bottom: 1em;
+}
+
+#multimedia button:last-child{
+	margin-bottom: 0;
+}

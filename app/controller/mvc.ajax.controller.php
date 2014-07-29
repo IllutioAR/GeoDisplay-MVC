@@ -23,8 +23,9 @@ class mvc_controller {
 		if( strlen($_POST["latitude"]) > 0 && 
 			strlen($_POST["longitude"]) > 0 && 
 			strlen($_POST["name"]) > 0 && 
-			strlen($_POST["description"]) > 0 && 
-			isset($_FILES["video"]) )
+			strlen($_POST["description"]) > 0 &&
+			( isset($_FILES["video"]) || isset($_POST["video_id"]) )
+		  )
 		{
 			$tag = new tag($_SESSION["client"]["nick"]);
 			$tag->add_new_tag($_SESSION["client"]["tags"], $_SESSION["client"]["space"]);
@@ -77,6 +78,16 @@ class mvc_controller {
 		$this->validate_session();
 		$multimedia = new multimedia($_SESSION["client"]["nick"]);
 		$multimedia->delete_file($_POST["id"]);
+	}
+
+	function get_user_files(){
+		$this->validate_session();
+		if( isset($_GET["type"]) ){
+
+		}
+		$multimedia = new multimedia($_SESSION["client"]["nick"]);
+		$files["files"] = $multimedia->get_form_files( $_GET["type"] );
+		echo json_encode($files);
 	}
 
 	function password_recovery(){
