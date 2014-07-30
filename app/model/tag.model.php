@@ -99,7 +99,7 @@ class tag extends database {
 
 		if( isset($_FILES["video"]) && $_FILES["video"]["error"] == 0){
 			$multimedia->move_media_file("video", $tag_id);			
-		}elseif ( isset($_POST["video_id"]) ) {
+		}elseif ( isset($_POST["video_id"]) ){
 			$multimedia->set_existing_file("video", $tag_id, $_POST["video_id"]);
 		}
 		else{
@@ -117,73 +117,108 @@ class tag extends database {
 		}elseif ( isset($_POST["image_id"]) ) {
 			$multimedia->set_existing_file("image", $tag_id, $_POST["image_id"]);
 		}
-		
 		$_SESSION["client"]["tags"] -= 1;
-		header("Location: ../index.php");
 	}
 
 	function edit_media_file($type, $id){
-		//If 0 edit file, if 4 delete file from server.
-		$event = $_FILES[$type]["error"];
-		if( $event == 0 ){
-			if ( ($_FILES[$type]["size"]/(1024*1024)) > $_SESSION["client"]["space"] ){
-				header("Location: ../edit_tag.php?tag=".$id."&error=space");
+		/*
+		if( !(isset($_POST["video_id"]) && $_POST["video_id"] != "") ){
+			if( !$_FILES["video"]["error"] == 0 ){
+				header("Location: ../edit_tag.php?tag=".$_POST["id"]."&error=video");
 			}
-			$path = "../media/".$this->nick;
+		}
+		*/
+		if( isset($_FILES[$type]) ){
+			//If 0 edit file, if 4 delete file from server.
+			$event = $_FILES[$type]["error"];
+			if( $event == 0 ){
+				if ( ($_FILES[$type]["size"]/(1024*1024)) > $_SESSION["client"]["space"] ){
+					header("Location: ../edit_tag.php?tag=".$id."&error=space");
+				}
+				$path = "../media/".$this->nick;
 
-			$base_path = $path."/".$type."/";
-			while( file_exists( $base_path.$_FILES[$type]["name"] ) ){
-				$base_path = $base_path."copy - ";
-			}
+				$base_path = $path."/".$type."/";
+				while( file_exists( $base_path.$_FILES[$type]["name"] ) ){
+					$base_path = $base_path."copy - ";
+				}
 
-			$path = $base_path.$_FILES[$type]["name"];
-			if ( !move_uploaded_file($_FILES[$type]["tmp_name"], $path) ) {
+				$path = $base_path.$_FILES[$type]["name"];
+				if ( !move_uploaded_file($_FILES[$type]["tmp_name"], $path) ) {
+					header("Location: ../edit_tag.php?tag=".$id."&error=fileUpload");
+				}
+				$size = intval( $_FILES[$type]["size"] ) / (1024*1024);
+				$_SESSION["client"]["space"] -= $size;
+
+				$statement = "INSERT INTO Multimedia (name, type, size, file_path, client_nick, created_at, updated_at) VALUES (:name, :type, :size, :file_path, :client_nick, NOW(), NOW())";
+				$query = $this->db->prepare($statement);
+				$query->bindParam(':name', 		$_FILES[$type]["name"]);
+				$query->bindParam(':type', 		$type);
+				$query->bindParam(':size', 		$size, PDO::PARAM_INT);
+				$query->bindParam(':file_path', $path);
+				$query->bindParam(':client_nick',$this->nick);
+				$query->execute();
+				$multimedia_id = $this->db->lastInsertId();
+
+				$statement = "DELETE FROM Multimedia_Tag WHERE tag_id = :tag_id AND type = :type";
+				$query = $this->db->prepare($statement);
+				$query->bindParam(':tag_id', 	$id, PDO::PARAM_INT);
+				$query->bindParam(':type', 		$type);
+				$query->execute();
+
+				$statement = "INSERT INTO Multimedia_Tag VALUES (:multimedia_id, :tag_id, :type)";
+				$query = $this->db->prepare($statement);
+				$query->bindParam(':multimedia_id', $multimedia_id, PDO::PARAM_INT);
+				$query->bindParam(':tag_id', $id, PDO::PARAM_INT);
+				$query->bindParam(':type', 	 $type);
+				$query->execute();
+			}elseif( $event == 4 ){
+				if( $type == "video" ){
+					return;
+				}
+				$statement = "DELETE FROM Multimedia_Tag WHERE tag_id = :tag_id AND type = :type";
+				$query = $this->db->prepare($statement);
+				$query->bindParam(':tag_id', $id, PDO::PARAM_INT);
+				$query->bindParam(':type', 	 $type);
+				$query->execute();
+			}else{
 				header("Location: ../edit_tag.php?tag=".$id."&error=fileUpload");
 			}
-			$size = intval( $_FILES[$type]["size"] ) / (1024*1024);
-			$_SESSION["client"]["space"] -= $size;
+		}elseif( isset($_POST[$type."_id"]) ) {
+			if( $_POST[$type."_id"] != ""){
+				$statement = "DELETE FROM Multimedia_Tag WHERE tag_id = :tag_id AND type = :type";
+				$query = $this->db->prepare($statement);
+				$query->bindParam(':tag_id', 	$id, PDO::PARAM_INT);
+				$query->bindParam(':type', 		$type);
+				$query->execute();
 
-			$statement = "INSERT INTO Multimedia (name, type, size, file_path, client_nick, created_at, updated_at) VALUES (:name, :type, :size, :file_path, :client_nick, NOW(), NOW())";
-			$query = $this->db->prepare($statement);
-			$query->bindParam(':name', $_FILES[$type]["name"]);
-			$query->bindParam(':type', $type);
-			$query->bindParam(':size', $size, PDO::PARAM_INT);
-			$query->bindParam(':file_path', $path);
-			$query->bindParam(':client_nick', $this->nick);
-			$query->execute();
-			$multimedia_id = $this->db->lastInsertId();
-
-			$statement = "DELETE FROM Multimedia_Tag WHERE tag_id = :tag_id AND type = :type";
-			$query = $this->db->prepare($statement);
-			$query->bindParam(':tag_id', $id, PDO::PARAM_INT);
-			$query->bindParam(':type', $type);
-			$query->execute();
-
-			$statement = "INSERT INTO Multimedia_Tag VALUES (:multimedia_id, :tag_id, :type)";
-			$query = $this->db->prepare($statement);
-			$query->bindParam(':multimedia_id', $multimedia_id, PDO::PARAM_INT);
-			$query->bindParam(':tag_id', $id, PDO::PARAM_INT);
-			$query->bindParam(':type', $type);
-			$query->execute();
-		}elseif( $event == 4 ){
-			if( $type == "video" ){
-				return;
+				$statement = "INSERT INTO Multimedia_Tag VALUES (:multimedia_id, :tag_id, :type)";
+				$query = $this->db->prepare($statement);
+				$query->bindParam(':multimedia_id', $_POST[$type."_id"], PDO::PARAM_INT);
+				$query->bindParam(':tag_id', $id, PDO::PARAM_INT);
+				$query->bindParam(':type', 	 $type);
+				$query->execute();
 			}
-			$statement = "DELETE FROM Multimedia_Tag WHERE tag_id = :tag_id AND type = :type";
-			$query = $this->db->prepare($statement);
-			$query->bindParam(':tag_id', $id, PDO::PARAM_INT);
-			$query->bindParam(':type', $type);
-			$query->execute();
-		}else{
-			header("Location: ../edit_tag.php?tag=".$id."&error=fileUpload");
+			else{
+				if($type == "video"){
+					return;
+				}
+				$statement = "DELETE FROM Multimedia_Tag WHERE tag_id = :tag_id AND type = :type";
+				$query = $this->db->prepare($statement);
+				$query->bindParam(':tag_id', 	$id, PDO::PARAM_INT);
+				$query->bindParam(':type', 		$type);
+				$query->execute();
+			}
+		}
+		else{
+			// code...
 		}
 	}
 
 	function edit_tag($space){
 		$statement = "SELECT map FROM Tag WHERE id = :id AND client_nick = :nick";
 		$query = $this->db->prepare($statement);
-		$query->bindParam(':id', $_POST["id"], PDO::PARAM_INT);
-		$query->bindParam(':nick', $this->nick);
+		$query->bindParam(':id', 	$_POST["id"], PDO::PARAM_INT);
+		$query->bindParam(':nick', 	$this->nick);
 		$query->execute();
 		$result = $query->fetchAll(PDO::FETCH_ASSOC)[0];
 		unlink("../".$result["map"]);
@@ -195,33 +230,22 @@ class tag extends database {
 
 		$statement = "UPDATE Tag SET name = :name, description = :description, latitude = :latitude, longitude = :longitude, map = :map, url = :url, url_purchase = :url_purchase, facebook = :facebook, twitter = :twitter WHERE id = :id AND client_nick = :nick";
 		$query = $this->db->prepare($statement);
-		$query->bindParam(":name", $_POST["name"]);
-		$query->bindParam(":description", $_POST["description"]);
-		$query->bindParam(":latitude", $_POST["latitude"]);
-		$query->bindParam(":longitude", $_POST["longitude"]);
-		$query->bindParam(":map", $map_path);
-		$query->bindParam(":url", $_POST["url"]);
-		$query->bindParam(":url_purchase", $_POST["purchase_url"]);
-		$query->bindParam(":facebook", $_POST["facebook"]);
-		$query->bindParam(":twitter", $_POST["twitter"]);
-		$query->bindParam(":id", $_POST["id"], PDO::PARAM_INT);
-		$query->bindParam(":nick", $this->nick);
+		$query->bindParam(":name", 			$_POST["name"]);
+		$query->bindParam(":description", 	$_POST["description"]);
+		$query->bindParam(":latitude", 		$_POST["latitude"]);
+		$query->bindParam(":longitude", 	$_POST["longitude"]);
+		$query->bindParam(":map", 			$map_path);
+		$query->bindParam(":url", 			$_POST["url"]);
+		$query->bindParam(":url_purchase", 	$_POST["purchase_url"]);
+		$query->bindParam(":facebook", 		$_POST["facebook"]);
+		$query->bindParam(":twitter", 		$_POST["twitter"]);
+		$query->bindParam(":id", 			$_POST["id"], PDO::PARAM_INT);
+		$query->bindParam(":nick", 			$this->nick);
 		$query->execute();
 
-		if( isset($_FILES["video"]["name"]) ){
-			if( $_FILES["video"]["error"] == 0 ){
-				$this->edit_media_file("video", $_POST["id"]);
-			}
-			else{
-				header("Location: ../edit_tag.php?tag=".$_POST["id"]."&error=video");
-			}
-		}
-		if( isset($_FILES["audio"]["name"]) ){
-			$this->edit_media_file("audio", $_POST["id"]);
-		}
-		if( isset($_FILES["image"]["name"]) ){
-			$this->edit_media_file("image", $_POST["id"]);
-		}
+		$this->edit_media_file("video", $_POST["id"]);
+		$this->edit_media_file("audio", $_POST["id"]);
+		$this->edit_media_file("image", $_POST["id"]);
 		
 	}
 
@@ -229,8 +253,8 @@ class tag extends database {
 		try{
 			$statement = "SELECT active FROM Tag WHERE id = :id AND client_nick = :nick";
 			$query = $this->db->prepare($statement);
-			$query->bindParam(':id', $id, PDO::PARAM_INT);
-			$query->bindParam(':nick', $this->nick);
+			$query->bindParam(':id', 	$id, PDO::PARAM_INT);
+			$query->bindParam(':nick', 	$this->nick);
 			$query->execute();
 			$stat = $query->fetchAll(PDO::FETCH_ASSOC);
 			$stat = $stat[0]["active"];
@@ -238,16 +262,16 @@ class tag extends database {
 			if ($stat == 0){
 				$statement = "UPDATE Tag SET active = 1 WHERE id = :id AND client_nick = :nick";
 				$query = $this->db->prepare($statement);
-				$query->bindParam(':id', $id, PDO::PARAM_INT);
-				$query->bindParam(':nick', $this->nick);
+				$query->bindParam(':id', 	$id, PDO::PARAM_INT);
+				$query->bindParam(':nick', 	$this->nick);
 				$query->execute();
 				
 			}
 			else if ($stat == 1){
 				$statement = "UPDATE Tag SET active = 0 WHERE id = :id AND client_nick = :nick";
 				$query = $this->db->prepare($statement);
-				$query->bindParam(':id', $id, PDO::PARAM_INT);
-				$query->bindParam(':nick', $this->nick);
+				$query->bindParam(':id', 	$id, PDO::PARAM_INT);
+				$query->bindParam(':nick', 	$this->nick);
 				$query->execute();
 			}
 			else {

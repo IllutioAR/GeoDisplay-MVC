@@ -29,6 +29,7 @@ class mvc_controller {
 		{
 			$tag = new tag($_SESSION["client"]["nick"]);
 			$tag->add_new_tag($_SESSION["client"]["tags"], $_SESSION["client"]["space"]);
+			header("Location: ../index.php?success=new_tag");
 		}
 		else{
 			header("Location: ../addtag.php?error=incomplete");

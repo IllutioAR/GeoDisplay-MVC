@@ -89,7 +89,7 @@
 						<i class="fa fa-asterisk"></i>
 						<?php 
 							if( isset($tag['video_path']) )
-								echo '<i id="close-video-preview" type="video" class="fa fa-times fa-lg pull-right close-icon"></i>';
+								echo '<i id="close-video-select" type="video" class="fa fa-times fa-lg pull-right close-icon"></i>';
 						?>
 					</div>
 					<?php 
@@ -97,12 +97,16 @@
 					?>
 					<div id="video-field">
 						<div class="form" id="multimedia">
-							<div class="row" id="multimedia-video">
+							<div class="row" id="multimedia-video" style="margin-bottom:0">
 								<div class="col-xs-12">
-									<input name="video" id="video" type="file" class="btn btn-default" style="display:none">
-									<button id="btn-video" class="btn btn-default" style="margin:.2em">
+									<input name="video" id="video" type="file" style="display:none">
+									<button id="btn-video" class="btn btn-default">
 										<i class="fa fa-laptop"></i> 
-										Seleccionar una archivo
+										Seleccionar desde equipo
+									</button>
+									<button id="btn-video-cloud" class="btn btn-default">
+										<i class="fa fa-cloud"></i> 
+										Seleccionar de multimedia
 									</button>
 								</div>
 							</div>
@@ -112,12 +116,18 @@
 						else:
 					?>
 					<div id="video-field">
-						<div id="video-preview">
-							<div class="preview-container">
-								<video class="video-preview" controls>
-									<source src="<?= 'media/'.$tag['video_path'] ?>" type="video/mp4">
-									Tu navegador no tiene soporte para HTML5.
-								</video>
+						<div class="form" id="multimedia">
+							<div class="row" id="multimedia-video" style="margin-bottom:0">
+								<div class="col-xs-12">
+									<div id="video-preview">
+										<div class="preview-container">
+											<video class="video-preview" controls>
+												<source src="<?= 'media/'.$tag['video_path'] ?>" type="video/mp4">
+												Tu navegador no tiene soporte para HTML5.
+											</video>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -132,7 +142,7 @@
 						<strong>Audio</strong>
 						<?php 
 							if( isset($tag['audio_path']) )
-								echo '<i id="close-audio-preview" type="audio" class="fa fa-times fa-lg pull-right close-icon"></i>';
+								echo '<i id="close-audio-select" type="audio" class="fa fa-times fa-lg pull-right close-icon"></i>';
 						?>
 					</div>
 					<?php 
@@ -140,12 +150,16 @@
 					?>
 					<div id="audio-field">
 						<div class="form" id="multimedia">
-							<div class="row" id="multimedia-audio">
+							<div class="row" id="multimedia-audio" style="margin-bottom:0">
 								<div class="col-xs-12">
-									<input name="audio" type="file" class="btn btn-default" style="display:none">
-									<button id="btn-audio" class="btn btn-default" style="margin:.2em">
+									<input name="audio" id="audio" type="file" style="display:none">
+									<button id="btn-audio" class="btn btn-default">
 										<i class="fa fa-laptop"></i> 
-										Selecciona una archivo
+										Seleccionar desde equipo
+									</button>
+									<button id="btn-audio-cloud" class="btn btn-default">
+										<i class="fa fa-cloud"></i> 
+										Seleccionar de multimedia
 									</button>
 								</div>
 							</div>
@@ -155,12 +169,18 @@
 						else:
 					?>
 					<div id="audio-field">
-						<div id="audio-preview">
-							<div class="preview-container">
-								<audio class="audio-preview" controls>
-									<source src="<?= 'media/'.$tag['audio_path'] ?>" type="audio/mpeg">
-									Tu navegador no tiene soporte para HTML5.
-								</audio>
+						<div class="form" id="multimedia">
+							<div class="row" id="multimedia-audio" style="margin-bottom:0">
+								<div class="col-xs-12">
+									<div id="audio-preview">
+										<div class="preview-container">
+											<audio class="audio-preview" controls>
+												<source src="<?= 'media/'.$tag['audio_path'] ?>" type="audio/mpeg">
+												Tu navegador no tiene soporte para HTML5.
+											</audio>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -175,7 +195,7 @@
 						<strong>Imagen</strong>
 						<?php 
 							if( isset($tag['image_path']) )
-								echo '<i id="close-image-preview" type="image" class="fa fa-times fa-lg pull-right close-icon"></i>';
+								echo '<i id="close-image-select" type="image" class="fa fa-times fa-lg pull-right close-icon"></i>';
 						?>
 					</div>
 					<?php 
@@ -183,12 +203,16 @@
 					?>
 					<div id="image-field">
 						<div class="form" id="multimedia">
-							<div class="row" id="multimedia-image">
+							<div class="row" id="multimedia-image" style="margin-bottom:0">
 								<div class="col-xs-12">
-									<input name="image" type="file" class="btn btn-default" style="display:none">
-									<button id="btn-image" class="btn btn-default" style="margin:.2em">
+									<input name="image" id="image" type="file" style="display:none">
+									<button id="btn-image" class="btn btn-default">
 										<i class="fa fa-laptop"></i> 
-										Selecciona una archivo
+										Seleccionar desde equipo
+									</button>
+									<button id="btn-image-cloud" class="btn btn-default">
+										<i class="fa fa-cloud"></i> 
+										Seleccionar de multimedia
 									</button>
 								</div>
 							</div>
@@ -198,9 +222,15 @@
 						else:
 					?>
 					<div id="image-field">
-						<div id="image-preview">
-							<div class="preview-container">
-								<img src="<?= 'media/'.$tag['image_path'] ?>" alt="<?= $tag['name'] ?>" class="image-preview">
+						<div class="form" id="multimedia">
+							<div class="row" id="multimedia-image" style="margin-bottom:0">
+								<div class="col-xs-12">
+									<div id="image-preview">
+										<div class="preview-container">
+											<img src="<?= 'media/'.$tag['image_path'] ?>" alt="<?= $tag['name'] ?>" class="image-preview">
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
