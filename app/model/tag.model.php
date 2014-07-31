@@ -12,6 +12,14 @@ class tag extends database {
 		$this->nick = $nick;
 	}
 
+	function get_num_user_tags(){
+		$statement = "SELECT tags FROM Client WHERE nick = :nick";
+		$query = $this->db->prepare($statement);
+		$query->bindParam(':nick', 	$this->nick);
+		$query->execute();
+		return $query->fetchAll(PDO::FETCH_ASSOC)[0]["tags"];
+	}
+
 	function get_tags($limit_tags=9, $status = 1){
 		$statement = "SELECT id, name, description, map, url, facebook, twitter FROM Tag WHERE client_nick = :nick and active = :status";
 		$query = $this->db->prepare($statement);
@@ -117,7 +125,7 @@ class tag extends database {
 		}elseif ( isset($_POST["image_id"]) ) {
 			$multimedia->set_existing_file("image", $tag_id, $_POST["image_id"]);
 		}
-		$_SESSION["client"]["tags"] -= 1;
+		$_SESSION["client"]["tags"] = $this->get_num_user_tags();
 	}
 
 	function edit_media_file($type, $id){
@@ -332,7 +340,7 @@ class tag extends database {
 				$query->bindParam(':type',$tag["type"]);
 				$query->execute();
 			}
-			$_SESSION["client"]["tags"] -= 1;
+			$_SESSION["client"]["tags"] = $this->get_num_user_tags();
 		}
 		catch(Exception $e){
 			echo json_encode(array(
@@ -365,7 +373,7 @@ class tag extends database {
 			if ($query->rowCount() > 0){
 				unlink("../".$map);
 			}
-			$_SESSION["client"]["tags"] += 1;
+			$_SESSION["client"]["tags"] = $this->get_num_user_tags();
 		}
 		catch(Exception $e){
 			echo json_encode(array(

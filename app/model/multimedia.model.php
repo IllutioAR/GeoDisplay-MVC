@@ -12,8 +12,17 @@ class multimedia extends database {
 		$this->nick = $nick;
 	}
 
+	function get_user_space(){
+		$statement = "SELECT space FROM Client WHERE nick = :nick";
+		$query = $this->db->prepare($statement);
+		$query->bindParam(":nick", $this->nick);
+		$query->execute();
+		$result = $query->fetchAll(PDO::FETCH_ASSOC)[0];
+		return $result["space"];
+	}
+
 	function save_file($type){
-		if ( ($_FILES["file"]["size"]/(1024*1024)) > $_SESSION["client"]["space"] ){
+		if ( ($_FILES["file"]["size"]/(1024*1024)) > $this->get_user_space() ){
 			return "user_space";
 		}
 		if($type == "image"){
@@ -39,7 +48,7 @@ class multimedia extends database {
 			$path = $base_path.$_FILES["file"]["name"];
 			if ( move_uploaded_file($_FILES["file"]["tmp_name"], $path) ) {
 				$size = intval( $_FILES["file"]["size"] ) / (1024*1024);
-				$_SESSION["client"]["space"] -= $size;
+				$_SESSION["client"]["space"] = $this->get_user_space();
 
 				$statement = "INSERT INTO Multimedia (name, type, size, file_path, client_nick, created_at, updated_at) VALUES (:name, :type, :size, :file_path, :client_nick, NOW(), NOW())";
 				$query = $this->db->prepare($statement);
@@ -77,7 +86,7 @@ class multimedia extends database {
 		echo $file["file_path"];
 		echo $file["size"];
 		if( unlink("../media/".$file["file_path"]) ){
-			$_SESSION["client"]["space"] += $file["size"];
+			$_SESSION["client"]["space"] = $this->get_user_space();
 			$statement = "DELETE FROM Multimedia WHERE id = :id AND client_nick = :nick";
 			$query = $this->db->prepare($statement);
 			$query->bindParam(":id", $id);
@@ -95,7 +104,7 @@ class multimedia extends database {
 	}
 
 	function move_media_file($type, $tag_id){
-		if ( ($_FILES[$type]["size"]/(1024*1024)) > $_SESSION["client"]["space"] ){
+		if ( ($_FILES[$type]["size"]/(1024*1024)) > $this->get_user_space() ){
 			header("Location: ../addtag.php?error=space");
 		}
 		
@@ -109,7 +118,7 @@ class multimedia extends database {
 		$path = $base_path.$_FILES[$type]["name"];
 		if ( move_uploaded_file($_FILES[$type]["tmp_name"], $path)) {
 			$size = intval( $_FILES[$type]["size"] ) / (1024*1024);
-			$_SESSION["client"]["space"] -= $size;
+			$_SESSION["client"]["space"] = $this->get_user_space();
 
 			$statement = "INSERT INTO Multimedia (name, type, size, file_path, client_nick, created_at, updated_at) VALUES (:name, :type, :size, :file_path, :client_nick, NOW(), NOW())";
 			$query = $this->db->prepare($statement);
