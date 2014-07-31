@@ -42,4 +42,41 @@ $( document ).ready(function() {
 		search_tag();
 	});
 
+	$("#video-upload, #audio-upload, #image-upload").click(function(){
+		$("#file").trigger("click");
+		var type = $(this).attr("id");
+		type = type.replace("-upload", "");
+		var action = $("#upload-file").attr("action");
+		$("#upload-file").attr("action", action + "?type=" + type);
+	});
+
+	$("#file").on("change", function(){
+		$("#upload-file").ajaxForm({
+			beforeSubmit:function() {
+				$("#file-upload-select").html("Uploading...");
+				$("#file-upload-select").removeAttr("data-toggle");
+			},
+			beforeSend: function(e) {
+
+			},
+			uploadProgress: function(event, position, total, percentComplete) {
+				$("#file-upload-select").html("Progress " + percentComplete + "%");
+			},
+			success: function(data) {
+				if(data == "success"){
+					var type = $("#upload-file").attr("action").replace("ajax/upload_file.php?type=", "")
+					window.location.href = "multimedia.php?type=" + type + "&success=upload";
+				}
+				else{
+					window.location.href = "multimedia.php?error";
+				}				
+			},
+			error: function(){
+				console.log("Error");
+			}
+		});
+		$("#upload-file").submit();
+	});
+
+
 });

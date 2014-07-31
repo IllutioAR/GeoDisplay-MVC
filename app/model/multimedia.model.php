@@ -12,6 +12,54 @@ class multimedia extends database {
 		$this->nick = $nick;
 	}
 
+	function save_file($type){
+		if ( ($_FILES["file"]["size"]/(1024*1024)) > $_SESSION["client"]["space"] ){
+			return "user_space";
+		}
+		if($type == "image"){
+			$valid_exts = array("jpeg", "jpg", "png", "gif");
+		}
+		elseif ($type == "audio") {
+			$valid_exts = array("mp3");
+		}
+		elseif ($type == "video") {
+			$valid_exts = array("mp4", "3gp");
+		}
+		else{
+			return "error";
+		}
+		
+		$max_size = 50 * 1024 * 1024; // 50 MB
+		if( in_array($ext, $valid_exts) && $_FILES['image']['size'] < $max_size){
+			$path = "../media/".$this->nick;
+			$base_path = $path."/".$type."/";
+			while( file_exists( $base_path.$_FILES["file"]["name"] ) ){
+				$base_path = $base_path."(".uniqid().")";
+			}
+			$path = $base_path.$_FILES["file"]["name"];
+			if ( move_uploaded_file($_FILES["file"]["tmp_name"], $path) ) {
+				$size = intval( $_FILES["file"]["size"] ) / (1024*1024);
+				$_SESSION["client"]["space"] -= $size;
+
+				$statement = "INSERT INTO Multimedia (name, type, size, file_path, client_nick, created_at, updated_at) VALUES (:name, :type, :size, :file_path, :client_nick, NOW(), NOW())";
+				$query = $this->db->prepare($statement);
+				$query->bindParam(':name', $_FILES["file"]["name"]);
+				$query->bindParam(':type', $type);
+				$query->bindParam(':size', $size, PDO::PARAM_INT);
+				$query->bindParam(':file_path', str_replace("../media/", "", $path) );
+				$query->bindParam(':client_nick', $this->nick);
+				$query->execute();
+				return "success";
+			}
+			else{
+				return "error_upload";
+			}
+		}
+		else{
+			return "file_extesion";
+		}
+	}
+
 	function delete_file($id){
 		echo "\nNick: ".$this->nick."\n";
 		echo "Id: ".$id;

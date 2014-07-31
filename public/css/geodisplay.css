@@ -56,12 +56,12 @@ header nav button[class = "navbar-toggle"] > span[class = "icon-bar"]{
 	color: #333;
 }
 
-#menu-secundario ul > li a[class = "green"]{
+#menu-secundario ul > li a[class ~= "green"]{
 	background: #60AF31;
 	color: #FFF;
 }
 
-#menu-secundario ul > li a[class = "green"]:hover{
+#menu-secundario ul > li a[class ~= "green"]:hover{
 	background: #4C9220;
 }
 

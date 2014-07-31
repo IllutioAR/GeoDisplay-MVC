@@ -84,11 +84,17 @@ class mvc_controller {
 	function get_user_files(){
 		$this->validate_session();
 		if( isset($_GET["type"]) ){
-
+			$multimedia = new multimedia($_SESSION["client"]["nick"]);
+			$files["files"] = $multimedia->get_form_files( $_GET["type"] );
+			echo json_encode($files);
 		}
+		
+	}
+
+	function upload_file(){
+		$this->validate_session();
 		$multimedia = new multimedia($_SESSION["client"]["nick"]);
-		$files["files"] = $multimedia->get_form_files( $_GET["type"] );
-		echo json_encode($files);
+		echo $multimedia->save_file( $_GET["type"] );
 	}
 
 	function password_recovery(){

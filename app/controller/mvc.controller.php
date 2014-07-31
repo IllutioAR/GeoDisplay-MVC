@@ -167,7 +167,10 @@ class mvc_controller {
 	function multimedia($type){
 		$this->validate_session();
 		$css = array("media.css");
-		$js = array("js/multimedia.js");
+		$js = array(
+			"js/multimedia.js",
+			"js/jquery.form.js"
+			);
 		$pagina = $this->load_template("Multimedia", "es", $css, $js );
 		$menu = $this->load_page("../app/views/default/modules/multimedia/menu.php");
 		$pagina = $this->replace_content('/\#{MENU}\#/ms' ,$menu , $pagina);
