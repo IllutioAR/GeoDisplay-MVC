@@ -28,9 +28,9 @@ class multimedia extends database {
 		else{
 			return "error";
 		}
-		
+		$ext = strtolower(pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION));
 		$max_size = 50 * 1024 * 1024; // 50 MB
-		if( in_array($ext, $valid_exts) && $_FILES['image']['size'] < $max_size){
+		if( in_array($ext, $valid_exts) && $_FILES['file']['size'] < $max_size){
 			$path = "../media/".$this->nick;
 			$base_path = $path."/".$type."/";
 			while( file_exists( $base_path.$_FILES["file"]["name"] ) ){

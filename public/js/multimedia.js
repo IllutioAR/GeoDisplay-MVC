@@ -63,12 +63,12 @@ $( document ).ready(function() {
 				$("#file-upload-select").html("Progress " + percentComplete + "%");
 			},
 			success: function(data) {
+				var type = $("#upload-file").attr("action").replace("ajax/upload_file.php?type=", "")
 				if(data == "success"){
-					var type = $("#upload-file").attr("action").replace("ajax/upload_file.php?type=", "")
 					window.location.href = "multimedia.php?type=" + type + "&success=upload";
 				}
 				else{
-					window.location.href = "multimedia.php?error";
+					window.location.href = "multimedia.php?type=" + type + "&error";
 				}				
 			},
 			error: function(){
