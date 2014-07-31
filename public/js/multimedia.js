@@ -1,3 +1,4 @@
+var uploading = false;
 $( document ).ready(function() {
 	$("button").click(function(){
 		$(this).html("Eliminado...");
@@ -50,11 +51,20 @@ $( document ).ready(function() {
 		$("#upload-file").attr("action", action + "?type=" + type);
 	});
 
+	$("a").click(function(e){
+		if(uploading){
+			if( !confirm("Da click en OK si deseas cancelar la carga,\nDa click en CANCELAR si deseas esperar") ){
+				e.preventDefault();
+			}
+		}
+	});
+
 	$("#file").on("change", function(){
 		$("#upload-file").ajaxForm({
 			beforeSubmit:function() {
 				$("#file-upload-select").html("Uploading...");
 				$("#file-upload-select").removeAttr("data-toggle");
+				uploading = true;
 			},
 			beforeSend: function(e) {
 
@@ -77,6 +87,4 @@ $( document ).ready(function() {
 		});
 		$("#upload-file").submit();
 	});
-
-
 });
