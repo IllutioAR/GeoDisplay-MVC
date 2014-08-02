@@ -3,4 +3,7 @@ $( document ).ready(function() {
 	$("img").on("dragstart", function(e){
 		e.preventDefault();
 	});
+	$("#close-notification").click(function(){
+		$(".notification").remove();
+	});
 });

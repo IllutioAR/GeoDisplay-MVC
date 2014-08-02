@@ -43,6 +43,85 @@ header nav button[class = "navbar-toggle"] > span[class = "icon-bar"]{
 	background-color: #FFF !important;
 }
 
+.notification{
+	/*background: #1B75CE;*/
+	bottom: -5em;
+	color: white;
+	display: table;
+	margin: 0 0 0 0;
+	overflow: hidden;
+	position: fixed;
+	z-index: 20;
+	-webkit-animation-delay: .5s;
+	-webkit-animation-direction: alternate;
+	-webkit-animation-duration: 5s;
+	-webkit-animation-iteration-count: 1;
+  	-webkit-animation-name: notification;
+  	-webkit-animation-fill-mode: forwards;
+  	
+  	animation-delay: .5s;
+	animation-direction: alternate;
+	animation-duration: 5s;
+	animation-iteration-count: 1;
+  	animation-name: notification;
+  	animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes notification {
+	0%   { bottom: -5em; }
+	10%  { bottom: 1em; }
+	90%  { bottom: 1em; }
+	100% { bottom: -5em; }
+}
+
+@keyframes notification {
+	0%   { bottom: -5em; }
+	10%  { bottom: 1em; }
+	90%  { bottom: 1em; }
+	100% { bottom: -5em; }
+}
+
+.notification > span{
+	padding: 1em;
+}
+
+.success .thumbnail-notification{
+	background: #60AF31;
+}
+
+.error .thumbnail-notification{
+	background: red;
+}
+
+.info .thumbnail-notification{
+	background: #1B75CE;
+}
+
+.notification .thumbnail-notification{
+	display: inline-block;
+	min-height: 70px;
+	min-width: 70px;
+	text-align: center;
+}
+
+.notification .message-notification{
+	background: white;
+	border: 1px gray solid;
+	border-left: 0;
+	color: black;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.notification .close-notification{
+	color: gray;
+	cursor: pointer;
+	margin: 1em .5em 1em 1em;
+}
+.notification .close-notification:hover{
+	color: black;
+}
+
 /*
 	MENU-SECUNDARIO
 */
@@ -50,6 +129,7 @@ header nav button[class = "navbar-toggle"] > span[class = "icon-bar"]{
 #menu-secundario{
 	background: #FFF;
 	border: 1px solid #DDD !important;
+	z-index: 10;
 }
 
 #menu-secundario ul > li a{

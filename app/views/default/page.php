@@ -20,9 +20,10 @@
   </head>
   <body>
     #{HEADER}#
-    <div class="container">
+    <div class="container geodisplay-container">
       #{MENU}#
       #{CONTENIDO}#
+      #{NOTIFICATION}#
     </div>
     #{FOOTER}#
     #{JS}#
