@@ -1,6 +1,6 @@
 <div class="notification success">
 	<span class="thumbnail-notification">
-		<i class="fa fa-check fa-3x"></i>
+		<i class="fa fa-smile-o fa-3x"></i>
 	</span>
 	<span class="message-notification">
 		#{MESSAGE}#

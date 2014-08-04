@@ -75,7 +75,7 @@ class tag extends database {
 
 	function add_new_tag($num_tags, $space, $active = 1){
 		if ( $num_tags <= 0){
-			header("Location: ../addtag.php?error=numTags");
+			header("Location: ../index.php?error=numTags");
 		}
 		$statement = "INSERT INTO Tag (name, description, latitude, longitude, map, url, url_purchase, facebook, twitter, client_nick, created_at, updated_at, active) VALUES(:name, :description, :latitude, :longitude, :map, :url, :url_purchase, :facebook, :twitter, :client_nick, NOW(), NOW(), :active)";
 		$query = $this->db->prepare($statement);
@@ -218,7 +218,7 @@ class tag extends database {
 			}
 		}
 		else{
-			// code...
+			
 		}
 	}
 

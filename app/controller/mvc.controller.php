@@ -35,6 +35,22 @@ class mvc_controller {
 		}
 	}
 
+	function show_notification($type, $message){
+		if($type == "success"){
+			$notification = $this->load_page('../app/views/default/modules/notification/success.php');
+		}
+		elseif($type == "error"){
+			$notification = $this->load_page('../app/views/default/modules/notification/error.php');	
+		}
+		elseif($type == "info"){
+			$notification = $this->load_page('../app/views/default/modules/notification/info.php');
+		}
+		else{
+			$notification = "";
+		}
+		return $this->replace_content('/\#{MESSAGE}\#/ms', $message, $notification);
+	}
+
 	function show_tags($active = 1)
 	{
 		$this->validate_session();
@@ -70,7 +86,23 @@ class mvc_controller {
 		$pagina = $this->replace_content('/\#{NUMINACTIVE}\#/ms', $inactive_tags , $pagina);
 		include "../app/views/default/modules/tags/tags.php";
 		$table = ob_get_clean();
-		$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms', $table , $pagina);
+		$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms', $table , $pagina);		
+
+		if( isset($_GET["success"]) ){
+			if( $_GET["success"] == "new_tag" ){
+				$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("success", "Tag agregado correctamente.") , $pagina);
+			}
+		}
+		elseif( isset($_GET["error"]) ){
+			if( $_GET["error"] == "numTags" ){
+				$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("error", "No tienes más lugares disponibles.") , $pagina);
+			}
+			elseif( $_GET["error"] == "edit_tag" ){
+				$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("error", "Ocurrió un error mientras se editaba el tag.") , $pagina);	
+			}
+		}
+		$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', "" , $pagina);
+
 		$this->view_page($pagina);
 	}
 
@@ -82,7 +114,7 @@ class mvc_controller {
 			if ( $changed )
 				header("Location: profile.php?success=password");
 			else 
-				header("Location: profile.php?error");
+				header("Location: profile.php?error=password");
 		}
 		else{	// No existe ningún post de formularios muestra la vista normal
 			$css = array("profile.css");
@@ -115,6 +147,21 @@ class mvc_controller {
 			$pagina = $this->replace_content('/\#{USEDSPACE}\#/ms' , $used_space , $pagina);
 			$pagina = $this->replace_content('/\#{TOTALSPACE}\#/ms' ,$plan_info["total_space"] , $pagina);
 			$pagina = $this->replace_content('/\#{PERCENTAGESPACE}\#/ms' ,$percentage_space , $pagina);
+			if( isset($_GET["success"]) ){
+				if( $_GET["success"] == "password" ){
+					$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("success", "La contraseña se cambió correctamente.") , $pagina);
+				}
+			}
+			elseif( isset($_GET["error"]) ){
+				if( $_GET["error"] == "password" ){
+					$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("error", "Ocurrió un error mientras se cambiaba la contraseña.") , $pagina);
+				}
+				elseif( $_GET["error"] == "numTags" ){
+					$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("error", "No tienes más tags disponibles.") , $pagina);
+				}
+			}
+			$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', "" , $pagina);
+
 			$this->view_page($pagina);
 		}
 	}
@@ -133,6 +180,19 @@ class mvc_controller {
 		$form = $this->load_page('../app/views/default/modules/addtag/form.php');
 		$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms', $form , $pagina);
 		
+		if( isset($_GET["success"]) ){
+			
+		}
+		elseif( isset($_GET["error"]) ){
+			if( $_GET["error"] == "fileUpload" ){
+				$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("error", "Ocurrió un error mientras se subia el archivo.") , $pagina);
+			}
+			elseif( $_GET["error"] == "space" ){
+				$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("error", "No tienes espacio suficiente para subir archivos.") , $pagina);	
+			}
+		}
+		$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', "" , $pagina);
+
 		$this->view_page($pagina);
 	}
 
@@ -155,11 +215,25 @@ class mvc_controller {
 		$tag = $tag->get_full_data($id);
 		
 		if($tag == array()){
-			header("Location: index.php?error=edit");
+			header("Location: index.php?error=edit_tag");
 		}
 		include "../app/views/default/modules/edittag/form.php";
 		$form = ob_get_clean();
 		$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms', $form , $pagina);
+
+		if( isset($_GET["success"]) ){
+			
+		}
+		elseif( isset($_GET["error"]) ){
+			if( $_GET["error"] == "fileUpload" ){
+				$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("error", "Ocurrió un error mientras se subia el archivo.") , $pagina);
+			}
+			elseif( $_GET["error"] == "space" ){
+				$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("error", "No tienes espacio suficiente para subir archivos.") , $pagina);	
+			}
+		}
+		$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', "" , $pagina);
+
 
 		$this->view_page($pagina);
 	}
@@ -214,6 +288,7 @@ class mvc_controller {
 		$table = ob_get_clean();
 		$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms', $table , $pagina);
 		
+		$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', "" , $pagina);
 
 		$this->view_page($pagina);
 	}

@@ -1,6 +1,6 @@
 <div class="notification error">
 	<span class="thumbnail-notification">
-		<i class="fa fa-times fa-3x"></i>
+		<i class="fa fa-frown-o fa-3x"></i>
 	</span>
 	<span class="message-notification">
 		#{MESSAGE}#

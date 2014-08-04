@@ -44,7 +44,6 @@ header nav button[class = "navbar-toggle"] > span[class = "icon-bar"]{
 }
 
 .notification{
-	/*background: #1B75CE;*/
 	bottom: -5em;
 	color: white;
 	display: table;
@@ -90,7 +89,7 @@ header nav button[class = "navbar-toggle"] > span[class = "icon-bar"]{
 }
 
 .error .thumbnail-notification{
-	background: red;
+	background: #d9534f;
 }
 
 .info .thumbnail-notification{

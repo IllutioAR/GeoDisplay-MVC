@@ -46,7 +46,7 @@ class mvc_controller {
 		{
 			$tag = new tag($_SESSION["client"]["nick"]);
 			$tag->edit_tag($_SESSION["client"]["space"]);
-			header("Location: ../index.php?edit=success");
+			header("Location: ../index.php?success=edit_tag");
 		}
 		else{
 			header("Location: ../index.php?error=edit_incomplete");
