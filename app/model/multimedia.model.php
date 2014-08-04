@@ -50,12 +50,14 @@ class multimedia extends database {
 				$size = intval( $_FILES["file"]["size"] ) / (1024*1024);
 				$_SESSION["client"]["space"] = $this->get_user_space();
 
+				$tmp_path = str_replace("../media/", "", $path);
+				
 				$statement = "INSERT INTO Multimedia (name, type, size, file_path, client_nick, created_at, updated_at) VALUES (:name, :type, :size, :file_path, :client_nick, NOW(), NOW())";
 				$query = $this->db->prepare($statement);
 				$query->bindParam(':name', $_FILES["file"]["name"]);
 				$query->bindParam(':type', $type);
 				$query->bindParam(':size', $size, PDO::PARAM_INT);
-				$query->bindParam(':file_path', str_replace("../media/", "", $path) );
+				$query->bindParam(':file_path', $tmp_path );
 				$query->bindParam(':client_nick', $this->nick);
 				$query->execute();
 				return "success";

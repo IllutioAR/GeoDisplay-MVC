@@ -189,6 +189,8 @@ class mvc_controller {
 			}
 			elseif( $_GET["error"] == "space" ){
 				$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("error", "No tienes espacio suficiente para subir archivos.") , $pagina);	
+			}elseif( $_GET["error"] == "incomplete" ){
+				$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("error", "Completa todos los campos para poder guardar el lugar.") , $pagina);	
 			}
 		}
 		$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', "" , $pagina);
@@ -288,6 +290,14 @@ class mvc_controller {
 		$table = ob_get_clean();
 		$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms', $table , $pagina);
 		
+		if( isset($_GET["success"]) ){
+			if( $_GET["success"] == "upload" ){
+				$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("success", "Archivo subido correctamente.") , $pagina);	
+			}
+		}
+		elseif( isset($_GET["error"]) ){
+			$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("error", "Ocurrió un error mientras se subia el archivo.") , $pagina);
+		}
 		$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', "" , $pagina);
 
 		$this->view_page($pagina);
