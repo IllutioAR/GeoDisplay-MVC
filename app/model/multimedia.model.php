@@ -51,7 +51,7 @@ class multimedia extends database {
 				$_SESSION["client"]["space"] = $this->get_user_space();
 
 				$tmp_path = str_replace("../media/", "", $path);
-				
+
 				$statement = "INSERT INTO Multimedia (name, type, size, file_path, client_nick, created_at, updated_at) VALUES (:name, :type, :size, :file_path, :client_nick, NOW(), NOW())";
 				$query = $this->db->prepare($statement);
 				$query->bindParam(':name', $_FILES["file"]["name"]);
@@ -99,10 +99,22 @@ class multimedia extends database {
 
 	function create_media_directory(){
 		$path = "../media/".$this->nick;
-		if( !(mkdir($path) && mkdir($path."/video") && mkdir($path."/audio") && mkdir($path."/image") && mkdir($path."/map")) )
-		{
-			header("Location: ../addtag.php?error=mediaDirectory");
+		if(!file_exists($path)){
+			mkdir($path);
+			if(!file_exists($path."/video")){
+				mkdir($path."/video");
+			}
+			if(!file_exists($path."/audio")){
+				mkdir($path."/audio");
+			}
+			if(!file_exists($path."/image")){
+				mkdir($path."/image");
+			}
+			if(!file_exists($path."/map")){
+				mkdir($path."/map");
+			}
 		}
+		header("Location: ../addtag.php?error=mediaDirectory");
 	}
 
 	function move_media_file($type, $tag_id){

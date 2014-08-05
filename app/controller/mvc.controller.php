@@ -23,6 +23,22 @@ class mvc_controller {
 			$_SESSION["logged"] = $user->validate_client( $_POST["email"], $_POST["password"] );
 			if($_SESSION["logged"]) {
 				$_SESSION["client"] = $user->get_client_data( $_POST["email"] )[0];
+				$path = "media/".$_SESSION["client"]["nick"];
+				if(!file_exists($path)){
+					mkdir($path);
+					if(!file_exists($path."/video")){
+						mkdir($path."/video");
+					}
+					if(!file_exists($path."/audio")){
+						mkdir($path."/audio");
+					}
+					if(!file_exists($path."/image")){
+						mkdir($path."/image");
+					}
+					if(!file_exists($path."/map")){
+						mkdir($path."/map");
+					}
+				}
 				header("Location: index.php");
 			}else{
 				header("Location: login.php?error");
