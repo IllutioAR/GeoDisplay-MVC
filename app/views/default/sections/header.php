@@ -18,13 +18,13 @@
 						    <li>
 						    	<a href="index.php">
 						    		<i class="fa fa-map-marker"></i>
-						    		Lugares
+						    		Mis lugares
 						    	</a>
 						    </li>
 						    <li>
 						    	<a href="multimedia.php">
 						    		<i class="fa fa-cloud"></i>
-						    		Multimedia
+						    		Mis archivos
 						    	</a>
 						    </li>
 						</ul>

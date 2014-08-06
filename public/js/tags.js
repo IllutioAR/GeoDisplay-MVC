@@ -1,6 +1,6 @@
 $("i").click(function(){
 	action = $(this).attr("id");
-	id = $(this).parent().attr("tag-id");
+	id = $(this).parent().parent().parent().attr("tag-id");
 	if(action == "disable"){
 		disable_tag(id);
 	}
@@ -13,6 +13,18 @@ $("i").click(function(){
 	else if(action == "delete"){
 		delete_tag(id);
 	}
+});
+
+$("img").click(function(){
+    var element = $(this).parent();
+    if(element.attr("class") == "map"){
+        edit_tag(element.parent().attr("tag-id"));
+    }
+});
+
+$(".titulo-tag").click(function(){
+    var id = $(this).parent().parent().attr("tag-id");
+    edit_tag(id);
 });
 
 function disable_tag(id){

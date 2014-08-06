@@ -20,12 +20,12 @@
 			foreach ($data as $row):
 		?>
 		<div class="col-xs-12 col-md-4" id="tagInfo">
-			<div class="seccion">
+			<div class="seccion" tag-id="<?= $row['id'] ?>">
 				<div class="titulo">
 					<span class="titulo-tag">
 						<?= $row['name'] ?>
 					</span>
-					<span class="titulo-botones pull-right" tag-id="<?= $row['id'] ?>">
+					<span class="titulo-botones pull-right">
 						<i id="disable" class="fa fa-flag" data-toggle="tooltip" data-placement="top" title="Deshabilitar"></i>
 						<i id="clone" class="fa fa-copy" data-toggle="tooltip" data-placement="top" title="Copiar"></i>
 						<i id="edit" class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="Editar"></i>
