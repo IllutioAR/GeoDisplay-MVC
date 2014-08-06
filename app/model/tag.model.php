@@ -48,8 +48,8 @@ class tag extends database {
 
 		$rows = array(
 			"id" => 			$result[0]["id"],
-			"name" => 			utf8_encode($result[0]["name"]),
-			"description" => 	utf8_encode($result[0]["description"]),
+			"name" => 			$result[0]["name"],
+			"description" => 	$result[0]["description"],
 			"url" => 			$result[0]["url"],
 			"url_purchase" => 	$result[0]["url_purchase"],
 			"latitude" => 		$result[0]["latitude"],
