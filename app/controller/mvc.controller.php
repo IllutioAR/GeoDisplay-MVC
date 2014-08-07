@@ -187,7 +187,7 @@ class mvc_controller {
 		$css = array("addtag.css");
 		$js = array(
 					"js/addtag.js",
-					"https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false",
+					"http://maps.googleapis.com/maps/api/js?key=AIzaSyBnIOf-8Tp4UdM1TnwOi8Dx-X0V7cop-9A&sensor=false",
 					"js/map.js"
 				);
 		$pagina = $this->load_template("Add tag", "es", $css, $js );
