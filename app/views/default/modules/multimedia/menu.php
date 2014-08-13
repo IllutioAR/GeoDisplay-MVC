@@ -57,13 +57,13 @@
 				-->
 
 				<li class="dropdown">
+					<form id="upload-file" action="ajax/upload_file.php" method="post" enctype="multipart/form-data" style="display:none">
+						<input id="file" name="file" type="file">
+					</form>
 					<a id="file-upload-select" href="#" class="green dropdown-toggle" data-toggle="dropdown">
 						<i class="fa fa-plus-circle"></i>
 						Subir archivo
 					</a>
-					<form id="upload-file" action="ajax/upload_file.php" method="post" enctype="multipart/form-data" style="display:none">
-						<input id="file" name="file" type="file">
-					</form>
 					<ul class="dropdown-menu" role="menu">
 						<li>
 							<a id="video-upload" href="#">

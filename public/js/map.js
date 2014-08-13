@@ -57,7 +57,7 @@ function setPositionForm(){
 		document.getElementById('latitude').value = markerLatLng.lat().toFixed(6);
 		document.getElementById('longitude').value = markerLatLng.lng().toFixed(6);
 	}else{
-		//window.setTimeout("setPositionForm();",100);
+		window.setTimeout("setPositionForm();",100);
 	}
 	google.maps.event.addListener(marker, 'mouseup', function() {
 		setPositionForm();

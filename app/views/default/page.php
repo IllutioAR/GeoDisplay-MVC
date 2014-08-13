@@ -26,7 +26,6 @@
       #{NOTIFICATION}#
     </div>
     #{FOOTER}#
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
     #{JS}#
   </body>
 </html>

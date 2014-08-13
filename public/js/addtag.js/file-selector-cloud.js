@@ -68,7 +68,7 @@ $(document).ready(function() {
 			element.empty();
 			if(type == "video"){
 				element.prepend(
-					'<div><video controls>'+
+					'<div class="video-preview"><video controls>'+
 						'<source src="' + file_path + '" type="video/mp4">'+
 						'Your browser does not support the video tag.'+
 					'</video></div>' +
@@ -79,10 +79,10 @@ $(document).ready(function() {
 			}
 			else if(type == "audio"){
 				element.prepend(
-					'<audio controls>'+
+					'<div class="audio-preview"><audio controls>'+
 						'<source src="'+file_path+'" type="audio/mpeg">'+
 						'Your browser does not support the audio tag.'+
-					'</audio>' +
+					'</audio></div>' +
 					'<div class="button-area">' +
 						'<button id="audio-cancel" class="btn btn-default">Cancelar selección</button>' +
 					'</div>'
@@ -90,7 +90,7 @@ $(document).ready(function() {
 			}
 			else if(type == "image"){
 				element.append(
-					'<img src="'+file_path+'">' +
+					'<div class="image-preview"><img src="'+file_path+'"></div>' +
 					'<div class="button-area">' +
 						'<button id="image-cancel" class="btn btn-default">Cancelar selección</button>' +
 					'</div>'

@@ -25,7 +25,20 @@ input, textarea{
 	padding: 0 !important;
 }
 
-.multimedia-container > img{
+.multimedia-container video{
+	width: 100%;
+}
+
+.multimedia-container > .audio-preview{
+	padding: 1em;
+	background: #DDD;
+}
+
+.multimedia-container audio{
+	width: 100%;
+}
+
+.multimedia-container img{
 	width: 100%;
 }
 
