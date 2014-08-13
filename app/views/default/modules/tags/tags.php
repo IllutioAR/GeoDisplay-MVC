@@ -3,12 +3,12 @@
 		<div class="col-xs-12 col-md-4">
 			<div class="seccion" onclick="window.location.href = 'addtag.php'" style="cursor:pointer">
 				<div class="new-tag">
-					<div class="parent-container">
-						<div class="child-container">
+					<div class="parent-container" style="height:inherit">
+						<div class="child-container" style="color: #60af31">
 							<div>
-								<i class="fa fa-plus-circle add-icon-lg"></i>
+								<i class="fa fa-plus-circle icon-lg"></i>
 							</div>
-							<div class="add-text-lg">
+							<div class="text-lg">
 								Agrega un lugar
 							</div>
 						</div>

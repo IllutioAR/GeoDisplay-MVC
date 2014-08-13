@@ -186,15 +186,19 @@ class mvc_controller {
 		$this->validate_session();
 		$css = array("addtag.css");
 		$js = array(
-					"js/addtag.js",
-					"http://maps.googleapis.com/maps/api/js?key=AIzaSyBnIOf-8Tp4UdM1TnwOi8Dx-X0V7cop-9A&sensor=false",
+					"js/addtag.js/navigator.js",
+					"js/addtag.js/file-selector-pc.js",
+					"js/addtag.js/file-selector-cloud.js",
+					"https://maps.googleapis.com/maps/api/js?v=3.exp",
+					//"http://maps.googleapis.com/maps/api/js?key=AIzaSyBnIOf-8Tp4UdM1TnwOi8Dx-X0V7cop-9A&sensor=false",
 					"js/map.js"
 				);
 		$pagina = $this->load_template("Add tag", "es", $css, $js );
 		$menu = $this->load_page('../app/views/default/modules/addtag/menu.php');
 		$pagina = $this->replace_content('/\#{MENU}\#/ms' ,$menu , $pagina);
 		$form = $this->load_page('../app/views/default/modules/addtag/form.php');
-		$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms', $form , $pagina);
+		$modal = $this->load_page('../app/views/default/modules/addtag/modal.php');
+		$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms', $form.$modal , $pagina);
 		
 		if( isset($_GET["success"]) ){
 			

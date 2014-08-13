@@ -193,7 +193,7 @@ class multimedia extends database {
 	}
 
 	function get_files($type){
-		$statement = "SELECT id, name, size, created_at FROM Multimedia WHERE client_nick = :nick AND type = :type AND id IN (SELECT multimedia_id FROM Multimedia_Tag)";
+		$statement = "SELECT id, name, size, file_path, created_at FROM Multimedia WHERE client_nick = :nick AND type = :type AND id IN (SELECT multimedia_id FROM Multimedia_Tag)";
 		$query = $this->db->prepare($statement);
 		$query->bindParam(":nick", $this->nick);
 		$query->bindParam(":type", $type);
@@ -224,6 +224,25 @@ class multimedia extends database {
 				);
 		}
 		sort($return);
+		return $return;
+	}
+
+	function get_file_by_id($id){
+		$statement = "SELECT name, size, file_path, type FROM Multimedia WHERE client_nick = :nick AND id = :id";
+		$query = $this->db->prepare($statement);
+		$query->bindParam(":nick", $this->nick);
+		$query->bindParam(":id", $id);
+		$query->execute();
+		$files = $query->fetchAll(PDO::FETCH_ASSOC);
+		$return = array();
+		foreach ($files as $file) {
+			$return[] = array(
+					"name" => $file["name"],
+					"size" => $file["size"],
+					"file_path" => str_replace("../media","",$file["file_path"]),
+					"type" => $file["type"]
+				);
+		}
 		return $return;
 	}
 

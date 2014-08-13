@@ -1,12 +1,12 @@
 <div>
 	<form id="form" role="form" action="ajax/add_tag.php" method="post" enctype="multipart/form-data">
-		<div id="1" class="row">
-			<div class="col-xs-12 col-md-6">
+		<div class="row" id="1">
+			<div class="col-xs-12 col-md-8 col-md-offset-2">
 				<div class="seccion">
 					<div class="titulo">
-						<strong>Información de geolocalización</strong>
+						<strong>Localiza un punto</strong>
 					</div>
-					<div id="map"></div>
+					<div id="map-canvas"></div>
 					<div class="form">
 						<div class="row">
 							<div class="col-xs-6">
@@ -21,16 +21,19 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-xs-12 col-md-6">
+		</div>
+		<div class="row" id="2" style="display:none">
+			<div class="col-xs-12 col-md-8 col-md-offset-2">
 				<div class="seccion">
 					<div class="titulo">
-						<strong>Informacion general</strong>
+						<strong>Información general</strong>
+						(Los campos con <i class="fa fa-asterisk"></i> son obligatorios)
 					</div>
 					<div class="form">
 						<div class="row">
 							<div class="col-xs-6">
 								<label for="tag">
-									Nombre del tag
+									Nombre del lugar
 									<i class="fa fa-asterisk"></i>
 									[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Pon un nombre al lugar que quieres etiquetar."></i>]
 								</label>
@@ -46,6 +49,7 @@
 							</div>
 							<div class="col-xs-6">
 								<label for="tag">
+									<i class="fa fa-globe"></i>
 									Sitio web
 									[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Dirección a tu sitio web."></i>]
 								</label>
@@ -53,8 +57,9 @@
 							</div>
 							<div class="col-xs-6">
 								<label for="tag">
-									Dirección de compra
-									[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Dirección para comprar un producto o servicio."></i>]
+									<i class="fa fa-shopping-cart"></i>
+									Url de compra
+									[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Dirección web para comprar un producto o servicio."></i>]
 								</label>
 								<input name="purchase_url" type="text" class="form-control" id="tag">
 							</div>
@@ -68,11 +73,17 @@
 					<div class="form">
 						<div class="row">
 							<div class="col-xs-6">
-								<label for="facebok">Facebook</label>
+								<label for="facebok">
+									<i class="fa fa-facebook-square"></i>
+									Facebook
+								</label>
 								<input name="facebook" type="url" class="form-control" id="facebook">
 							</div>
 							<div class="col-xs-6">
-								<label for="twitter">Twitter</label>
+								<label for="twitter">
+									<i class="fa fa-twitter"></i>
+									Twitter
+								</label>
 								<input name="twitter" type="text" class="form-control" id="twitter">
 							</div>
 						</div>
@@ -80,27 +91,56 @@
 				</div>
 			</div>
 		</div>
-		<div id="2" class="row" style="display:none">
+		<div class="row" id="3" style="display:none">
+			<div class="col-xs-12 col-md-4">
+				<div class="seccion">
+					<div class="titulo">
+						<strong>Imagen</strong>
+						<i class="fa fa-asterisk"></i>
+					</div>
+					<div class="multimedia-container">
+						<input name="image" id="image" type="file" style="display:none">
+						<div class="drag-area" gd-type="image">
+							<div class="parent-container">
+								<div class="child-container">
+									<div>
+										<i class="fa fa-picture-o icon-lg" data-original-title="" title=""></i>
+									</div>
+									<div class="text-lg">
+										Arrastra una imagen aquí
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="button-area">
+							<button id="image-select-pc" class="btn btn-default">Subir desde PC</button>
+							<button id="image-select-cloud" class="btn btn-default">Image en GeoDisplay</button>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="col-xs-12 col-md-4">
 				<div class="seccion">
 					<div class="titulo">
 						<strong>Video</strong>
-						<i class="fa fa-asterisk"></i>
-						<i id="close-video-select" type="video" class="fa fa-times fa-lg pull-right close-icon" style="display:none"></i>
 					</div>
-					<div class="form" id="multimedia">
-						<div class="row" id="multimedia-video" style="margin-bottom:0">
-							<div class="col-xs-12">
-								<input name="video" id="video" type="file" style="display:none">
-								<button id="btn-video" class="btn btn-default">
-									<i class="fa fa-laptop"></i> 
-									Seleccionar desde equipo
-								</button>
-								<button id="btn-video-cloud" class="btn btn-default">
-									<i class="fa fa-cloud"></i> 
-									Seleccionar de multimedia
-								</button>
+					<div class="multimedia-container">
+						<input name="video" id="video" type="file" style="display:none">
+						<div class="drag-area" gd-type="video">
+							<div class="parent-container">
+								<div class="child-container">
+									<div>
+										<i class="fa fa-film icon-lg" data-original-title="" title=""></i>
+									</div>
+									<div class="text-lg">
+										Arrastra un video aquí
+									</div>
+								</div>
 							</div>
+						</div>
+						<div class="button-area">
+							<button id="video-select-pc" class="btn btn-default">Subir desde PC</button>
+							<button id="video-select-cloud" class="btn btn-default">Video en GeoDisplay</button>
 						</div>
 					</div>
 				</div>
@@ -109,44 +149,24 @@
 				<div class="seccion">
 					<div class="titulo">
 						<strong>Audio</strong>
-						<i id="close-audio-select" type="audio" class="fa fa-times fa-lg pull-right close-icon" style="display:none"></i>
 					</div>
-					<div class="form" id="multimedia">
-						<div class="row" id="multimedia-audio" style="margin-bottom:0">
-							<div class="col-xs-12">
-								<input name="audio" id="audio" type="file" style="display:none">
-								<button id="btn-audio" class="btn btn-default">
-									<i class="fa fa-laptop"></i> 
-									Seleccionar desde equipo
-								</button>
-								<button id="btn-audio-cloud" class="btn btn-default">
-									<i class="fa fa-cloud"></i> 
-									Seleccionar de multimedia
-								</button>
+					<div class="multimedia-container">
+						<input name="audio" id="audio" type="file" style="display:none">
+						<div class="drag-area" gd-type="audio">
+							<div class="parent-container">
+								<div class="child-container">
+									<div>
+										<i class="fa fa-music icon-lg" data-original-title="" title=""></i>
+									</div>
+									<div class="text-lg">
+										Arrastra un audio aquí
+									</div>
+								</div>
 							</div>
 						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-12 col-md-4">
-				<div class="seccion">
-					<div class="titulo">
-						<strong>Imagen</strong>
-						<i id="close-image-select" type="image" class="fa fa-times fa-lg pull-right close-icon" style="display:none"></i>
-					</div>
-					<div class="form" id="multimedia">
-						<div class="row" id="multimedia-image" style="margin-bottom:0">
-							<div class="col-xs-12">
-								<input name="image" id="image" type="file" style="display:none">
-								<button id="btn-image" class="btn btn-default">
-									<i class="fa fa-laptop"></i> 
-									Seleccionar desde equipo
-								</button>
-								<button id="btn-image-cloud" class="btn btn-default">
-									<i class="fa fa-cloud"></i> 
-									Seleccionar de multimedia
-								</button>
-							</div>
+						<div class="button-area">
+							<button id="audio-select-pc" class="btn btn-default">Subir desde PC</button>
+							<button id="audio-select-cloud" class="btn btn-default">Audio en GeoDisplay</button>
 						</div>
 					</div>
 				</div>

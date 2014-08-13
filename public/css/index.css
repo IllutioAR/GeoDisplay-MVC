@@ -36,40 +36,10 @@
     width: 			95%;
 }
 
-.seccion .links .fa-facebook-square{
-	color: #3B5998;
-}
-
-.seccion .links .fa-twitter{
-	color: #00aced;
-}
-
 .seccion .links a{
 	color: inherit;
 }
 
 .seccion .new-tag{
 	height: 257px;
-}
-
-.parent-container{
-	display: table; 
-	height:260px; 
-	width:100%;
-}
-
-.child-container{
-	color: 			#60af31;
-	display: 		table-cell;
-	text-align: 	center;
-	vertical-align: middle;
-	width:100%
-}
-
-.add-icon-lg{
-	font-size: 9em;
-}
-
-.add-text-lg{
-	font-size: 2em;
 }

@@ -201,9 +201,43 @@ footer > span{
 }
 */
 
+.parent-container{
+	display: table;
+	width:100%;
+}
+
+.child-container{
+	display: 		table-cell;
+	text-align: 	center;
+	vertical-align: middle;
+	width: 			100%;
+}
+
+video{
+	width: 100%;
+}
+
+audio{
+	width: 100%;
+}
+
+.text-lg{
+	font-size: 2em;
+}
+
+.icon-lg{
+	font-size: 5em;
+}
+
 .fa-asterisk{
 	color: red;
 }
 .fa-question{
 	cursor: pointer;
+}
+.fa-facebook-square{
+	color: #3B5998;
+}
+.fa-twitter{
+	color: #00aced;
 }

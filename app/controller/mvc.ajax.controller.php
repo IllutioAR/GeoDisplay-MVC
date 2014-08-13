@@ -91,6 +91,16 @@ class mvc_controller {
 		
 	}
 
+	function get_file_by_id(){
+		$this->validate_session();
+		if( isset($_GET["id"]) ){
+			$multimedia = new multimedia($_SESSION["client"]["nick"]);
+			$file["file"] = $multimedia->get_file_by_id( $_GET["id"] );
+			echo json_encode($file);
+		}
+		
+	}
+
 	function upload_file(){
 		$this->validate_session();
 		$multimedia = new multimedia($_SESSION["client"]["nick"]);
