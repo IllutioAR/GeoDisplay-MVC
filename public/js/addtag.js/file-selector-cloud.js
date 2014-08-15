@@ -109,8 +109,21 @@ $(document).ready(function() {
 		e.preventDefault();
 		var type = $(this).attr("id").replace("-cancel", "");
 
-		var hmtl_string = '<input name="DEFAULT" id="DEFAULT" type="file" style="display:none"><div class="drag-area" gd-type="DEFAULT"><div class="parent-container"><div class="child-container"><div><i class="fa fa-ICON_TYPE icon-lg" data-original-title="" title=""></i></div><div class="text-lg">Arrastra un DEFAULT aquí</div></div></div></div><div class="button-area"><button id="DEFAULT-select-pc" class="btn btn-default">Subir desde PC</button><button id="DEFAULT-select-cloud" class="btn btn-default">DEFAULT en GeoDisplay</button></div>';
-		html_string = hmtl_string.split("DEFAULT").join(type);
+		var html_string = '<input name="DEFAULT" id="DEFAULT" type="file" style="display:none"><div class="drag-area" gd-type="DEFAULT"><div class="parent-container"><div class="child-container"><div><i class="fa fa-ICON_TYPE icon-lg" data-original-title="" title=""></i></div><div class="text-lg">Arrastra un DEFAULT aquí</div>';
+		
+		if (type == "image"){
+			html_string += '<div>.jpg .png (Max 5MB)</div>';
+		}
+		else if(type == "video"){
+			html_string += '<div>.mp4 .3gp (Max 30MB)</div>';
+		}
+		else if(type == "audio"){
+			html_string += '<div>.mp3 (Max 10MB)</div>';
+		}
+
+		html_string += '</div></div></div><div class="button-area"><button id="DEFAULT-select-pc" class="btn btn-default">Subir desde PC</button><button id="DEFAULT-select-cloud" class="btn btn-default">DEFAULT en GeoDisplay</button></div>';
+		
+		html_string = html_string.split("DEFAULT").join(type);
 
 		if(type == "video"){
 			html_string = html_string.replace("ICON_TYPE", "film");

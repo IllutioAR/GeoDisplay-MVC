@@ -11,10 +11,6 @@ input, textarea{
 	margin-bottom: 1em;
 }
 
-.progress{
-	margin-bottom: 0;
-}
-
 .close-icon{
 	color: red;
 	cursor: pointer;
@@ -50,6 +46,12 @@ input, textarea{
 
 .drag-area > div{
 	min-height: 200px;
+}
+
+.preview-upload-progress{
+	background: #DDD;
+	color: #AAA;
+	height: 200px;
 }
 
 .button-area{

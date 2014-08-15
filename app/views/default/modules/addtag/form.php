@@ -109,12 +109,15 @@
 									<div class="text-lg">
 										Arrastra una imagen aquí
 									</div>
+									<div>
+									 .jpg .png .gif (Max 2MB) 
+									</div>
 								</div>
 							</div>
 						</div>
 						<div class="button-area">
 							<button id="image-select-pc" class="btn btn-default">Subir desde PC</button>
-							<button id="image-select-cloud" class="btn btn-default">Image en GeoDisplay</button>
+							<button id="image-select-cloud" class="btn btn-default">Imagen en GeoDisplay</button>
 						</div>
 					</div>
 				</div>
@@ -134,6 +137,9 @@
 									</div>
 									<div class="text-lg">
 										Arrastra un video aquí
+									</div>
+									<div>
+									 .mp4 .3gp (Max 30MB) 
 									</div>
 								</div>
 							</div>
@@ -160,6 +166,9 @@
 									</div>
 									<div class="text-lg">
 										Arrastra un audio aquí
+									</div>
+									<div>
+									 .mp3 (Max 10MB) 
 									</div>
 								</div>
 							</div>

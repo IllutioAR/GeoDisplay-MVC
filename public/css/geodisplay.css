@@ -203,6 +203,7 @@ footer > span{
 
 .parent-container{
 	display: table;
+	height: inherit;
 	width:100%;
 }
 
@@ -215,6 +216,10 @@ footer > span{
 
 .text-lg{
 	font-size: 2em;
+}
+
+.text-xl{
+	font-size: 4em;
 }
 
 .icon-lg{
