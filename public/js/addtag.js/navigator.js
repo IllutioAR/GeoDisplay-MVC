@@ -15,6 +15,7 @@ $(document).ready(function() {
 		state++; 
 		if(state === 3){
 			//SUBMIT FORM
+			
 		}else if(state === 4){
 			// SUBMIT MULTIMEDIA
 			/*
@@ -34,16 +35,16 @@ $(document).ready(function() {
 		var back;
 		var next;
 		if( state === 1){
-			back = "Mis lugares";
-			next = "Información";
+			back = '<i class="fa fa-arrow-left" data-original-title="" title=""></i> Mis lugares';
+			next = 'Información <i class="fa fa-arrow-right" data-original-title="" title=""></i>';
 		}else if( state === 2 ){
-			back = "Mapa";
-			next = "Multimedia";
+			back = '<i class="fa fa-arrow-left" data-original-title="" title=""></i> Mapa';
+			next = 'Multimedia <i class="fa fa-arrow-right" data-original-title="" title=""></i>';
 		}else if( state === 3){
-			back = "Información";
-			next = "Publicar";
+			back = '<i class="fa fa-arrow-left" data-original-title="" title=""></i> Información';
+			next = 'Publicar <i class="fa fa-cloud-upload" data-original-title="" title=""></i>';
 		}
-		$( "#back > span" ).html( back );
-		$( "#next > span" ).html( next );
+		$( "#back" ).html( back );
+		$( "#next" ).html( next );
 	}
 });
