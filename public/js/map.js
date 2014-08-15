@@ -1,6 +1,6 @@
 var map;
 var initialLocation;
-var marker;
+var marker = null;
 
 function initialize() {
 	var mapOptions = {
@@ -36,12 +36,10 @@ function initialize() {
 			google.maps.event.addListener(marker, "mousedown", function() {
 				infowindow.close();
 			});
-
 		}, function() {
 			handleNoGeolocation();
 		});
-	}
-	else {
+	}else {
 		handleNoGeolocation();
 	}
 
@@ -57,7 +55,7 @@ function setPositionForm(){
 		document.getElementById('latitude').value = markerLatLng.lat().toFixed(6);
 		document.getElementById('longitude').value = markerLatLng.lng().toFixed(6);
 	}else{
-		window.setTimeout("setPositionForm();",100);
+		window.setTimeout("setPositionForm();",500);
 	}
 	google.maps.event.addListener(marker, 'mouseup', function() {
 		setPositionForm();
