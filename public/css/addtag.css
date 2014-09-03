@@ -11,6 +11,18 @@ input, textarea{
 	margin-bottom: 1em;
 }
 
+form [class*="error-input"]{
+	/*background: #FFD6DC;*/
+	border: 1px #F00 solid;
+	box-shadow: 0px 0px 3px #f00;
+}
+
+form [class*="error-input"]:focus{
+	/*background: #FFD6DC;*/
+	border: 1px #F00 solid;
+	box-shadow: 0px 0px 3px #f00;
+}
+
 .close-icon{
 	color: red;
 	cursor: pointer;

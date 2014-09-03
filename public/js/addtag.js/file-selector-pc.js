@@ -75,6 +75,7 @@ $(document).ready(function() {
 		element.empty();
 
 		var html_string = '<div class="preview-upload-progress">'+
+						  '<input name="DEFAULT-id" id="DEFAULT-id" type="text" style="display:none"> '+
 							'<div class="parent-container">'+
 								'<div class="child-container">'+
 									'<div id="upload-progress-text" class="text-xl">'+
@@ -98,7 +99,7 @@ $(document).ready(function() {
 		var progress_bar = $(".progress[gd-type="+type+"]").children();
 		var progress_txt = $(element).find("#upload-progress-text")
 
-		var uploadURL ="ajax/test.php";
+		var uploadURL ="ajax/upload_file.php?type="+type;
 		var extraData ={};
 		var jqXHR=$.ajax({
 			xhr: function() {
@@ -128,10 +129,16 @@ $(document).ready(function() {
 				$(".progress[gd-type="+type+"]").children().css("width", "100%");
 				$(".progress[gd-type="+type+"]").children().addClass("progress-bar-success");
 				$(".progress[gd-type="+type+"]").children().removeClass("progress-bar-striped");
-
+				if(data.indexOf("success") > -1){
+					var id = data.replace("success", "");
+					$("#"+type+"-id").val(id);	
+				}
+				else{
+					console.log("error");
+				}
 				//SHOW FILE PREVIEW
 
-				console.debug(data);
+				//console.debug(data);
 			},
 			error: function(){
 				console.debug("Error");

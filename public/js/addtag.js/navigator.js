@@ -12,11 +12,50 @@ $(document).ready(function() {
 	});
 
 	$("#next").click(function(){
-		state++; 
-		if(state === 3){
-			//SUBMIT FORM
+		var flag = true;
+		if(state === 1){
+			//Elementos a validar
+			var latitude = $("#latitude");
+			var longitude = $("#longitude");
+
+			//Valida los elementos numéricos
+			if( !isNumeric(latitude.val()) ){
+				latitude.addClass("error-input");
+				flag = false;
+			}
+			else{
+				latitude.removeClass("error-input");
+			}
+			if( !isNumeric(longitude.val()) ){
+				longitude.addClass("error-input");
+				flag = false;
+			}else{
+				longitude.removeClass("error-input");
+			}
+		}
+		else if(state === 2){
+			var name = $("#name");
+			var description = $("#description");
+
+			if( name.val() == 0 ){
+				name.addClass("error-input");
+				flag = false;
+			}else{
+				name.removeClass("error-input");
+			}
+			if( description.val() == 0 ){
+				description.addClass("error-input");
+				flag = false;
+			}else{
+				description.removeClass("error-input");
+			}
 			
-		}else if(state === 4){
+		}else if(state === 3){
+			var image;
+			var video;
+			var audio;
+			$("#form").submit();
+			return ;
 			// SUBMIT MULTIMEDIA
 			/*
 				Los archivos se suben automáticamente al seleccionarlos,
@@ -25,9 +64,13 @@ $(document).ready(function() {
 				(Falta implementar una restricción que no permita activar tags sin video)
 			*/
 		}
-		$( "#" + (state-1) ).hide();
-		$( "#" + state ).show(200);
-		setMenuText();
+
+		if (flag){
+			state++; 
+			$( "#" + (state-1) ).hide();
+			$( "#" + state ).show(200);
+			setMenuText();	
+		}
 	});
 
 	function setMenuText(){
@@ -47,4 +90,9 @@ $(document).ready(function() {
 		$( "#back" ).html( back );
 		$( "#next" ).html( next );
 	}
+
+	function isNumeric(n) {
+		return !isNaN(parseFloat(n)) && isFinite(n);
+	}
+
 });

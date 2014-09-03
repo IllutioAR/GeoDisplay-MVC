@@ -24,7 +24,7 @@ class mvc_controller {
 			strlen($_POST["longitude"]) > 0 && 
 			strlen($_POST["name"]) > 0 && 
 			strlen($_POST["description"]) > 0 &&
-			( isset($_FILES["video"]) || isset($_POST["video_id"]) )
+			( isset($_POST["image-id"]) )
 		  )
 		{
 			$tag = new tag($_SESSION["client"]["nick"]);

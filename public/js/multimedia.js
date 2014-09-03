@@ -49,6 +49,7 @@ $( document ).ready(function() {
 		type = type.replace("-upload", "");
 		var action = $("#upload-file").attr("action");
 		$("#upload-file").attr("action", action + "?type=" + type);
+		$("#file").attr("name", type);
 	});
 
 	$("a").click(function(e){
@@ -60,6 +61,7 @@ $( document ).ready(function() {
 	});
 
 	$("#file").on("change", function(){
+
 		$("#upload-file").ajaxForm({
 			beforeSubmit:function() {
 				$("#file-upload-select").html("Uploading...");
@@ -73,16 +75,20 @@ $( document ).ready(function() {
 				$("#file-upload-select").html("Progress " + percentComplete + "%");
 			},
 			success: function(data) {
+				//console.log(data);
 				var type = $("#upload-file").attr("action").replace("ajax/upload_file.php?type=", "")
-				if(data == "success"){
+
+				if(data.indexOf("success") > -1){
 					window.location.href = "multimedia.php?type=" + type + "&success=upload";
 				}
 				else{
 					window.location.href = "multimedia.php?type=" + type + "&error";
-				}				
+				}
+				$("#file").attr("name", "file");				
 			},
 			error: function(){
 				console.log("Error");
+				$("#file").attr("name", "file");
 			}
 		});
 		$("#upload-file").submit();

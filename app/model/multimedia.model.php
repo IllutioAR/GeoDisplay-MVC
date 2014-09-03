@@ -22,7 +22,7 @@ class multimedia extends database {
 	}
 
 	function save_file($type){
-		if ( ($_FILES["file"]["size"]/(1024*1024)) > $this->get_user_space() ){
+		if ( ($_FILES[$type]["size"]/(1024*1024)) > $this->get_user_space() ){
 			return "user_space";
 		}
 		if($type == "image"){
@@ -37,37 +37,37 @@ class multimedia extends database {
 		else{
 			return "error";
 		}
-		$ext = strtolower(pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION));
-		$max_size = 50 * 1024 * 1024; // 50 MB
-		if( in_array($ext, $valid_exts) && $_FILES['file']['size'] < $max_size){
+		$ext = strtolower(pathinfo($_FILES[$type]["name"], PATHINFO_EXTENSION));
+		$max_size = 100 * 1024 * 1024; // 100 MB
+		if( in_array($ext, $valid_exts) && $_FILES[$type]['size'] < $max_size){
 			$path = "../media/".$this->nick;
 			$base_path = $path."/".$type."/";
-			while( file_exists( $base_path.$_FILES["file"]["name"] ) ){
+			while( file_exists( $base_path.$_FILES[$type]["name"] ) ){
 				$base_path = $base_path."(".uniqid().")";
 			}
-			$path = $base_path.$_FILES["file"]["name"];
-			if ( move_uploaded_file($_FILES["file"]["tmp_name"], $path) ) {
-				$size = intval( $_FILES["file"]["size"] ) / (1024*1024);
+			$path = $base_path.$_FILES[$type]["name"];
+			if ( move_uploaded_file($_FILES[$type]["tmp_name"], $path) ) {
+				$size = intval( $_FILES[$type]["size"] ) / (1024*1024);
 				$_SESSION["client"]["space"] = $this->get_user_space();
 
 				$tmp_path = str_replace("../media/", "", $path);
 
 				$statement = "INSERT INTO Multimedia (name, type, size, file_path, client_nick, created_at, updated_at) VALUES (:name, :type, :size, :file_path, :client_nick, NOW(), NOW())";
 				$query = $this->db->prepare($statement);
-				$query->bindParam(':name', $_FILES["file"]["name"]);
+				$query->bindParam(':name', $_FILES[$type]["name"]);
 				$query->bindParam(':type', $type);
 				$query->bindParam(':size', $size, PDO::PARAM_INT);
 				$query->bindParam(':file_path', $tmp_path );
 				$query->bindParam(':client_nick', $this->nick);
 				$query->execute();
-				return "success";
+				return "success".$this->db->lastInsertId();
 			}
 			else{
 				return "error_upload";
 			}
 		}
 		else{
-			return "file_extesion";
+			return "file_extesion/size";
 		}
 	}
 
@@ -228,7 +228,7 @@ class multimedia extends database {
 	}
 
 	function get_file_by_id($id){
-		$statement = "SELECT name, size, file_path, type FROM Multimedia WHERE client_nick = :nick AND id = :id";
+		$statement = "SELECT id, name, size, file_path, type FROM Multimedia WHERE client_nick = :nick AND id = :id";
 		$query = $this->db->prepare($statement);
 		$query->bindParam(":nick", $this->nick);
 		$query->bindParam(":id", $id);
@@ -237,6 +237,7 @@ class multimedia extends database {
 		$return = array();
 		foreach ($files as $file) {
 			$return[] = array(
+					"id" => $file["id"],
 					"name" => $file["name"],
 					"size" => $file["size"],
 					"file_path" => str_replace("../media","",$file["file_path"]),

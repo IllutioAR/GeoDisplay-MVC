@@ -105,26 +105,19 @@ class tag extends database {
 		$query->bindParam(':client_nick', $this->nick);
 		$query->execute();
 
-		if( isset($_FILES["video"]) && $_FILES["video"]["error"] == 0){
-			$multimedia->move_media_file("video", $tag_id);			
-		}elseif ( isset($_POST["video_id"]) ){
-			$multimedia->set_existing_file("video", $tag_id, $_POST["video_id"]);
+		if ( isset($_POST["image-id"]) ){
+			$multimedia->set_existing_file("image", $tag_id, $_POST["image-id"]);
 		}
 		else{
 			header("Location: ../addtag.php?error=fileUpload");
 		}
-
-		if( isset($_FILES["audio"]) && $_FILES["audio"]["error"] == 0){
-			$multimedia->move_media_file("audio", $tag_id);
-		}elseif ( isset($_POST["audio_id"]) ) {
-			$multimedia->set_existing_file("audio", $tag_id, $_POST["audio_id"]);
+		if ( isset($_POST["video-id"]) ) {
+			$multimedia->set_existing_file("video", $tag_id, $_POST["video-id"]);
+		}
+		if ( isset($_POST["audio-id"]) ) {
+			$multimedia->set_existing_file("audio", $tag_id, $_POST["audio-id"]);
 		}
 
-		if( isset($_FILES["image"]) && $_FILES["image"]["error"] == 0){
-			$multimedia->move_media_file("image", $tag_id);
-		}elseif ( isset($_POST["image_id"]) ) {
-			$multimedia->set_existing_file("image", $tag_id, $_POST["image_id"]);
-		}
 		$_SESSION["client"]["tags"] = $this->get_num_user_tags();
 	}
 

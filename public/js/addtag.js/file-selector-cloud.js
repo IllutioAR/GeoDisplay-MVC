@@ -46,7 +46,7 @@ $(document).ready(function() {
 			});
 		})
 
-		request.fail(function() {
+		request.fail(function(){
 			$("#file-selector-cloud").modal("hide");
 		    alert("Error miestra se cargaban los archivos,\n intenta otra vez.");
 		});
@@ -58,9 +58,11 @@ $(document).ready(function() {
 		var id = $(".file-wrapper-selected").attr("gd-id");
 
 		var request = $.getJSON( "ajax/get_file_by_id.php?id=" + id, function(response) {
+			var id = "";
 			var file_path = "";
 			var type = "";
 			$.each( response["file"], function( i, item ) {
+				id = item["id"];
 				file_path = "media/"+item["file_path"];
 				type = item["type"];
 			});
@@ -68,7 +70,9 @@ $(document).ready(function() {
 			element.empty();
 			if(type == "video"){
 				element.prepend(
-					'<div class="video-preview"><video controls>'+
+					'<div class="video-preview">'+
+					'<input name="video-id" id="video-id" type="text" style="display:none" value="'+ id +'"> '+
+					'<video controls>'+	
 						'<source src="' + file_path + '" type="video/mp4">'+
 						'Your browser does not support the video tag.'+
 					'</video></div>' +
@@ -79,7 +83,9 @@ $(document).ready(function() {
 			}
 			else if(type == "audio"){
 				element.prepend(
-					'<div class="audio-preview"><audio controls>'+
+					'<div class="audio-preview">'+
+					'<input name="audio-id" id="audio-id" type="text" style="display:none" value="'+ id +'"> '+
+					'<audio controls>'+
 						'<source src="'+file_path+'" type="audio/mpeg">'+
 						'Your browser does not support the audio tag.'+
 					'</audio></div>' +
@@ -90,7 +96,9 @@ $(document).ready(function() {
 			}
 			else if(type == "image"){
 				element.append(
-					'<div class="image-preview"><img src="'+file_path+'"></div>' +
+					'<div class="image-preview">'+
+					'<input name="image-id" id="image-id" type="text" style="display:none" value="'+ id +'"> '+
+					'<img src="'+file_path+'"></div>' +
 					'<div class="button-area">' +
 						'<button id="image-cancel" class="btn btn-default">Cancelar selección</button>' +
 					'</div>'
