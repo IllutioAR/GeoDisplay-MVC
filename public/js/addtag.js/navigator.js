@@ -14,55 +14,12 @@ $(document).ready(function() {
 	$("#next").click(function(){
 		var flag = true;
 		if(state === 1){
-			//Elementos a validar
-			var latitude = $("#latitude");
-			var longitude = $("#longitude");
-
-			//Valida los elementos numéricos
-			if( !isNumeric(latitude.val()) ){
-				latitude.addClass("error-input");
-				flag = false;
-			}
-			else{
-				latitude.removeClass("error-input");
-			}
-			if( !isNumeric(longitude.val()) ){
-				longitude.addClass("error-input");
-				flag = false;
-			}else{
-				longitude.removeClass("error-input");
-			}
+			flag = validateCoordinates();
 		}
 		else if(state === 2){
-			var name = $("#name");
-			var description = $("#description");
-
-			if( name.val() == 0 ){
-				name.addClass("error-input");
-				flag = false;
-			}else{
-				name.removeClass("error-input");
-			}
-			if( description.val() == 0 ){
-				description.addClass("error-input");
-				flag = false;
-			}else{
-				description.removeClass("error-input");
-			}
-			
+			flag = validateTextFields();
 		}else if(state === 3){
-			var image;
-			var video;
-			var audio;
-			$("#form").submit();
-			return ;
-			// SUBMIT MULTIMEDIA
-			/*
-				Los archivos se suben automáticamente al seleccionarlos,
-				al dar click aquí sólo se valida que los archivos se hayan subido completamente
-				y se cambia el status del tag a activo.
-				(Falta implementar una restricción que no permita activar tags sin video)
-			*/
+			flag = validateMediaFiles();
 		}
 
 		if (flag){
@@ -89,6 +46,65 @@ $(document).ready(function() {
 		}
 		$( "#back" ).html( back );
 		$( "#next" ).html( next );
+	}
+
+	function validateCoordinates(){
+		flag = true;
+		var latitude = $("#latitude");
+		var longitude = $("#longitude");
+
+		//Valida los elementos numéricos
+		if( !isNumeric(latitude.val()) ){
+			latitude.addClass("error-input");
+			flag = false;
+		}
+		else{
+			latitude.removeClass("error-input");
+		}
+		if( !isNumeric(longitude.val()) ){
+			longitude.addClass("error-input");
+			flag = false;
+		}else{
+			longitude.removeClass("error-input");
+		}
+		return flag;
+	}
+
+	function validateTextFields(){
+		flag = true;
+		var name = $("#name");
+		var description = $("#description");
+
+		if( name.val() == 0 ){
+			name.addClass("error-input");
+			flag = false;
+		}else{
+			name.removeClass("error-input");
+		}
+		if( description.val() == 0 ){
+			description.addClass("error-input");
+			flag = false;
+		}else{
+			description.removeClass("error-input");
+		}
+		return flag;
+	}
+
+	function validateMediaFiles(){
+		flag = true;
+		var image;
+		var video;
+		var audio;
+
+		$("#form").submit();
+		return flag;
+		// SUBMIT MULTIMEDIA
+		/*
+			Los archivos se suben automáticamente al seleccionarlos,
+			al dar click aquí sólo se valida que los archivos se hayan subido completamente
+			y se cambia el status del tag a activo.
+			(Falta implementar una restricción que no permita activar tags sin video)
+		*/
 	}
 
 	function isNumeric(n) {
