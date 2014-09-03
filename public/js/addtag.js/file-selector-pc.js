@@ -165,7 +165,7 @@ $(document).ready(function() {
 				html_string += '<div>.mp3 (Max 10MB)</div>';
 			}
 
-			html_string += '</div></div></div><div class="button-area"><button id="DEFAULT-select-pc" class="btn btn-default">Subir desde PC</button><button id="DEFAULT-select-cloud" class="btn btn-default">DEFAULT en GeoDisplay</button></div>';
+			html_string += '</div></div></div><div class="button-area"><button id="DEFAULT-select-pc" class="btn btn-default">Subir desde PC</button><button id="DEFAULT-select-cloud" class="btn btn-default">Seleccionar desde GeoDisplay</button></div>';
 			html_string = html_string.split("DEFAULT").join(type);
 
 			if(type == "video"){

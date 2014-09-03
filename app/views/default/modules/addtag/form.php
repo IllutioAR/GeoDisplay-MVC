@@ -117,7 +117,7 @@
 						</div>
 						<div class="button-area">
 							<button id="image-select-pc" class="btn btn-default">Subir desde PC</button>
-							<button id="image-select-cloud" class="btn btn-default">Imagen en GeoDisplay</button>
+							<button id="image-select-cloud" class="btn btn-default">Seleccionar desde GeoDisplay</button>
 						</div>
 					</div>
 				</div>
@@ -146,7 +146,7 @@
 						</div>
 						<div class="button-area">
 							<button id="video-select-pc" class="btn btn-default">Subir desde PC</button>
-							<button id="video-select-cloud" class="btn btn-default">Video en GeoDisplay</button>
+							<button id="video-select-cloud" class="btn btn-default">Seleccionar desde GeoDisplay</button>
 						</div>
 					</div>
 				</div>
@@ -175,7 +175,7 @@
 						</div>
 						<div class="button-area">
 							<button id="audio-select-pc" class="btn btn-default">Subir desde PC</button>
-							<button id="audio-select-cloud" class="btn btn-default">Audio en GeoDisplay</button>
+							<button id="audio-select-cloud" class="btn btn-default">Seleccionar desde GeoDisplay</button>
 						</div>
 					</div>
 				</div>
