@@ -10,6 +10,21 @@ class client extends database {
 		$this->db = new database();
 	}
 
+	function register($data){
+		var_dump($data);
+		$statement = "INSERT INTO Client (nick, email, password, name, logo, country, city, reseller_id, plan, tags, space, language, created_at, updated_at) VALUES (:nick, :email, :password, :name, :logo, :country, :city, 1, 'Starter', 10, 500, 'English', NOW(), NOW() )";
+		$query = $this->db->prepare($statement);
+		$query->bindParam(':nick', 		$data["nick"]);
+		$query->bindParam(':email', 	$data["email"]);
+		$query->bindParam(':password',	$data["password"]);
+		$query->bindParam(':name', 		$data["name"]);
+		$query->bindParam(':logo', 		$data["logo"]);
+		$query->bindParam(':country', 	$data["country"]);
+		$query->bindParam(':city', 		$data["city"]);
+		$query->execute();
+		//print_r( $this->db->errorInfo() );
+	}
+
 	function validate_client($email, $password){
 		if(filter_var($email,FILTER_VALIDATE_EMAIL)){
 			$statement = "SELECT password FROM Client WHERE email = :email";

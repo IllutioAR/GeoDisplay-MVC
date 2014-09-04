@@ -15,6 +15,67 @@ class mvc_controller {
 		header("Location: login.php");
 	}
 
+	function register(){
+		session_start();
+		if( isset($_SESSION["logged"]) && $_SESSION["logged"] ){
+			header("Location: index.php");	
+			exit();
+		}
+
+		if(
+			isset( $_POST["nick"] ) &&
+			isset( $_POST["email"] ) &&
+			isset( $_POST["password"] ) &&
+			isset( $_POST["password2"] ) &&
+			isset( $_POST["name"] ) &&
+			isset( $_POST["country"] ) &&
+			isset( $_POST["city"] )
+		){
+			if(!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
+				header("Location: register.php?error=email");
+				exit();
+			}
+			elseif ( strlen($_POST["password"]) < 6 || $_POST["password"] != $_POST["password2"]) {
+				header("Location: register.php?error=password");
+				exit();
+			}
+			$user = new client();
+			$data["nick"] = $_POST["nick"];
+			$data["email"] = $_POST["email"];
+			$data["password"] = $_POST["password"];
+			$data["name"] = $_POST["name"];
+			$data["logo"] = "media/default/profile/default.png";
+			$data["country"] = $_POST["country"];
+			$data["city"] = $_POST["city"];
+			
+
+			$path = "media/".$_POST["nick"];
+			if(!file_exists($path)){
+				mkdir($path);
+				if(!file_exists($path."/video")){
+					mkdir($path."/video");
+				}
+				if(!file_exists($path."/audio")){
+					mkdir($path."/audio");
+				}
+				if(!file_exists($path."/image")){
+					mkdir($path."/image");
+				}
+				if(!file_exists($path."/map")){
+					mkdir($path."/map");
+				}
+			}
+			$user->register($data);
+			header("Location: login.php");
+
+
+		}else{
+			$pagina = $this->load_page('../app/views/default/modules/register.php');
+			$this->view_page($pagina);	
+		}
+		
+	}
+
 	// Muestra la vista de login, es el único método que valida la session por sí mismo sin utilizar el método validate_session()
 	function login(){
 		session_start();
