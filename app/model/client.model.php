@@ -25,6 +25,18 @@ class client extends database {
 		//print_r( $this->db->errorInfo() );
 	}
 
+	function user_exists($nick, $email){
+		$statement = "SELECT id FROM Client WHERE nick = :nick OR email = :email";
+		$query = $this->db->prepare($statement);
+		$query->bindParam(':nick', $nick);
+		$query->bindParam(':email', $email);
+		$query->execute();
+		if($query->rowCount() == 1){
+			return true;
+		}
+		return false;
+	}
+
 	function validate_client($email, $password){
 		if(filter_var($email,FILTER_VALIDATE_EMAIL)){
 			$statement = "SELECT password FROM Client WHERE email = :email";
@@ -93,7 +105,7 @@ class client extends database {
 			$query->bindParam(':newPass',$newPass);
 			$query->execute();
 
-			$email_message = "Su nueva contraseña es: " .$newPassword;
+			$email_message = "Su nueva contraseña ha sido generada, te recomendamos cambiarle inmediatamente al iniciar sesión: " .$newPassword;
 			$email_from = 'support@illut.io';
 
 			$headers = 'From: '.$email_from."\r\n".

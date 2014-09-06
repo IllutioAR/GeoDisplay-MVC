@@ -26,7 +26,7 @@
 						    <span class="icon-bar"></span>
 						    <span class="icon-bar"></span>
 						</button>
-						<a id="logo" class="navbar-brand" href="index.html">
+						<a id="logo" class="navbar-brand" href="index.php">
 							<img src="img/logo-124x124.png" height="40" width="40">
 							<span>GeoDisplay</span>
 						</a>
@@ -50,23 +50,23 @@
 									<hr>
 								</div>
 								<div>
-	                                <form action="register.php" method="post" role="form">
+	                                <form action="register.php" method="post" role="form" enctype="multipart/form-data">
 	                                	<div class="col-xs-6">
 	                                		<div class="form-group">
 												<label for="nick">Nick</label>
-												<input name="nick" type="text" class="form-control" id="nick" placeholder="Escribe un nick" required focus>
+												<input name="nick" type="text" class="form-control" id="nick" pattern="[a-zA-Z0-9]" title="El nick sólo debe tener letras o números." placeholder="Escribe un nick" required focus>
 											</div>
 		                            		<div class="form-group">
 												<label for="email">Correo electrónico</label>
-												<input name="email" type="email" class="form-control" id="email" placeholder="Escribe tu correo electrónico" required>
+												<input name="email" type="email" class="form-control" id="email" placeholder="Escribe tu correo electrónico." required>
 											</div>
 											<div class="form-group">
 												<label for="password">Contraseña</label>
-												<input name="password" type="password" class="form-control" id="password" placeholder="Escribe tu contraseña" required>
+												<input name="password" type="password" class="form-control" id="password" pattern=".{6,}" title="Mínimo 6 caracteres." placeholder="Escribe tu contraseña" required>
 											</div>
 											<div class="form-group">
 												<label for="password2">Confirmar contraseña</label>
-												<input name="password2" type="password" class="form-control" id="password2" placeholder="Escribe de nuevo tu contraseña" required>
+												<input name="password2" type="password" class="form-control" id="password2" pattern=".{6,}" title="Mínimo 6 caracteres." placeholder="Escribe de nuevo tu contraseña." required>
 											</div>
 										</div>
 										<div class="col-xs-6">
@@ -103,12 +103,14 @@
 				</div>
 			</div>
 		</div>
+		<!--
 		<footer class="container login-footer">
 			<span class="pull-left">illut.io</span>
 			<span class="pull-left">Reporta un problema</span>
 			<span class="pull-left">Ayuda</span>
 			<span class="pull-right">copyright © illut.io</span>
 		</footer>
+		-->
 		<script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>

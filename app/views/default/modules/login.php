@@ -26,7 +26,7 @@
 						    <span class="icon-bar"></span>
 						    <span class="icon-bar"></span>
 						</button>
-						<a id="logo" class="navbar-brand" href="index.html">
+						<a id="logo" class="navbar-brand" href="login.php">
 							<img src="img/logo-124x124.png" height="40" width="40">
 							<span>GeoDisplay</span>
 						</a>
@@ -69,12 +69,14 @@
 				</div>
 			</div>
 		</div>
+		<!--
 		<footer class="container login-footer">
 			<span class="pull-left">illut.io</span>
 			<span class="pull-left">Reporta un problema</span>
 			<span class="pull-left">Ayuda</span>
 			<span class="pull-right">copyright © illut.io</span>
 		</footer>
+		-->
 		<script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>

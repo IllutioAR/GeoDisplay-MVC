@@ -9,7 +9,7 @@ class mvc_controller {
 	// Método que valida la sesión del usuario, si la sesión no es válida redirige automáticamente al login.
 	function validate_session(){
 		session_start();
-		if( isset($_SESSION["logged"]) && $_SESSION["logged"] ){
+		if( isset($_SESSION["client"]) ){
 			return true;
 		}
 		header("Location: login.php");
@@ -31,7 +31,10 @@ class mvc_controller {
 			isset( $_POST["country"] ) &&
 			isset( $_POST["city"] )
 		){
-			if(!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
+			if( preg_match("[a-zA-Z0-9]") != 1 ){
+				header("Location: register.php?error=nick");
+			}
+			elseif(!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
 				header("Location: register.php?error=email");
 				exit();
 			}
@@ -40,9 +43,18 @@ class mvc_controller {
 				exit();
 			}
 			$user = new client();
+
+			if( $user->user_exists($_POST["nick"], $_POST["email"] ) ){
+				header("Location: register.php?error=user_exists");
+				exit();
+			}
+
 			$data["nick"] = $_POST["nick"];
 			$data["email"] = $_POST["email"];
-			$data["password"] = $_POST["password"];
+			if (defined("CRYPT_BLOWFISH") && CRYPT_BLOWFISH){
+		        $salt = "$2y$11$" . substr(md5(uniqid(rand(), true)), 0, 22);
+		        $data["password"] = crypt($_POST["password"], $salt);
+		    }
 			$data["name"] = $_POST["name"];
 			$data["logo"] = "media/default/profile/default.png";
 			$data["country"] = $_POST["country"];
@@ -60,14 +72,18 @@ class mvc_controller {
 				}
 				if(!file_exists($path."/image")){
 					mkdir($path."/image");
+					var_dump($_FILES);
+					if( move_uploaded_file($_FILES["logo"]["tmp_name"], "media/".$_POST["nick"]."/image/".$_FILES["logo"]["name"]) ){
+						$data["logo"] = "media/".$_POST["nick"]."/image/".$_FILES["logo"]["name"];
+					}
 				}
 				if(!file_exists($path."/map")){
 					mkdir($path."/map");
 				}
 			}
 			$user->register($data);
+			
 			header("Location: login.php");
-
 
 		}else{
 			$pagina = $this->load_page('../app/views/default/modules/register.php');
