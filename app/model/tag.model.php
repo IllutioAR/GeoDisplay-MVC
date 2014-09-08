@@ -173,7 +173,7 @@ class tag extends database {
 				$query->bindParam(':type', 	 $type);
 				$query->execute();
 			}elseif( $event == 4 ){
-				if( $type == "video" ){
+				if( $type == "image" ){
 					return;
 				}
 				$statement = "DELETE FROM Multimedia_Tag WHERE tag_id = :tag_id AND type = :type";
@@ -200,7 +200,7 @@ class tag extends database {
 				$query->execute();
 			}
 			else{
-				if($type == "video"){
+				if($type == "image"){
 					return;
 				}
 				$statement = "DELETE FROM Multimedia_Tag WHERE tag_id = :tag_id AND type = :type";
@@ -209,9 +209,6 @@ class tag extends database {
 				$query->bindParam(':type', 		$type);
 				$query->execute();
 			}
-		}
-		else{
-			
 		}
 	}
 

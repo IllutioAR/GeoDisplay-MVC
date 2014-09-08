@@ -50,22 +50,23 @@ $("#save").click(function(){
 		uploading = false;
 		message += "- Description\n";
 	}
-	if( $("#video").length > 0 ) {
-		var filename = $("#video").val();
+	if( $("#image").length > 0 ) {
+		var filename = $("#image").val();
 		if( filename != "" ){
-			if( filename.split(".").pop() !== "mp4"){
+			var extension = filename.split(".").pop();
+			if( extension !== "jpg" && extension !== "png"){
 				uploading = false;
-				message += "- Video (Must be a mp4 file)";	
+				message += "- Image (Must be a png or jpg file)";	
 			}
 		}
 		else{
 			uploading = false;
-			message += "- Video";	
+			message += "- Image";	
 		}
-	}else if( $("#video_id").length > 0 ){
-		if( $("#video_id").val() == "" ){
+	}else if( $("#image_id").length > 0 ){
+		if( $("#image_id").val() == "" ){
 			uploading = false;
-			message += "- Video (Select a video)";	
+			message += "- Image (Select an image)";	
 		}
 	}
 	

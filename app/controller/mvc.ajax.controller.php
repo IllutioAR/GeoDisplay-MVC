@@ -38,10 +38,11 @@ class mvc_controller {
 
 	function edit_tag(){
 		$this->validate_session();
-		if( strlen($_POST["latitude"]) > 0 && 
-			strlen($_POST["longitude"]) > 0 && 
-			strlen($_POST["name"]) > 0 && 
-			strlen($_POST["description"]) > 0
+		if( strlen($_POST["latitude"]) > 0 &&
+			strlen($_POST["longitude"]) > 0 &&
+			strlen($_POST["name"]) > 0 &&
+			strlen($_POST["description"]) > 0 &&
+			( isset($_POST["image_id"]) || $_FILES["image"]["error"] == 0 )
 		  )
 		{
 			$tag = new tag($_SESSION["client"]["nick"]);
