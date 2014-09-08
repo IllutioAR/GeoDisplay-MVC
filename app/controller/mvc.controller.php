@@ -180,6 +180,12 @@ class mvc_controller {
 		include "../app/views/default/modules/tags/tags.php";
 		$table = ob_get_clean();
 		$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms', $table , $pagina);		
+		if ($active == 1) {
+			$pagina = $this->replace_content('/\#{DISABLE}\#/ms' ,"Deshabilitar" , $pagina);
+		}
+		else{
+			$pagina = $this->replace_content('/\#{DISABLE}\#/ms' ,"Habilitar" , $pagina);
+		}
 
 		if( isset($_GET["success"]) ){
 			if( $_GET["success"] == "new_tag" ){

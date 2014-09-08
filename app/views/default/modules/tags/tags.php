@@ -26,7 +26,7 @@
 						<?= $row['name'] ?>
 					</span>
 					<span class="titulo-botones pull-right">
-						<i id="disable" class="fa fa-flag" data-toggle="tooltip" data-placement="top" title="Deshabilitar"></i>
+						<i id="disable" class="fa fa-flag" data-toggle="tooltip" data-placement="top" title="#{DISABLE}#"></i>
 						<i id="clone" class="fa fa-copy" data-toggle="tooltip" data-placement="top" title="Copiar"></i>
 						<i id="edit" class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="Editar"></i>
 						<i id="delete" class="fa fa-trash-o" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
