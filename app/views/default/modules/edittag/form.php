@@ -85,8 +85,58 @@
 			<div class="col-xs-12 col-md-4">
 				<div class="seccion">
 					<div class="titulo">
-						<strong>Video</strong>
+						<strong>Imagen</strong>
 						<i class="fa fa-asterisk"></i>
+						<?php 
+							if( isset($tag['image_path']) )
+								echo '<i id="close-image-select" type="image" class="fa fa-times fa-lg pull-right close-icon"></i>';
+						?>
+					</div>
+					<?php 
+						if( !isset($tag['image_path']) ):
+					?>
+					<div id="image-field">
+						<div class="form" id="multimedia">
+							<div class="row" id="multimedia-image" style="margin-bottom:0">
+								<div class="col-xs-12">
+									<input name="image" id="image" type="file" style="display:none">
+									<button id="btn-image" class="btn btn-default">
+										<i class="fa fa-laptop"></i> 
+										Seleccionar desde equipo
+									</button>
+									<button id="btn-image-cloud" class="btn btn-default">
+										<i class="fa fa-cloud"></i> 
+										Seleccionar de multimedia
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<?php 
+						else:
+					?>
+					<div id="image-field">
+						<div class="form" id="multimedia">
+							<div class="row" id="multimedia-image" style="margin-bottom:0">
+								<div class="col-xs-12">
+									<div id="image-preview">
+										<div class="preview-container">
+											<img src="<?= 'media/'.$tag['image_path'] ?>" alt="<?= $tag['name'] ?>" class="image-preview">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<?php
+						endif;
+					?>
+				</div>
+			</div>
+			<div class="col-xs-12 col-md-4">
+				<div class="seccion">
+					<div class="titulo">
+						<strong>Video</strong>
 						<?php 
 							if( isset($tag['video_path']) )
 								echo '<i id="close-video-select" type="video" class="fa fa-times fa-lg pull-right close-icon"></i>';
@@ -178,56 +228,6 @@
 												<source src="<?= 'media/'.$tag['audio_path'] ?>" type="audio/mpeg">
 												Tu navegador no tiene soporte para HTML5.
 											</audio>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<?php
-						endif;
-					?>
-				</div>
-			</div>
-			<div class="col-xs-12 col-md-4">
-				<div class="seccion">
-					<div class="titulo">
-						<strong>Imagen</strong>
-						<?php 
-							if( isset($tag['image_path']) )
-								echo '<i id="close-image-select" type="image" class="fa fa-times fa-lg pull-right close-icon"></i>';
-						?>
-					</div>
-					<?php 
-						if( !isset($tag['image_path']) ):
-					?>
-					<div id="image-field">
-						<div class="form" id="multimedia">
-							<div class="row" id="multimedia-image" style="margin-bottom:0">
-								<div class="col-xs-12">
-									<input name="image" id="image" type="file" style="display:none">
-									<button id="btn-image" class="btn btn-default">
-										<i class="fa fa-laptop"></i> 
-										Seleccionar desde equipo
-									</button>
-									<button id="btn-image-cloud" class="btn btn-default">
-										<i class="fa fa-cloud"></i> 
-										Seleccionar de multimedia
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<?php 
-						else:
-					?>
-					<div id="image-field">
-						<div class="form" id="multimedia">
-							<div class="row" id="multimedia-image" style="margin-bottom:0">
-								<div class="col-xs-12">
-									<div id="image-preview">
-										<div class="preview-container">
-											<img src="<?= 'media/'.$tag['image_path'] ?>" alt="<?= $tag['name'] ?>" class="image-preview">
 										</div>
 									</div>
 								</div>
