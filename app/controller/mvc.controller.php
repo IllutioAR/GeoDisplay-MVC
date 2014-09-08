@@ -31,8 +31,9 @@ class mvc_controller {
 			isset( $_POST["country"] ) &&
 			isset( $_POST["city"] )
 		){
-			if( preg_match("[a-zA-Z0-9]") != 1 ){
+			if( preg_match("[a-zA-Z0-9]+") != 1 ){
 				header("Location: register.php?error=nick");
+				exit();
 			}
 			elseif(!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
 				header("Location: register.php?error=email");

@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-		<title>Iniciar sesión - GeoDisplay</title>
+		<title>Registrar - GeoDisplay</title>
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 		<link href="css/geodisplay.css" rel="stylesheet">
@@ -54,7 +54,7 @@
 	                                	<div class="col-xs-6">
 	                                		<div class="form-group">
 												<label for="nick">Nick</label>
-												<input name="nick" type="text" class="form-control" id="nick" pattern="[a-zA-Z0-9]" title="El nick sólo debe tener letras o números." placeholder="Escribe un nick" required focus>
+												<input name="nick" type="text" class="form-control" id="nick" pattern="[a-zA-Z0-9]+" title="El nick sólo debe tener letras o números." placeholder="Escribe un nick" required focus>
 											</div>
 		                            		<div class="form-group">
 												<label for="email">Correo electrónico</label>
