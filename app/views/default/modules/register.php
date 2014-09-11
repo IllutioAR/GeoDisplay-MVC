@@ -54,7 +54,7 @@
 	                                	<div class="col-xs-6">
 	                                		<div class="form-group">
 												<label for="nick">Nick</label>
-												<input name="nick" type="text" class="form-control" id="nick" pattern="[a-zA-Z0-9]+" title="El nick sólo debe tener letras o números." placeholder="Escribe un nick" required focus>
+												<input name="nick" type="text" class="form-control" id="nick" pattern="[a-zA-Z][a-zA-Z0-9_]{1,19}" title="El nick sólo debe tener letras o números." placeholder="Escribe un nick" required focus>
 											</div>
 		                            		<div class="form-group">
 												<label for="email">Correo electrónico</label>

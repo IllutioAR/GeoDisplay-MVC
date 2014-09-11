@@ -31,7 +31,8 @@ class mvc_controller {
 			isset( $_POST["country"] ) &&
 			isset( $_POST["city"] )
 		){
-			if( preg_match("[a-zA-Z0-9]+") != 1 ){
+			
+			if( preg_match("/^[a-z]\w{0,19}$/i", $_POST["nick"]) != 1 ){
 				header("Location: register.php?error=nick");
 				exit();
 			}
