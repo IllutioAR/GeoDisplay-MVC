@@ -5,7 +5,6 @@ $(document).ready(function() {
 		$( "#" + type ).trigger("click");
 	});
 
-
 	$("form").on("click", ".drag-area",function(){
 		var type = $(this).attr("gd-type");
 		$( "#" + type ).trigger("click");
@@ -63,6 +62,13 @@ $(document).ready(function() {
 		e.preventDefault();
 	});
 
+	//Al dar enter en la búsqueda de google maps hace un trigger de los botones multimedia
+	$("#map-search").on("keydown", function(e){
+		if( e.keyCode == 13 ){
+			e.preventDefault();	
+		}
+	});
+
 	function handleFileUpload(file, type){
 		var fd = new FormData();
 		fd.append(type, file);
@@ -70,7 +76,6 @@ $(document).ready(function() {
 	}
 
 	function uploadFile(fd, type){
-
 		var element = $("[class='drag-area'][gd-type='"+type+"']").parent();
 		element.empty();
 
@@ -153,34 +158,34 @@ $(document).ready(function() {
 	}
 
 	function cancelUploadPreview(type){
-			var html_string = '<input name="DEFAULT" id="DEFAULT" type="file" style="display:none"><div class="drag-area" gd-type="DEFAULT"><div class="parent-container"><div class="child-container"><div><i class="fa fa-ICON_TYPE icon-lg" data-original-title="" title=""></i></div><div class="text-lg">Arrastra un DEFAULT aquí</div>';
-			
-			if (type == "image"){
-				html_string += '<div>.jpg .png (Max 5MB)</div>';
-			}
-			else if(type == "video"){
-				html_string += '<div>.mp4 .3gp (Max 30MB)</div>';
-			}
-			else if(type == "audio"){
-				html_string += '<div>.mp3 (Max 10MB)</div>';
-			}
+		var html_string = '<input name="DEFAULT" id="DEFAULT" type="file" style="display:none"><div class="drag-area" gd-type="DEFAULT"><div class="parent-container"><div class="child-container"><div><i class="fa fa-ICON_TYPE icon-lg" data-original-title="" title=""></i></div><div class="text-lg">Arrastra un DEFAULT aquí</div>';
+		
+		if (type == "image"){
+			html_string += '<div>.jpg .png (Max 5MB)</div>';
+		}
+		else if(type == "video"){
+			html_string += '<div>.mp4 .3gp (Max 30MB)</div>';
+		}
+		else if(type == "audio"){
+			html_string += '<div>.mp3 (Max 10MB)</div>';
+		}
 
-			html_string += '</div></div></div><div class="button-area"><button id="DEFAULT-select-pc" class="btn btn-default">Subir desde PC</button><button id="DEFAULT-select-cloud" class="btn btn-default">Seleccionar desde GeoDisplay</button></div>';
-			html_string = html_string.split("DEFAULT").join(type);
+		html_string += '</div></div></div><div class="button-area"><button id="DEFAULT-select-pc" class="btn btn-default">Subir desde PC</button><button id="DEFAULT-select-cloud" class="btn btn-default">Seleccionar desde GeoDisplay</button></div>';
+		html_string = html_string.split("DEFAULT").join(type);
 
-			if(type == "video"){
-				html_string = html_string.replace("ICON_TYPE", "film");
-			}
-			else if(type == "audio"){
-				html_string = html_string.replace("ICON_TYPE", "music");
-			}
-			else if(type == "image"){
-				html_string = html_string.replace("ICON_TYPE", "picture-o");
-			}
+		if(type == "video"){
+			html_string = html_string.replace("ICON_TYPE", "film");
+		}
+		else if(type == "audio"){
+			html_string = html_string.replace("ICON_TYPE", "music");
+		}
+		else if(type == "image"){
+			html_string = html_string.replace("ICON_TYPE", "picture-o");
+		}
 
-			var element = $("#"+type+"-cancel-upload").parent().parent();
-			element.empty();
-			element.append(html_string);
+		var element = $("#"+type+"-cancel-upload").parent().parent();
+		element.empty();
+		element.append(html_string);
 	}
 
 });

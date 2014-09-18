@@ -34,6 +34,10 @@ header nav button[class = "navbar-toggle"]:focus
 	background-color: #0A4F92 !important;
 }
 
+.navbar-default .navbar-nav>.open>a{
+	background-color: #0A4F92 !important;
+}
+
 header nav button[class = "navbar-toggle"]{
 	background-color: inherit;
 	border-color: #FFF !important;

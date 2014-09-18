@@ -6,6 +6,7 @@
 					<div class="titulo">
 						<strong>Localiza un punto</strong>
 					</div>
+					<input id="map-search" class="controls" type="text" placeholder="Buscar..." style="display: none">
 					<div id="map-canvas"></div>
 					<div class="form">
 						<div class="row">

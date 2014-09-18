@@ -274,7 +274,7 @@ class mvc_controller {
 					"js/addtag.js/navigator.js",
 					"js/addtag.js/file-selector-pc.js",
 					"js/addtag.js/file-selector-cloud.js",
-					"https://maps.googleapis.com/maps/api/js?v=3.exp",
+					"https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places",
 					//"http://maps.googleapis.com/maps/api/js?key=AIzaSyBnIOf-8Tp4UdM1TnwOi8Dx-X0V7cop-9A&sensor=false",
 					"js/map.js"
 				);
