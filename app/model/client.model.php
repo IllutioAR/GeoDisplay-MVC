@@ -22,7 +22,6 @@ class client extends database {
 		$query->bindParam(':country', 	$data["country"]);
 		$query->bindParam(':city', 		$data["city"]);
 		$query->execute();
-		//print_r( $this->db->errorInfo() );
 	}
 
 	function user_exists($nick, $email){

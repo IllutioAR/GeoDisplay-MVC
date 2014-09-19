@@ -33,21 +33,25 @@ class mvc_controller {
 		){
 			
 			if( preg_match("/^[a-z]\w{0,19}$/i", $_POST["nick"]) != 1 ){
-				header("Location: register.php?error=nick");
+				$_SESSION["error"]["nick"] = true;
+				header("Location: register.php");
 				exit();
 			}
 			elseif(!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
-				header("Location: register.php?error=email");
+				$_SESSION["error"]["email"] = true;
+				header("Location: register.php");
 				exit();
 			}
 			elseif ( strlen($_POST["password"]) < 6 || $_POST["password"] != $_POST["password2"]) {
-				header("Location: register.php?error=password");
+				$_SESSION["error"]["password"] = true;
+				header("Location: register.php");
 				exit();
 			}
 			$user = new client();
 
 			if( $user->user_exists($_POST["nick"], $_POST["email"] ) ){
-				header("Location: register.php?error=user_exists");
+				$_SESSION["error"]["user_exists"] = true;
+				header("Location: register.php");
 				exit();
 			}
 
@@ -120,7 +124,8 @@ class mvc_controller {
 				}
 				header("Location: index.php");
 			}else{
-				header("Location: login.php?error");
+				$_SESSION["error"]["login"] = true;
+				header("Location: login.php");
 			}
 		}else if( isset($_SESSION["logged"]) && $_SESSION["logged"] ){
 			header("Location: index.php");
@@ -212,10 +217,14 @@ class mvc_controller {
 		if( isset($_POST["password_form"]) && isset($_POST["password"]) && isset($_POST["new_password"]) && isset($_POST["new_password_confirm"]) ){
 			$client = new client();
 			$changed = $client->change_password($_SESSION["client"]["email"], $_POST["password"], $_POST["new_password"], $_POST["new_password_confirm"]);
-			if ( $changed )
-				header("Location: profile.php?success=password");
-			else 
-				header("Location: profile.php?error=password");
+			if ( $changed ){
+				$_SESSION["success"]["change_password"] = true;
+				header("Location: profile.php");
+			}else{
+				$_SESSION["error"]["change_password"] = true;
+				header("Location: profile.php");
+			}
+				
 		}
 		else{	// No existe ningún post de formularios muestra la vista normal
 			$css = array("profile.css");
@@ -322,7 +331,8 @@ class mvc_controller {
 		$tag = $tag->get_full_data($id);
 		
 		if($tag == array()){
-			header("Location: index.php?error=edit_tag");
+			$_SESSION["error"]["edit_tag"] = true;
+			header("Location: index.php");
 		}
 		include "../app/views/default/modules/edittag/form.php";
 		$form = ob_get_clean();

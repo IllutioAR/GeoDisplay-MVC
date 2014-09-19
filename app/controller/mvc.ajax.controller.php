@@ -8,7 +8,7 @@ class mvc_controller {
 	// Método que valida la sesión del usuario, si la sesión no es válida redirige automáticamente al login.
 	function validate_session(){
 		session_start();
-		if( isset($_SESSION["logged"]) && $_SESSION["logged"] ){
+		if( isset($_SESSION["logged"]) && $_SESSION["logged"] && isset($_SESSION["client"]) ){
 			return true;
 		}
 		header("Location: login.php");
@@ -29,10 +29,12 @@ class mvc_controller {
 		{
 			$tag = new tag($_SESSION["client"]["nick"]);
 			$tag->add_new_tag($_SESSION["client"]["tags"], $_SESSION["client"]["space"]);
-			header("Location: ../index.php?success=new_tag");
+			$_SESSION["success"]["new_tag"] = true;
+			header("Location: ../index.php");
 		}
 		else{
-			header("Location: ../addtag.php?error=incomplete");
+			$_SESSION["error"]["incomplete_tag"] = true;
+			header("Location: ../addtag.php");
 		}
 	}
 
@@ -47,10 +49,12 @@ class mvc_controller {
 		{
 			$tag = new tag($_SESSION["client"]["nick"]);
 			$tag->edit_tag($_SESSION["client"]["space"]);
-			header("Location: ../index.php?success=edit_tag");
+			$_SESSION["success"]["edit_tag"] = true;
+			header("Location: ../index.php");
 		}
 		else{
-			header("Location: ../index.php?error=edit_incomplete");
+			$_SESSION["error"]["edit_incomplete"] = true;
+			header("Location: ../index.php");
 		}	
 	}
 

@@ -72,8 +72,6 @@ class multimedia extends database {
 	}
 
 	function delete_file($id){
-		echo "\nNick: ".$this->nick."\n";
-		echo "Id: ".$id;
 
 		$statement = "SELECT file_path, size FROM Multimedia WHERE id = :id AND client_nick = :nick AND id NOT IN (SELECT multimedia_id FROM Multimedia_Tag)";
 		$query = $this->db->prepare($statement);
@@ -85,8 +83,7 @@ class multimedia extends database {
 		}
 
 		$file = $query->fetchAll(PDO::FETCH_ASSOC)[0];
-		echo $file["file_path"];
-		echo $file["size"];
+		
 		if( unlink("../media/".$file["file_path"]) ){
 			$_SESSION["client"]["space"] = $this->get_user_space();
 			$statement = "DELETE FROM Multimedia WHERE id = :id AND client_nick = :nick";
@@ -114,12 +111,14 @@ class multimedia extends database {
 				mkdir($path."/map");
 			}
 		}
-		header("Location: ../addtag.php?error=mediaDirectory");
+		$_SESSION["error"]["mediaDirectory"] = true;
+		header("Location: ../addtag.php");
 	}
 
 	function move_media_file($type, $tag_id){
 		if ( ($_FILES[$type]["size"]/(1024*1024)) > $this->get_user_space() ){
-			header("Location: ../addtag.php?error=space");
+			$_SESSION["error"]["user_space"] = true;
+			header("Location: ../addtag.php");
 		}
 		
 		$path = "../media/".$this->nick;
@@ -152,7 +151,8 @@ class multimedia extends database {
 			$query->execute();
 		}
 		else{
-			header("Location: ../addtag.php?error=fileUpload");
+			$_SESSION["error"]["file_upload"] = true;
+			header("Location: ../addtag.php");
 		}
 	}
 

@@ -75,7 +75,8 @@ class tag extends database {
 
 	function add_new_tag($num_tags, $space, $active = 1){
 		if ( $num_tags <= 0){
-			header("Location: ../index.php?error=numTags");
+			$_SESSION["error"]["num_tags"] = true;
+			header("Location: ../index.php");
 		}
 		$statement = "INSERT INTO Tag (name, description, latitude, longitude, map, url, url_purchase, facebook, twitter, client_nick, created_at, updated_at, active) VALUES(:name, :description, :latitude, :longitude, :map, :url, :url_purchase, :facebook, :twitter, :client_nick, NOW(), NOW(), :active)";
 		$query = $this->db->prepare($statement);
@@ -109,7 +110,8 @@ class tag extends database {
 			$multimedia->set_existing_file("image", $tag_id, $_POST["image-id"]);
 		}
 		else{
-			header("Location: ../addtag.php?error=fileUpload");
+			$_SESSION["error"]["file_upload"] = true;
+			header("Location: ../addtag.php");
 		}
 		if ( isset($_POST["video-id"]) ) {
 			$multimedia->set_existing_file("video", $tag_id, $_POST["video-id"]);
@@ -134,7 +136,8 @@ class tag extends database {
 			$event = $_FILES[$type]["error"];
 			if( $event == 0 ){
 				if ( ($_FILES[$type]["size"]/(1024*1024)) > $_SESSION["client"]["space"] ){
-					header("Location: ../edit_tag.php?tag=".$id."&error=space");
+					$_SESSION["error"]["user_space"] = true;
+					header("Location: ../edit_tag.php?tag=".$id);
 				}
 				$path = "../media/".$this->nick;
 
@@ -145,7 +148,8 @@ class tag extends database {
 
 				$path = $base_path.$_FILES[$type]["name"];
 				if ( !move_uploaded_file($_FILES[$type]["tmp_name"], $path) ) {
-					header("Location: ../edit_tag.php?tag=".$id."&error=fileUpload");
+					$_SESSION["error"]["file_upload"] = true;
+					header("Location: ../edit_tag.php?tag=".$id);
 				}
 				$size = intval( $_FILES[$type]["size"] ) / (1024*1024);
 				$_SESSION["client"]["space"] -= $size;
@@ -182,7 +186,8 @@ class tag extends database {
 				$query->bindParam(':type', 	 $type);
 				$query->execute();
 			}else{
-				header("Location: ../edit_tag.php?tag=".$id."&error=fileUpload");
+				$_SESSION["error"]["file_upload"] = true;
+				header("Location: ../edit_tag.php?tag=".$id);
 			}
 		}elseif( isset($_POST[$type."_id"]) ) {
 			if( $_POST[$type."_id"] != ""){
@@ -272,9 +277,6 @@ class tag extends database {
 				$query->bindParam(':nick', 	$this->nick);
 				$query->execute();
 			}
-			else {
-				throw new Exception("No se logró habilitar, datos inválidos", 1);		
-			}	
 		}
 		catch (Exception $e){
 			echo json_encode(array(
