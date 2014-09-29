@@ -76,7 +76,7 @@
 										<strong>Contraseña</strong>
 									</div>
 									<div>
-										<form action="./Profile - GeoDisplay_files/Profile - GeoDisplay.html" method="post" role="form">
+										<form action="ajax/change_password.php" method="post" role="form">
 											<div class="row">
 												<div class="col-xs-12 col-md-4">
 													<div class="form-group">

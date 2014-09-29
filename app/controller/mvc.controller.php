@@ -103,29 +103,33 @@ class mvc_controller {
 		session_start();
 		if( isset($_POST["email"]) && isset($_POST["password"]) ){
 			$user = new client();
-			$_SESSION["logged"] = $user->validate_client( $_POST["email"], $_POST["password"] );
-			if($_SESSION["logged"]) {
-				$_SESSION["client"] = $user->get_client_data( $_POST["email"] )[0];
-				$path = "media/".$_SESSION["client"]["nick"];
-				if(!file_exists($path)){
-					mkdir($path);
-					if(!file_exists($path."/video")){
-						mkdir($path."/video");
+			if(filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
+				$_SESSION["logged"] = $user->validate_client( $_POST["email"], $_POST["password"] );
+				if($_SESSION["logged"]) {
+					$_SESSION["client"] = $user->get_client_data( $_POST["email"] )[0];
+					$path = "media/".$_SESSION["client"]["nick"];
+					if(!file_exists($path)){
+						mkdir($path);
+						if(!file_exists($path."/video")){
+							mkdir($path."/video");
+						}
+						if(!file_exists($path."/audio")){
+							mkdir($path."/audio");
+						}
+						if(!file_exists($path."/image")){
+							mkdir($path."/image");
+						}
+						if(!file_exists($path."/map")){
+							mkdir($path."/map");
+						}
 					}
-					if(!file_exists($path."/audio")){
-						mkdir($path."/audio");
-					}
-					if(!file_exists($path."/image")){
-						mkdir($path."/image");
-					}
-					if(!file_exists($path."/map")){
-						mkdir($path."/map");
-					}
+					header("Location: index.php");
+				}else{
+					$_SESSION["error"]["login"] = true;
+					header("Location: login.php");
 				}
-				header("Location: index.php");
 			}else{
-				$_SESSION["error"]["login"] = true;
-				header("Location: login.php");
+				header("Location: login.php");	
 			}
 		}else if( isset($_SESSION["logged"]) && $_SESSION["logged"] ){
 			header("Location: index.php");
@@ -133,22 +137,6 @@ class mvc_controller {
 			$pagina = $this->load_page('../app/views/default/modules/login.php');
 			$this->view_page($pagina);
 		}
-	}
-
-	function show_notification($type, $message){
-		if($type == "success"){
-			$notification = $this->load_page('../app/views/default/modules/notification/success.php');
-		}
-		elseif($type == "error"){
-			$notification = $this->load_page('../app/views/default/modules/notification/error.php');	
-		}
-		elseif($type == "info"){
-			$notification = $this->load_page('../app/views/default/modules/notification/info.php');
-		}
-		else{
-			$notification = "";
-		}
-		return $this->replace_content('/\#{MESSAGE}\#/ms', $message, $notification);
 	}
 
 	function show_tags($active = 1)
@@ -194,86 +182,59 @@ class mvc_controller {
 			$pagina = $this->replace_content('/\#{DISABLE}\#/ms' ,"Habilitar" , $pagina);
 		}
 
-		if( isset($_GET["success"]) ){
-			if( $_GET["success"] == "new_tag" ){
-				$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("success", "Tag agregado correctamente.") , $pagina);
-			}
-		}
-		elseif( isset($_GET["error"]) ){
-			if( $_GET["error"] == "numTags" ){
-				$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("error", "No tienes más lugares disponibles.") , $pagina);
-			}
-			elseif( $_GET["error"] == "edit_tag" ){
-				$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("error", "Ocurrió un error mientras se editaba el tag.") , $pagina);	
-			}
-		}
-		$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', "" , $pagina);
+		$pagina = $this->show_notification($pagina);
 
 		$this->view_page($pagina);
 	}
 
 	function profile(){
 		$this->validate_session();
-		if( isset($_POST["password_form"]) && isset($_POST["password"]) && isset($_POST["new_password"]) && isset($_POST["new_password_confirm"]) ){
-			$client = new client();
-			$changed = $client->change_password($_SESSION["client"]["email"], $_POST["password"], $_POST["new_password"], $_POST["new_password_confirm"]);
-			if ( $changed ){
-				$_SESSION["success"]["change_password"] = true;
-				header("Location: profile.php");
-			}else{
-				$_SESSION["error"]["change_password"] = true;
-				header("Location: profile.php");
+		$css = array("profile.css");
+		$js = array("js/profile.js");
+		$pagina = $this->load_template("Profile", "es", $css, $js );
+		$contenido = $this->load_page('../app/views/default/modules/profile/profile.php');
+		$pagina = $this->replace_content('/\#{MENU}\#/ms' , "", $pagina);
+		$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms' ,$contenido , $pagina);
+		$pagina = $this->replace_content('/\#{LOGO}\#/ms' ,$_SESSION["client"]["logo"] , $pagina);
+		$pagina = $this->replace_content('/\#{NAME}\#/ms' ,$_SESSION["client"]["name"] , $pagina);
+		$pagina = $this->replace_content('/\#{CITY}\#/ms' ,$_SESSION["client"]["city"] , $pagina);
+		$pagina = $this->replace_content('/\#{COUNTRY}\#/ms' ,$_SESSION["client"]["country"] , $pagina);
+		$pagina = $this->replace_content('/\#{NICK}\#/ms' , $_SESSION["client"]["nick"] , $pagina);
+		$pagina = $this->replace_content('/\#{EMAIL}\#/ms' ,$_SESSION["client"]["email"] , $pagina);
+		$pagina = $this->replace_content('/\#{PLAN}\#/ms' ,$_SESSION["client"]["plan"] , $pagina);
+
+		$plan_info = $this->get_plan_info($_SESSION["client"]["plan"]);
+
+		$used_tags = $plan_info["total_tags"] - $_SESSION["client"]["tags"];
+		$percentage_tags = $used_tags / $plan_info["total_tags"] * 100;
+
+		$used_space = number_format($plan_info["total_space"] - $_SESSION["client"]["space"], 2);
+		$percentage_space = round($used_space / $plan_info["total_space"] * 100);
+		
+		$pagina = $this->replace_content('/\#{USEDTAGS}\#/ms' ,$used_tags , $pagina);
+		$pagina = $this->replace_content('/\#{TOTALTAGS}\#/ms' ,$plan_info["total_tags"] , $pagina);
+		$pagina = $this->replace_content('/\#{USEDTAGS}\#/ms' ,$used_tags , $pagina);
+		$pagina = $this->replace_content('/\#{PERCENTAGETAGS}\#/ms' ,$percentage_tags , $pagina);
+
+		$pagina = $this->replace_content('/\#{USEDSPACE}\#/ms' , $used_space , $pagina);
+		$pagina = $this->replace_content('/\#{TOTALSPACE}\#/ms' ,$plan_info["total_space"] , $pagina);
+		$pagina = $this->replace_content('/\#{PERCENTAGESPACE}\#/ms' ,$percentage_space , $pagina);
+		if( isset($_GET["success"]) ){
+			if( $_GET["success"] == "password" ){
+				$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("success", "La contraseña se cambió correctamente.") , $pagina);
 			}
-				
 		}
-		else{	// No existe ningún post de formularios muestra la vista normal
-			$css = array("profile.css");
-			$js = array();
-			$pagina = $this->load_template("Profile", "es", $css, $js );
-			$contenido = $this->load_page('../app/views/default/modules/profile/profile.php');
-			$pagina = $this->replace_content('/\#{MENU}\#/ms' , "", $pagina);
-			$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms' ,$contenido , $pagina);
-			$pagina = $this->replace_content('/\#{LOGO}\#/ms' ,$_SESSION["client"]["logo"] , $pagina);
-			$pagina = $this->replace_content('/\#{NAME}\#/ms' ,$_SESSION["client"]["name"] , $pagina);
-			$pagina = $this->replace_content('/\#{CITY}\#/ms' ,$_SESSION["client"]["city"] , $pagina);
-			$pagina = $this->replace_content('/\#{COUNTRY}\#/ms' ,$_SESSION["client"]["country"] , $pagina);
-			$pagina = $this->replace_content('/\#{NICK}\#/ms' , $_SESSION["client"]["nick"] , $pagina);
-			$pagina = $this->replace_content('/\#{EMAIL}\#/ms' ,$_SESSION["client"]["email"] , $pagina);
-			$pagina = $this->replace_content('/\#{PLAN}\#/ms' ,$_SESSION["client"]["plan"] , $pagina);
-
-			$plan_info = $this->get_plan_info($_SESSION["client"]["plan"]);
-
-			$used_tags = $plan_info["total_tags"] - $_SESSION["client"]["tags"];
-			$percentage_tags = $used_tags / $plan_info["total_tags"] * 100;
-
-			$used_space = number_format($plan_info["total_space"] - $_SESSION["client"]["space"], 2);
-			$percentage_space = round($used_space / $plan_info["total_space"] * 100);
-			
-			$pagina = $this->replace_content('/\#{USEDTAGS}\#/ms' ,$used_tags , $pagina);
-			$pagina = $this->replace_content('/\#{TOTALTAGS}\#/ms' ,$plan_info["total_tags"] , $pagina);
-			$pagina = $this->replace_content('/\#{USEDTAGS}\#/ms' ,$used_tags , $pagina);
-			$pagina = $this->replace_content('/\#{PERCENTAGETAGS}\#/ms' ,$percentage_tags , $pagina);
-
-			$pagina = $this->replace_content('/\#{USEDSPACE}\#/ms' , $used_space , $pagina);
-			$pagina = $this->replace_content('/\#{TOTALSPACE}\#/ms' ,$plan_info["total_space"] , $pagina);
-			$pagina = $this->replace_content('/\#{PERCENTAGESPACE}\#/ms' ,$percentage_space , $pagina);
-			if( isset($_GET["success"]) ){
-				if( $_GET["success"] == "password" ){
-					$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("success", "La contraseña se cambió correctamente.") , $pagina);
-				}
+		elseif( isset($_GET["error"]) ){
+			if( $_GET["error"] == "password" ){
+				$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("error", "Ocurrió un error mientras se cambiaba la contraseña.") , $pagina);
 			}
-			elseif( isset($_GET["error"]) ){
-				if( $_GET["error"] == "password" ){
-					$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("error", "Ocurrió un error mientras se cambiaba la contraseña.") , $pagina);
-				}
-				elseif( $_GET["error"] == "numTags" ){
-					$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("error", "No tienes más tags disponibles.") , $pagina);
-				}
+			elseif( $_GET["error"] == "numTags" ){
+				$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("error", "No tienes más tags disponibles.") , $pagina);
 			}
-			$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', "" , $pagina);
-
-			$this->view_page($pagina);
 		}
+		$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', "" , $pagina);
+
+		$this->view_page($pagina);
 	}
 
 	function add_tag(){
@@ -449,6 +410,25 @@ class mvc_controller {
 
 	private function replace_content($in='/\#{CONTENIDO}\#/ms', $out, $pagina){
 		return preg_replace($in, $out, $pagina);
+	}
+
+	function show_notification($pagina){
+		//Carga el template para la notificacion
+		$notification = "";
+		if (isset( $_SESSION["success"] )) {
+			$notification = $this->load_page('../app/views/default/modules/notification/success.php');
+		}
+		elseif (isset( $_SESSION["error"] )) {
+			$notification = $this->load_page('../app/views/default/modules/notification/error.php');
+		}
+		elseif (isset( $_SESSION["info"] )) {
+			$notification = $this->load_page('../app/views/default/modules/notification/info.php');
+		}
+
+		//Pone el texto en el html
+		$notification = $this->replace_content('/\#{MESSAGE}\#/ms', "Prueba de notificación", $notification);
+
+		return $this->replace_content('/\#{NOTIFICATION}\#/ms', $notification, $pagina);
 	}
 
 	private function get_plan_info($plan){

@@ -2,6 +2,7 @@
 
 require '../../app/model/tag.model.php';
 require '../../app/model/multimedia.model.php';
+require '../../app/model/client.model.php';
 
 class mvc_controller {
 
@@ -112,10 +113,60 @@ class mvc_controller {
 		echo $multimedia->save_file( $_GET["type"] );
 	}
 
+	function change_password(){
+		$this->validate_session();
+		if( isset($_POST["password"]) && isset($_POST["new_password"]) && isset($_POST["new_password_confirm"]) ){
+			
+			if( $_POST["new_password"] === $_POST["new_password_confirm"] ){
+				
+				$client = new client();
+				$hashed_password = $client->get_hashed_password($_SESSION["client"]["email"]);
+				
+				if(crypt($_POST["password"], $hashed_password) == $hashed_password){
+					if (defined("CRYPT_BLOWFISH") && CRYPT_BLOWFISH){
+
+				        $salt = '$2y$11$' . substr(md5(uniqid(rand(), true)), 0, 22);
+
+				        $new_hashed_password = crypt($_POST["new_password"], $salt);
+				        $client->change_password($_SESSION["client"]["email"], $new_hashed_password);
+						
+						$_SESSION["success"]["change_password"] = true;
+						header("Location: ../profile.php?success");
+						exit();
+				    }
+				}
+			}
+		}
+		$_SESSION["error"]["change_password"] = true;
+		header("Location: ../profile.php?error");
+	}
+
 	function password_recovery(){
-		require '../../app/model/client.model.php';
-		$client = new client();
 		if(filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
+
+
+			$characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		    $new_password = "";
+		    for ($i = 0; $i < 8; $i++) {
+		        $new_password .= $characters[rand(0, strlen($characters) - 1)];
+		    }
+			if (defined("CRYPT_BLOWFISH") && CRYPT_BLOWFISH){
+		        $salt = "$2y$11$" . substr(md5(uniqid(rand(), true)), 0, 22);
+		        $hashed_password = crypt($new_password, $salt);
+		        
+		        $client = new client();
+		        $client->password_recovery($_SESSION["client"]["email"], $hashed_password);
+
+				$email_message = "Su nueva contraseña ha sido generada, te recomendamos cambiarla inmediatamente al iniciar sesión: " .$new_password;
+				$email_from = "support@illut.io";
+
+				$headers = "From: ".$email_from."\r\n".
+				"Reply-To: ".$email_from."\r\n" .
+				"X-Mailer: PHP/" . phpversion();
+				@mail ($email, "", $email_message, $headers);
+		    }
+
+
 			$client->password_recovery($_POST["email"]);
 		}
 	}
