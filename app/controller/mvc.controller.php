@@ -150,6 +150,7 @@ class mvc_controller {
 		$pagina = $this->load_template("Index", "es", $css, $js );
 		$menu = $this->load_page('../app/views/default/modules/tags/menu.php');
 		$pagina = $this->replace_content('/\#{MENU}\#/ms' ,$menu , $pagina);
+
 		if ( $active == 1 ){
 			$pagina = $this->replace_content('/\#{ACTIVE}\#/ms' ,"class='active'" , $pagina);
 			$pagina = $this->replace_content('/\#{INACTIVE}\#/ms' ,"" , $pagina);
@@ -175,14 +176,17 @@ class mvc_controller {
 		include "../app/views/default/modules/tags/tags.php";
 		$table = ob_get_clean();
 		$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms', $table , $pagina);		
+		
 		if ($active == 1) {
-			$pagina = $this->replace_content('/\#{DISABLE}\#/ms' ,"Deshabilitar" , $pagina);
+			$pagina = $this->replace_content('/\#{DISABLE}\#/ms' ,"#{INDEX.DISABLE}#" , $pagina);
 		}
 		else{
-			$pagina = $this->replace_content('/\#{DISABLE}\#/ms' ,"Habilitar" , $pagina);
+			$pagina = $this->replace_content('/\#{DISABLE}\#/ms' ,"#{INDEX.ENABLE}#" , $pagina);
 		}
 
 		$pagina = $this->show_notification($pagina);
+
+		$pagina = $this->set_language($pagina,"index");
 
 		$this->view_page($pagina);
 	}
@@ -219,21 +223,8 @@ class mvc_controller {
 		$pagina = $this->replace_content('/\#{USEDSPACE}\#/ms' , $used_space , $pagina);
 		$pagina = $this->replace_content('/\#{TOTALSPACE}\#/ms' ,$plan_info["total_space"] , $pagina);
 		$pagina = $this->replace_content('/\#{PERCENTAGESPACE}\#/ms' ,$percentage_space , $pagina);
-		if( isset($_GET["success"]) ){
-			if( $_GET["success"] == "password" ){
-				$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("success", "La contraseña se cambió correctamente.") , $pagina);
-			}
-		}
-		elseif( isset($_GET["error"]) ){
-			if( $_GET["error"] == "password" ){
-				$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("error", "Ocurrió un error mientras se cambiaba la contraseña.") , $pagina);
-			}
-			elseif( $_GET["error"] == "numTags" ){
-				$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("error", "No tienes más tags disponibles.") , $pagina);
-			}
-		}
-		$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', "" , $pagina);
-
+		
+		$pagina = $this->show_notification($pagina);
 		$this->view_page($pagina);
 	}
 
@@ -255,20 +246,9 @@ class mvc_controller {
 		$modal = $this->load_page('../app/views/default/modules/addtag/modal.php');
 		$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms', $form.$modal , $pagina);
 		
-		if( isset($_GET["success"]) ){
-			
-		}
-		elseif( isset($_GET["error"]) ){
-			if( $_GET["error"] == "fileUpload" ){
-				$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("error", "Ocurrió un error mientras se subia el archivo.") , $pagina);
-			}
-			elseif( $_GET["error"] == "space" ){
-				$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("error", "No tienes espacio suficiente para subir archivos.") , $pagina);	
-			}elseif( $_GET["error"] == "incomplete" ){
-				$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("error", "Completa todos los campos para poder guardar el lugar.") , $pagina);	
-			}
-		}
-		$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', "" , $pagina);
+		$pagina = $this->show_notification($pagina);
+
+		$pagina = $this->set_language($pagina,"addtag");
 
 		$this->view_page($pagina);
 	}
@@ -299,19 +279,9 @@ class mvc_controller {
 		$form = ob_get_clean();
 		$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms', $form , $pagina);
 
-		if( isset($_GET["success"]) ){
-			
-		}
-		elseif( isset($_GET["error"]) ){
-			if( $_GET["error"] == "fileUpload" ){
-				$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("error", "Ocurrió un error mientras se subia el archivo.") , $pagina);
-			}
-			elseif( $_GET["error"] == "space" ){
-				$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("error", "No tienes espacio suficiente para subir archivos.") , $pagina);	
-			}
-		}
-		$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', "" , $pagina);
+		$pagina = $this->show_notification($pagina);
 
+		$pagina = $this->set_language($pagina,"edittag");
 
 		$this->view_page($pagina);
 	}
@@ -366,15 +336,9 @@ class mvc_controller {
 		$table = ob_get_clean();
 		$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms', $table , $pagina);
 		
-		if( isset($_GET["success"]) ){
-			if( $_GET["success"] == "upload" ){
-				$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("success", "Archivo subido correctamente.") , $pagina);	
-			}
-		}
-		elseif( isset($_GET["error"]) ){
-			$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', $this->show_notification("error", "Ocurrió un error mientras se subia el archivo.") , $pagina);
-		}
-		$pagina = $this->replace_content('/\#{NOTIFICATION}\#/ms', "" , $pagina);
+		$pagina = $this->show_notification($pagina);
+
+		$pagina = $this->set_language($pagina, "multimedia");
 
 		$this->view_page($pagina);
 	}
@@ -426,9 +390,84 @@ class mvc_controller {
 		}
 
 		//Pone el texto en el html
-		$notification = $this->replace_content('/\#{MESSAGE}\#/ms', "Prueba de notificación", $notification);
+		//$notification = $this->replace_content('/\#{MESSAGE}\#/ms', "Prueba de notificación", $notification);
 
 		return $this->replace_content('/\#{NOTIFICATION}\#/ms', $notification, $pagina);
+	}
+
+	private function set_language($pagina, $section){
+		$language = json_decode(file_get_contents('../app/language/language.json'), true);
+		$lan = $_SESSION["client"]["language"];
+
+		$pagina = $this->replace_content('/\#{GENERAL.HOME}\#/ms', $language[$lan]["general"]["HOME"], $pagina);
+		$pagina = $this->replace_content('/\#{GENERAL.MULTIMEDIA}\#/ms', $language[$lan]["general"]["MULTIMEDIA"], $pagina);
+		$pagina = $this->replace_content('/\#{GENERAL.LOGOUT}\#/ms', $language[$lan]["general"]["LOGOUT"], $pagina);
+		
+		if ($section === "index") {
+			$pagina = $this->replace_content('/\#{INDEX.ACTIVE}\#/ms', $language[$lan][$section]["ACTIVE"], $pagina);
+			$pagina = $this->replace_content('/\#{INDEX.INACTIVE}\#/ms', $language[$lan][$section]["INACTIVE"], $pagina);
+			$pagina = $this->replace_content('/\#{INDEX.SEARCH-PLACEHOLDER}\#/ms', $language[$lan][$section]["SEARCH-PLACEHOLDER"], $pagina);
+			$pagina = $this->replace_content('/\#{INDEX.ADDTAG}\#/ms', $language[$lan][$section]["ADDTAG"], $pagina);
+			$pagina = $this->replace_content('/\#{INDEX.DISABLE}\#/ms', $language[$lan][$section]["DISABLE"], $pagina);
+			$pagina = $this->replace_content('/\#{INDEX.ENABLE}\#/ms', $language[$lan][$section]["ENABLE"], $pagina);
+			$pagina = $this->replace_content('/\#{INDEX.COPY}\#/ms', $language[$lan][$section]["COPY"], $pagina);
+			$pagina = $this->replace_content('/\#{INDEX.EDIT}\#/ms', $language[$lan][$section]["EDIT"], $pagina);
+			$pagina = $this->replace_content('/\#{INDEX.DELETE}\#/ms', $language[$lan][$section]["DELETE"], $pagina);
+		}elseif ($section === "addtag") {
+			$pagina = $this->replace_content('/\#{ADDTAG.BACK}\#/ms', $language[$lan][$section]["BACK"], $pagina);
+			$pagina = $this->replace_content('/\#{ADDTAG.NEXT}\#/ms', $language[$lan][$section]["NEXT"], $pagina);
+			$pagina = $this->replace_content('/\#{ADDTAG.TITLE-LOCATION}\#/ms', $language[$lan][$section]["TITLE-LOCATION"], $pagina);
+			$pagina = $this->replace_content('/\#{ADDTAG.SEARCH}\#/ms', $language[$lan][$section]["SEARCH"], $pagina);
+			$pagina = $this->replace_content('/\#{ADDTAG.LATITUDE}\#/ms', $language[$lan][$section]["LATITUDE"], $pagina);
+			$pagina = $this->replace_content('/\#{ADDTAG.LONGITUDE}\#/ms', $language[$lan][$section]["LONGITUDE"], $pagina);
+			$pagina = $this->replace_content('/\#{ADDTAG.TITLE-GENERAL}\#/ms', $language[$lan][$section]["TITLE-GENERAL"], $pagina);
+			$pagina = $this->replace_content('/\#{ADDTAG.TAGNAME}\#/ms', $language[$lan][$section]["TAGNAME"], $pagina);
+			$pagina = $this->replace_content('/\#{ADDTAG.TAGNAME-TOOLTIP}\#/ms', $language[$lan][$section]["TAGNAME-TOOLTIP"], $pagina);
+			$pagina = $this->replace_content('/\#{ADDTAG.TAGDESC}\#/ms', $language[$lan][$section]["TAGDESC"], $pagina);
+			$pagina = $this->replace_content('/\#{ADDTAG.TAGDESC-TOOLTIP}\#/ms', $language[$lan][$section]["TAGDESC-TOOLTIP"], $pagina);
+			$pagina = $this->replace_content('/\#{ADDTAG.WEBSITE}\#/ms', $language[$lan][$section]["WEBSITE"], $pagina);
+			$pagina = $this->replace_content('/\#{ADDTAG.WEBSITE-TOOLTIP}\#/ms', $language[$lan][$section]["WEBSITE-TOOLTIP"], $pagina);
+			$pagina = $this->replace_content('/\#{ADDTAG.PURCHASEURL}\#/ms', $language[$lan][$section]["PURCHASEURL"], $pagina);
+			$pagina = $this->replace_content('/\#{ADDTAG.PURCHASEURL-TOOLTIP}\#/ms', $language[$lan][$section]["PURCHASEURL-TOOLTIP"], $pagina);
+			$pagina = $this->replace_content('/\#{ADDTAG.TITLE-SOCIAL}\#/ms', $language[$lan][$section]["TITLE-SOCIAL"], $pagina);
+			$pagina = $this->replace_content('/\#{ADDTAG.TITLE-IMAGE}\#/ms', $language[$lan][$section]["TITLE-IMAGE"], $pagina);
+			$pagina = $this->replace_content('/\#{ADDTAG.DRAG-IMAGE}\#/ms', $language[$lan][$section]["DRAG-IMAGE"], $pagina);
+			$pagina = $this->replace_content('/\#{ADDTAG.TITLE-VIDEO}\#/ms', $language[$lan][$section]["TITLE-VIDEO"], $pagina);
+			$pagina = $this->replace_content('/\#{ADDTAG.DRAG-VIDEO}\#/ms', $language[$lan][$section]["DRAG-VIDEO"], $pagina);
+			$pagina = $this->replace_content('/\#{ADDTAG.TITLE-AUDIO}\#/ms', $language[$lan][$section]["TITLE-AUDIO"], $pagina);
+			$pagina = $this->replace_content('/\#{ADDTAG.DRAG-AUDIO}\#/ms', $language[$lan][$section]["DRAG-AUDIO"], $pagina);
+			$pagina = $this->replace_content('/\#{ADDTAG.UPLOAD-PC}\#/ms', $language[$lan][$section]["UPLOAD-PC"], $pagina);
+			$pagina = $this->replace_content('/\#{ADDTAG.UPLOAD-CLOUD}\#/ms', $language[$lan][$section]["UPLOAD-CLOUD"], $pagina);
+			$pagina = $this->replace_content('/\#{ADDTAG.TITLE-SELECTFILE}\#/ms', $language[$lan][$section]["TITLE-SELECTFILE"], $pagina);
+			$pagina = $this->replace_content('/\#{ADDTAG.BUTTON-SELECT}\#/ms', $language[$lan][$section]["BUTTON-SELECT"], $pagina);
+			$pagina = $this->replace_content('/\#{ADDTAG.BUTTON-CANCEL}\#/ms', $language[$lan][$section]["BUTTON-CANCEL"], $pagina);
+		}elseif ($section === "multimedia") {
+			$pagina = $this->replace_content('/\#{MULTIMEDIA.TITLE-FILES}\#/ms', $language[$lan][$section]["TITLE-FILES"], $pagina);
+			$pagina = $this->replace_content('/\#{MULTIMEDIA.NAME}\#/ms', $language[$lan][$section]["NAME"], $pagina);
+			$pagina = $this->replace_content('/\#{MULTIMEDIA.SIZE}\#/ms', $language[$lan][$section]["SIZE"], $pagina);
+			$pagina = $this->replace_content('/\#{MULTIMEDIA.DATEUPLOADED}\#/ms', $language[$lan][$section]["DATEUPLOADED"], $pagina);
+			$pagina = $this->replace_content('/\#{MULTIMEDIA.ACTION}\#/ms', $language[$lan][$section]["ACTION"], $pagina);
+			$pagina = $this->replace_content('/\#{MULTIMEDIA.BUTTON-DELETE}\#/ms', $language[$lan][$section]["BUTTON-DELETE"], $pagina);
+			$pagina = $this->replace_content('/\#{MULTIMEDIA.MENU-VIDEO}\#/ms', $language[$lan][$section]["MENU-VIDEO"], $pagina);
+			$pagina = $this->replace_content('/\#{MULTIMEDIA.MENU-IMAGE}\#/ms', $language[$lan][$section]["MENU-IMAGE"], $pagina);
+			$pagina = $this->replace_content('/\#{MULTIMEDIA.MENU-AUDIO}\#/ms', $language[$lan][$section]["MENU-AUDIO"], $pagina);
+			$pagina = $this->replace_content('/\#{MULTIMEDIA.SEARCH-PLACEHOLDER}\#/ms', $language[$lan][$section]["SEARCH-PLACEHOLDER"], $pagina);
+			$pagina = $this->replace_content('/\#{MULTIMEDIA.UPLOADFILE}\#/ms', $language[$lan][$section]["UPLOADFILE"], $pagina);
+			$pagina = $this->replace_content('/\#{MULTIMEDIA.TITLE-OVERVIEW}\#/ms', $language[$lan][$section]["TITLE-OVERVIEW"], $pagina);
+			$pagina = $this->replace_content('/\#{MULTIMEDIA.USEDSPACE}\#/ms', $language[$lan][$section]["USEDSPACE"], $pagina);
+			$pagina = $this->replace_content('/\#{MULTIMEDIA.FILES-VIDEO}\#/ms', $language[$lan][$section]["FILES-VIDEO"], $pagina);
+			$pagina = $this->replace_content('/\#{MULTIMEDIA.FILES-IMAGE}\#/ms', $language[$lan][$section]["FILES-IMAGE"], $pagina);
+			$pagina = $this->replace_content('/\#{MULTIMEDIA.FILES-AUDIO}\#/ms', $language[$lan][$section]["FILES-AUDIO"], $pagina);
+			$pagina = $this->replace_content('/\#{MULTIMEDIA.FILES-TOTAL}\#/ms', $language[$lan][$section]["FILES-TOTAL"], $pagina);
+		}elseif ($section === "profile") {
+			
+		}elseif ($section === "notifications") {
+			
+		}elseif ($section === "edittag") {
+			
+		}
+
+		return $pagina;
 	}
 
 	private function get_plan_info($plan){

@@ -8,7 +8,7 @@ $(document).ready(function() {
 		}
 		$( "#" + (state+1) ).hide();
 		$( "#" + state ).show(200);
-		setMenuText();
+		//setMenuText();
 	});
 
 	$("#next").click(function(){
@@ -26,12 +26,12 @@ $(document).ready(function() {
 			state++; 
 			$( "#" + (state-1) ).hide();
 			$( "#" + state ).show(200);
-			setMenuText();	
+			//setMenuText();	
 		}
 	});
 
+	/*
 	function setMenuText(){
-		//Código...
 		var back;
 		var next;
 		if( state === 1){
@@ -47,6 +47,7 @@ $(document).ready(function() {
 		$( "#back" ).html( back );
 		$( "#next" ).html( next );
 	}
+	*/
 
 	function validateCoordinates(){
 		flag = true;

@@ -1,0 +1,77 @@
+{
+	"Spanish":{
+		"general":{
+			"HOME":"Inicio",
+			"MULTIMEDIA":"Mis Archivos",
+			"LOGOUT":"Cerrar Sesión"
+		},
+		"index":{
+			"ACTIVE":"Activos",
+			"INACTIVE":"Inactivos",
+			"SEARCH-PLACEHOLDER":"Busca tus lugares",
+			"ADDTAG":"Agregar lugar",
+			"DISABLE":"Deshabilitar",
+			"ENABLE":"Habiitar",
+			"COPY":"Copiar",
+			"EDIT":"Editar",
+			"DELETE":"Eliminar"
+		},
+		"addtag":{
+			"BACK":"Atrás",
+			"NEXT":"Siguiente",
+			"TITLE-LOCATION":"Localiza un punto",
+			"SEARCH":"Buscar...",
+			"LATITUDE":"Latitud",
+			"LONGITUDE":"Longitud",
+			"TITLE-GENERAL":"Información general",
+			"TAGNAME":"Nombre del lugar",
+			"TAGNAME-TOOLTIP":"Pon un nombre al lugar que quieres etiquetar",
+			"TAGDESC":"Descripción",
+			"TAGDESC-TOOLTIP":"Agrega una breve descripción de este lugar",
+			"WEBSITE":"Sitio web",
+			"WEBSITE-TOOLTIP":"Dirección a tu sitio web",
+			"PURCHASEURL":"Url de compra",
+			"PURCHASEURL-TOOLTIP":"Dirección web para comprar un producto o servicio",
+			"TITLE-SOCIAL":"Redes sociales",
+			"TITLE-IMAGE":"Imagen",
+			"DRAG-IMAGE":"Arrastra una imagen aquí",
+			"TITLE-VIDEO":"Video",
+			"DRAG-VIDEO":"Arrastra un video aquí",
+			"TITLE-AUDIO":"Audio",
+			"DRAG-AUDIO":"Arrastra un audio aquí",
+			"UPLOAD-PC":"Subir desde PC",
+			"UPLOAD-CLOUD":"Seleccionar de GeoDisplay ",
+			"TITLE-SELECTFILE":"Selecciona un archivo",
+			"BUTTON-SELECT":"Seleccionar",
+			"BUTTON-CANCEL":"Cancelar"
+		},
+		"profile":{
+			"":""
+		},
+		"multimedia":{
+			"TITLE-FILES":"Archivos",
+			"NAME":"Nombre",
+			"SIZE":"Tamaño",
+			"DATEUPLOADED":"Fecha",
+			"ACTION":"Acciones",
+			"BUTTON-DELETE":"Eliminar",
+			"MENU-VIDEO":"Video",
+			"MENU-IMAGE":"Imagen",
+			"MENU-AUDIO":"Audio",
+			"SEARCH-PLACEHOLDER":"Busca un archivo",
+			"UPLOADFILE":"Subir archivo",
+			"TITLE-OVERVIEW":"Visión general",
+			"USEDSPACE":"Espacio utilizado",
+			"FILES-VIDEO":"Archivos de video",
+			"FILES-IMAGE":"Archivos de imagen",
+			"FILES-AUDIO":"Archivos de audio",
+			"FILES-TOTAL":"Total de archivos"
+		},
+		"notifications":{
+			"":""
+		}
+	},
+	"English":{
+		"":""
+	}
+}

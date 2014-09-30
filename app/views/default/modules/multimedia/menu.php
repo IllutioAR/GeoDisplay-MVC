@@ -13,19 +13,19 @@
 				<li #{MENUVIDEO}#>
 					<a href="multimedia.php?type=video">
 						<i class="fa fa-film"></i>
-						Video
+						#{MULTIMEDIA.MENU-VIDEO}#
 					</a>
 				</li>
 				<li #{MENUAUDIO}#>
 					<a href="multimedia.php?type=audio">
 						<i class="fa fa-music"></i>
-						Audio
+						#{MULTIMEDIA.MENU-AUDIO}#
 					</a>
 				</li>
 				<li #{MENUIMAGE}#>
 					<a href="multimedia.php?type=image">
 						<i class="fa fa-picture-o"></i>
-						Imagen
+						#{MULTIMEDIA.MENU-IMAGE}#
 					</a>
 				</li>
 				<!--
@@ -39,7 +39,7 @@
 				<li style="padding:8px">
 					<form class="form-inline" role="form">
 						<div class="form-group">
-							<input id="search_file" type="text" placeholder="Busca un archivo" class="form-control">
+							<input id="search_file" type="text" placeholder="#{MULTIMEDIA.SEARCH-PLACEHOLDER}#" class="form-control">
 							<button id="search_button" class="btn btn-default"><span class="fa fa-search"></span></button>
 						</div>
 					</form>
@@ -62,25 +62,25 @@
 					</form>
 					<a id="file-upload-select" href="#" class="green dropdown-toggle" data-toggle="dropdown">
 						<i class="fa fa-plus-circle"></i>
-						Subir archivo
+						#{MULTIMEDIA.UPLOADFILE}#
 					</a>
 					<ul class="dropdown-menu" role="menu">
 						<li>
 							<a id="video-upload" href="#">
 								<i class="fa fa-film"></i>
-								Video
+								#{MULTIMEDIA.MENU-VIDEO}#
 							</a>
 						</li>
 						<li>
 							<a id="audio-upload" href="#">
 								<i class="fa fa-music"></i>
-								Audio
+								#{MULTIMEDIA.MENU-AUDIO}#
 							</a>
 						</li>
 						<li>
 							<a id="image-upload" href="#">
 								<i class="fa fa-picture-o"></i>
-								Imagen
+								#{MULTIMEDIA.MENU-IMAGE}#
 							</a>
 						</li>
 					</ul>

@@ -18,13 +18,13 @@
 						    <li>
 						    	<a href="index.php">
 						    		<i class="fa fa-home"></i>
-						    		Inicio
+						    		#{GENERAL.HOME}#
 						    	</a>
 						    </li>
 						    <li>
 						    	<a href="multimedia.php">
 						    		<i class="fa fa-cloud"></i>
-						    		Mis archivos
+						    		#{GENERAL.MULTIMEDIA}#
 						    	</a>
 						    </li>
 						</ul>
@@ -44,7 +44,7 @@
 						    <li>
 						    	<a href="logout.php">
 						    		<i class="fa fa-sign-out"></i>
-						    		Cerrar sesión
+						    		#{GENERAL.LOGOUT}#
 						    	</a>
 						    </li>
 						</ul>

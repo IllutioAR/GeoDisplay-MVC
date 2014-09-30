@@ -1,7 +1,7 @@
 <div class="col-xs-12 col-md-8">
 	<section class="seccion">
 		<div class="titulo">
-			<strong>Files</strong>
+			<strong>#{MULTIMEDIA.TITLE-FILES}#</strong>
 			<span class="pull-right">
 				<!--
 				<i class="fa fa-th-list" data-toggle="tooltip" data-placement="top" title="See as a list."></i>
@@ -26,10 +26,10 @@
 						<table class="table table-hover">
 							<thead>
 								<tr>
-									<th>Name</th>
-									<th style="text-align:right">Size</th>
-									<th>Uploaded</th>
-									<th>Action</th>
+									<th>#{MULTIMEDIA.NAME}#</th>
+									<th style="text-align:right">#{MULTIMEDIA.SIZE}#</th>
+									<th>#{MULTIMEDIA.DATEUPLOADED}#</th>
+									<th>#{MULTIMEDIA.ACTION}#</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -42,7 +42,7 @@
 											<?= ( isset($file["id"]) )? 'id="'.$file['id'].'"' : '' ?>
 											<?= ( !isset($file["id"]) )? "disabled" : "" ?>
 										>
-										<i id="delete" class="fa fa-trash-o"></i> Delete</button></td>
+										<i id="delete" class="fa fa-trash-o"></i> #{MULTIMEDIA.BUTTON-DELETE}#</button></td>
 								</tr>
 								<?php endforeach; ?>
 							</tbody>

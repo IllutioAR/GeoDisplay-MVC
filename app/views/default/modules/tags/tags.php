@@ -9,7 +9,7 @@
 								<i class="fa fa-plus-circle icon-lg"></i>
 							</div>
 							<div class="text-lg">
-								Agrega un lugar
+								#{INDEX.ADDTAG}#
 							</div>
 						</div>
 					</div>
@@ -27,9 +27,9 @@
 					</span>
 					<span class="titulo-botones pull-right">
 						<i id="disable" class="fa fa-flag" data-toggle="tooltip" data-placement="top" title="#{DISABLE}#"></i>
-						<i id="clone" class="fa fa-copy" data-toggle="tooltip" data-placement="top" title="Copiar"></i>
-						<i id="edit" class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="Editar"></i>
-						<i id="delete" class="fa fa-trash-o" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
+						<i id="clone" class="fa fa-copy" data-toggle="tooltip" data-placement="top" title="#{INDEX.COPY}#"></i>
+						<i id="edit" class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="#{INDEX.EDIT}#"></i>
+						<i id="delete" class="fa fa-trash-o" data-toggle="tooltip" data-placement="top" title="#{INDEX.DELETE}#"></i>
 					</span>
 				</div>
 				<div class="map">

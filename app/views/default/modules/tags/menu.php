@@ -12,20 +12,20 @@
 			<ul class="nav navbar-nav">
 				<li #{ACTIVE}#>
 					<a href="index.php">
-						Activos
+						#{INDEX.ACTIVE}#
 						<span class="badge">#{NUMACTIVE}#</span>
 					</a>
 				</li>
 				<li #{INACTIVE}#>
 					<a href="index.php?tags=inactive">
-						Inactivos
+						#{INDEX.INACTIVE}#
 						<span class="badge">#{NUMINACTIVE}#</span>
 					</a>
 				</li>
 				<li style="padding:8px">
 					<form class="form-inline" role="form">
 						<div class="form-group">
-							<input id="search_tag" type="text" placeholder="Busca un lugar" class="form-control">
+							<input id="search_tag" type="text" placeholder="#{INDEX.SEARCH-PLACEHOLDER}#" class="form-control">
 							<button id="search_button" class="btn btn-default"><span class="fa fa-search"></span></button>
 						</div>
 					</form>
@@ -49,7 +49,7 @@
 				<li>
 					<a href="addtag.php" class="green">
 						<i class="fa fa-plus-circle"></i>
-						Agregar lugar
+						#{INDEX.ADDTAG}#
 					</a>
 				</li>
 			</ul>

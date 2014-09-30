@@ -4,14 +4,14 @@
 			<li>
 				<a id="back" href="#">
 					<i class="fa fa-arrow-left"></i>
-					<span>Mis lugares</span>
+					<span>#{ADDTAG.BACK}#</span>
 				</a>
 			</li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 			<li>
 				<a id="next" href="#" class="green">
-					<span>Información</span>
+					<span>#{ADDTAG.NEXT}#</span>
 					<i class="fa fa-arrow-right"></i>
 				</a>
 			</li>
