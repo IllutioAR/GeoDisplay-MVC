@@ -225,6 +225,9 @@ class mvc_controller {
 		$pagina = $this->replace_content('/\#{PERCENTAGESPACE}\#/ms' ,$percentage_space , $pagina);
 		
 		$pagina = $this->show_notification($pagina);
+
+		$pagina = $this->set_language($pagina,"profile");
+
 		$this->view_page($pagina);
 	}
 
@@ -377,21 +380,53 @@ class mvc_controller {
 	}
 
 	function show_notification($pagina){
-		//Carga el template para la notificacion
+		$language = json_decode(file_get_contents('../app/language/language.json'), true);
+		$lan = $_SESSION["client"]["language"];
+
+		/*
+		$pagina = $this->replace_content('/\#{NOTIFICATION.SUCCESS-CHANGE_PASSWORD}\#/ms', $language[$lan]["notifications"]["SUCCESS-CHANGE_PASSWORD"], $pagina);
+		$pagina = $this->replace_content('/\#{NOTIFICATION.SUCCESS-NEW_TAG}\#/ms', $language[$lan]["notifications"]["SUCCESS-NEW_TAG"], $pagina);
+		$pagina = $this->replace_content('/\#{NOTIFICATION.SUCCESS-EDIT_TAG}\#/ms', $language[$lan]["notifications"]["SUCCESS-EDIT_TAG"], $pagina);
+		$pagina = $this->replace_content('/\#{NOTIFICATION.SUCCESS-FILE_UPLOAD}\#/ms', $language[$lan]["notifications"]["SUCCESS-FILE_UPLOAD"], $pagina);
+		$pagina = $this->replace_content('/\#{NOTIFICATION.SUCCESS-FILE_RESTRICTION}\#/ms', $language[$lan]["notifications"]["SUCCESS-FILE_RESTRICTION"], $pagina);
+		$pagina = $this->replace_content('/\#{NOTIFICATION.ERROR-CHANGE_PASSWORD}\#/ms', $language[$lan]["notifications"]["ERROR-CHANGE_PASSWORD"], $pagina);
+		$pagina = $this->replace_content('/\#{NOTIFICATION.ERROR-EDIT_TAG}\#/ms', $language[$lan]["notifications"]["ERROR-EDIT_TAG"], $pagina);
+		$pagina = $this->replace_content('/\#{NOTIFICATION.ERROR-INCOMPLETE_TAG}\#/ms', $language[$lan]["notifications"]["ERROR-INCOMPLETE_TAG"], $pagina);
+		$pagina = $this->replace_content('/\#{NOTIFICATION.ERROR-EDIT_INCOMPLETE}\#/ms', $language[$lan]["notifications"]["ERROR-EDIT_INCOMPLETE"], $pagina);
+		$pagina = $this->replace_content('/\#{NOTIFICATION.ERROR-MEDIADIRECTORY}\#/ms', $language[$lan]["notifications"]["ERROR-MEDIADIRECTORY"], $pagina);
+		$pagina = $this->replace_content('/\#{NOTIFICATION.ERROR-USER_SPACE}\#/ms', $language[$lan]["notifications"]["ERROR-USER_SPACE"], $pagina);
+		$pagina = $this->replace_content('/\#{NOTIFICATION.ERROR-FILE_UPLOAD}\#/ms', $language[$lan]["notifications"]["ERROR-FILE_UPLOAD"], $pagina);
+		$pagina = $this->replace_content('/\#{NOTIFICATION.ERROR-NUM_TAGS}\#/ms', $language[$lan]["notifications"]["ERROR-NUM_TAGS"], $pagina);
+		*/
+
 		$notification = "";
 		if (isset( $_SESSION["success"] )) {
 			$notification = $this->load_page('../app/views/default/modules/notification/success.php');
+			foreach ($_SESSION["success"] as $key => $value) {
+				$new_key = "SUCCESS-".strtoupper($key);
+				$notification = $this->replace_content('/\#{MESSAGE}\#/ms', "#{NOTIFICATION.".$new_key."}#", $notification);
+				$notification = $this->replace_content("/\#{NOTIFICATION.$new_key}\#/ms", $language[$lan]["notifications"][$new_key], $notification);
+			}
+			unset( $_SESSION["success"] );
 		}
 		elseif (isset( $_SESSION["error"] )) {
 			$notification = $this->load_page('../app/views/default/modules/notification/error.php');
+			foreach ($_SESSION["error"] as $key => $value) {
+				$new_key = "ERROR-".strtoupper($key);
+				$notification = $this->replace_content('/\#{MESSAGE}\#/ms', "#{NOTIFICATION.".$new_key."}#", $notification);
+				$notification = $this->replace_content("/\#{NOTIFICATION.$new_key}\#/ms", $language[$lan]["notifications"][$new_key], $notification);
+			}
+			unset( $_SESSION["error"] );
 		}
 		elseif (isset( $_SESSION["info"] )) {
 			$notification = $this->load_page('../app/views/default/modules/notification/info.php');
+			foreach ($_SESSION["info"] as $key => $value) {
+				$new_key = "INFO-".strtoupper($key);
+				$notification = $this->replace_content('/\#{MESSAGE}\#/ms', "#{NOTIFICATION.".$new_key."}#", $notification);
+				$notification = $this->replace_content("/\#{NOTIFICATION.$new_key}\#/ms", $language[$lan]["notifications"][$new_key], $notification);
+			}
+			unset( $_SESSION["info"] );
 		}
-
-		//Pone el texto en el html
-		//$notification = $this->replace_content('/\#{MESSAGE}\#/ms', "Prueba de notificación", $notification);
-
 		return $this->replace_content('/\#{NOTIFICATION}\#/ms', $notification, $pagina);
 	}
 
@@ -460,13 +495,23 @@ class mvc_controller {
 			$pagina = $this->replace_content('/\#{MULTIMEDIA.FILES-AUDIO}\#/ms', $language[$lan][$section]["FILES-AUDIO"], $pagina);
 			$pagina = $this->replace_content('/\#{MULTIMEDIA.FILES-TOTAL}\#/ms', $language[$lan][$section]["FILES-TOTAL"], $pagina);
 		}elseif ($section === "profile") {
-			
-		}elseif ($section === "notifications") {
-			
+			$pagina = $this->replace_content('/\#{PROFILE.PICTURE}\#/ms', $language[$lan][$section]["PICTURE"], $pagina);
+			$pagina = $this->replace_content('/\#{PROFILE.DETAIL}\#/ms', $language[$lan][$section]["DETAIL"], $pagina);
+			$pagina = $this->replace_content('/\#{PROFILE.USEDPLACES}\#/ms', $language[$lan][$section]["USEDPLACES"], $pagina);
+			$pagina = $this->replace_content('/\#{PROFILE.USEDSPACE}\#/ms', $language[$lan][$section]["USEDSPACE"], $pagina);
+			$pagina = $this->replace_content('/\#{PROFILE.PASSWORD-CHANGE}\#/ms', $language[$lan][$section]["PASSWORD-CHANGE"], $pagina);
+			$pagina = $this->replace_content('/\#{PROFILE.PASSWORD-CURRENT}\#/ms', $language[$lan][$section]["PASSWORD-CURRENT"], $pagina);
+			$pagina = $this->replace_content('/\#{PROFILE.PASSWORD-NEW}\#/ms', $language[$lan][$section]["PASSWORD-NEW"], $pagina);
+			$pagina = $this->replace_content('/\#{PROFILE.PASSWORD-CONFIRM}\#/ms', $language[$lan][$section]["PASSWORD-CONFIRM"], $pagina);
+			$pagina = $this->replace_content('/\#{PROFILE.PASSWORD-CHANGE}\#/ms', $language[$lan][$section]["PASSWORD-CHANGE"], $pagina);
+			$pagina = $this->replace_content('/\#{PROFILE.VAL-MIN6}\#/ms', $language[$lan][$section]["VAL-MIN6"], $pagina);
+			$pagina = $this->replace_content('/\#{PROFILE.LANGUAGE}\#/ms', $language[$lan][$section]["LANGUAGE"], $pagina);
+			$pagina = $this->replace_content('/\#{PROFILE.LANGUAGE-SPANISH}\#/ms', $language[$lan][$section]["LANGUAGE-SPANISH"], $pagina);
+			$pagina = $this->replace_content('/\#{PROFILE.LANGUAGE-ENGLISH}\#/ms', $language[$lan][$section]["LANGUAGE-ENGLISH"], $pagina);
+			$pagina = $this->replace_content('/\#{PROFILE.LANGUAGE-SELECT}\#/ms', $language[$lan][$section]["LANGUAGE-SELECT"], $pagina);
 		}elseif ($section === "edittag") {
 			
 		}
-
 		return $pagina;
 	}
 

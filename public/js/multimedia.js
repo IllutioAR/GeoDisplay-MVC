@@ -79,10 +79,10 @@ $( document ).ready(function() {
 				var type = $("#upload-file").attr("action").replace("ajax/upload_file.php?type=", "")
 
 				if(data.indexOf("success") > -1){
-					window.location.href = "multimedia.php?type=" + type + "&success=upload";
+					window.location.href = "multimedia.php?type=" + type;
 				}
 				else{
-					window.location.href = "multimedia.php?type=" + type + "&error";
+					window.location.href = "multimedia.php?type=" + type;
 				}
 				$("#file").attr("name", "file");				
 			},

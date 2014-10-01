@@ -35,6 +35,7 @@ class multimedia extends database {
 			$valid_exts = array("mp4", "3gp");
 		}
 		else{
+			$_SESSION["error"]["file_upload"] = true;
 			return "error";
 		}
 		$ext = strtolower(pathinfo($_FILES[$type]["name"], PATHINFO_EXTENSION));
@@ -60,13 +61,16 @@ class multimedia extends database {
 				$query->bindParam(':file_path', $tmp_path );
 				$query->bindParam(':client_nick', $this->nick);
 				$query->execute();
+				$_SESSION["success"]["file_upload"] = true;
 				return "success".$this->db->lastInsertId();
 			}
 			else{
+				$_SESSION["error"]["file_upload"];
 				return "error_upload";
 			}
 		}
 		else{
+			$_SESSION["success"]["file_restriction"] = true;
 			return "file_extesion/size";
 		}
 	}
