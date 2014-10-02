@@ -72,10 +72,11 @@ class client extends database {
 		return "";
 	}
 
-	function change_language($language){
-		$statement = "UPDATE Client SET language = :language";
+	function change_language($email, $language){
+		$statement = "UPDATE Client SET language = :language WHERE email = :email";
 		$query = $this->db->prepare($statement);
 		$query->bindParam(':language', $language);
+		$query->bindParam(':email', $email);
 		$query->execute();
 	}
 

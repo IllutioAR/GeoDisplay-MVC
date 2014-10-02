@@ -118,7 +118,7 @@ class mvc_controller {
 		if( isset($_POST["language"]) ){
 			if( $_POST["language"] != "" ){
 				$client = new client();
-				$client->change_language($_POST["language"]);
+				$client->change_language($_SESSION["client"]["email"], $_POST["language"]);
 				$_SESSION["client"]["language"] = $_POST["language"];	
 			}
 		}
