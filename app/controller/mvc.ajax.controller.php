@@ -113,6 +113,17 @@ class mvc_controller {
 		echo $multimedia->save_file( $_GET["type"] );
 	}
 
+	function change_language(){
+		$this->validate_session();
+		if( isset($_POST["language"]) ){
+			if( $_POST["language"] != "" ){
+				$client = new client();
+				$client->change_language($_POST["language"]);
+				$_SESSION["client"]["language"] = $_POST["language"];	
+			}
+		}
+	}
+
 	function change_password(){
 		$this->validate_session();
 		if( isset($_POST["password"]) && isset($_POST["new_password"]) && isset($_POST["new_password_confirm"]) ){
@@ -143,32 +154,29 @@ class mvc_controller {
 
 	function password_recovery(){
 		if(filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
+			$client = new client();
+			if($client->user_exists("",$_POST["email"])){
+				$characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+				$new_password = "";
+				for ($i = 0; $i < 10; $i++) {
+					$new_password .= $characters[rand(0, strlen($characters) - 1)];
+				}
+				if (defined("CRYPT_BLOWFISH") && CRYPT_BLOWFISH){
+					$salt = "$2y$11$" . substr(md5(uniqid(rand(), true)), 0, 22);
+					$hashed_password = crypt($new_password, $salt);
+				
+					$client->password_recovery($_POST["email"], $hashed_password);
 
+					$email_message = "Su nueva contraseña ha sido generada, te recomendamos cambiarla inmediatamente al iniciar sesión: " .$new_password;
+					$email_from = "support@illut.io";
 
-			$characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-		    $new_password = "";
-		    for ($i = 0; $i < 8; $i++) {
-		        $new_password .= $characters[rand(0, strlen($characters) - 1)];
-		    }
-			if (defined("CRYPT_BLOWFISH") && CRYPT_BLOWFISH){
-		        $salt = "$2y$11$" . substr(md5(uniqid(rand(), true)), 0, 22);
-		        $hashed_password = crypt($new_password, $salt);
-		        
-		        $client = new client();
-		        $client->password_recovery($_SESSION["client"]["email"], $hashed_password);
-
-				$email_message = "Su nueva contraseña ha sido generada, te recomendamos cambiarla inmediatamente al iniciar sesión: " .$new_password;
-				$email_from = "support@illut.io";
-
-				$headers = "From: ".$email_from."\r\n".
-				"Reply-To: ".$email_from."\r\n" .
-				"X-Mailer: PHP/" . phpversion();
-				@mail ($email, "", $email_message, $headers);
-		    }
-
-
-			$client->password_recovery($_POST["email"]);
+					$headers = "From: ".$email_from."\r\n"."Reply-To: ".$email_from."\r\n"."X-Mailer: PHP/" . phpversion();
+					@mail($_POST["email"], "GeoDisplay password", $email_message, $headers);
+					exit();
+				}
+			}
 		}
+		echo "error";
 	}
 
 }

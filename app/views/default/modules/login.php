@@ -116,20 +116,19 @@
         </script>
         <script>
         	$("#passwordRecovery").click(function (){
+        		$("#").attr("disabled","disabled");
+
         		var email = $("#email").val();
         		var data = {"email" : email};
 				$.ajax({
 			        data:  data,
-			        url:   'ajax/passwordRecovery.php',
+			        url:   'ajax/password_recovery.php',
 			        type:  'post',
-			        beforeSend: function (){
-			            console.log("Procesando, espere por favor...");
-			        },
 			        success: function (response){
-			            console.log("Servidor: " + response);
-			            //location.reload();
+			            console.debug("Servidor: " + response);
 			        }
 			    });
+			    location.reload();
         	});
         </script>
 	</body>

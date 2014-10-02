@@ -111,13 +111,14 @@
 											<div class="col-xs-12 col-md-6">
 												<div class="form-group" style="margin:1em 0 !important">
 													<select id="language" class="form-control">
+														<option value="">---</option>
 														<option value="Spanish">#{PROFILE.LANGUAGE-SPANISH}#</option>
 														<option value="English">#{PROFILE.LANGUAGE-ENGLISH}#</option>
 													</select>
 												</div>
 											</div>
 											<div class="col-xs-12 col-md-6">
-												<button type="button" class="btn btn-success pull-right" style="margin: 1em 0;">#{PROFILE.LANGUAGE-SELECT}#</button>
+												<button id="change-language" type="button" class="btn btn-success pull-right" style="margin: 1em 0;">#{PROFILE.LANGUAGE-SELECT}#</button>
 											</div>
 										</div>
 									</form>

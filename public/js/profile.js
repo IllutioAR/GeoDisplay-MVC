@@ -26,4 +26,18 @@ $(document).ready(function() {
 			$("#photo").height(imgHeight + relation);
 		};
 	}
+
+	$("#change-language").on("click", function(e){
+		$(this).attr("disabled", "disabled");
+		var data = {"language" : $("#language").val() };
+    	$.ajax({
+            data:  data,
+            url:   'ajax/change_language.php',
+            type:  'post',
+            success: function(response){
+            	console.log(response);
+                location.reload();
+            }
+        });
+	});
 });

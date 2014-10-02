@@ -72,6 +72,13 @@ class client extends database {
 		return "";
 	}
 
+	function change_language($language){
+		$statement = "UPDATE Client SET language = :language";
+		$query = $this->db->prepare($statement);
+		$query->bindParam(':language', $language);
+		$query->execute();
+	}
+
 	function change_password($email, $new_hashed_password){
 		$statement = "UPDATE Client SET password = :password WHERE email = :email";
 		$query = $this->db->prepare($statement);
