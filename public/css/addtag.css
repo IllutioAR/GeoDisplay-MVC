@@ -99,6 +99,7 @@ form [class*="error-input"]:focus{
 	background: #DDD;
 	color: #AAA;
 	cursor: pointer;
+	border: 1px dashed;
 }
 
 .drag-area > div{
