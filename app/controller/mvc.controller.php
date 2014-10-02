@@ -217,7 +217,6 @@ class mvc_controller {
 		
 		$pagina = $this->replace_content('/\#{USEDTAGS}\#/ms' ,$used_tags , $pagina);
 		$pagina = $this->replace_content('/\#{TOTALTAGS}\#/ms' ,$plan_info["total_tags"] , $pagina);
-		$pagina = $this->replace_content('/\#{USEDTAGS}\#/ms' ,$used_tags , $pagina);
 		$pagina = $this->replace_content('/\#{PERCENTAGETAGS}\#/ms' ,$percentage_tags , $pagina);
 
 		$pagina = $this->replace_content('/\#{USEDSPACE}\#/ms' , $used_space , $pagina);

@@ -31,11 +31,11 @@
 												<div>
 													<strong>#{PROFILE.USEDPLACES}#:</strong>
 													<div class="progress-container">
-														<div><strong>6/200</strong></div>
+														<div><strong>#{USEDTAGS}#/#{TOTALTAGS}#</strong></div>
 														<div class="progress">
 															<div class="progress">
-																<div class="progress-bar" role="progressbar" aria-valuenow="3" aria-valuemin="0" aria-valuemax="100" style="width: 3%">
-																	<span class="sr-only">3%</span>
+																<div class="progress-bar" role="progressbar" aria-valuenow="#{PERCENTAGETAGS}#" aria-valuemin="0" aria-valuemax="100" style="width: #{PERCENTAGETAGS}#%">
+																	<span class="sr-only">#{PERCENTAGETAGS}#%</span>
 																</div>
 															</div>
 														</div>
@@ -45,11 +45,11 @@
 												<div>
 													<strong>#{PROFILE.USEDSPACE}#:</strong>
 													<div class="progress-container">
-														<div><strong>333.87MB/500 MB</strong></div>
+														<div><strong>#{USEDSPACE}#MB/#{TOTALSPACE}#MB</strong></div>
 														<div class="progress">
 															<div class="progress">
-																<div class="progress-bar" role="progressbar" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100" style="width: 67%">
-																	<span class="sr-only">67%</span>
+																<div class="progress-bar" role="progressbar" aria-valuenow="#{PERCENTAGESPACE}#" aria-valuemin="0" aria-valuemax="100" style="width: #{PERCENTAGESPACE}#%">
+																	<span class="sr-only">#{PERCENTAGESPACE}#%</span>
 																</div>
 															</div>
 														</div>
