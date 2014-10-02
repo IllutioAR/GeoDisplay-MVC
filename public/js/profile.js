@@ -17,7 +17,6 @@ $(document).ready(function() {
 		$("#photo").height(ContainerWidth);
 	}
 	else{
-		alert($("#photoContainer").width());
 		$("#photoContainer").height(ContainerWidth);
 		if ($("#photo").width() < $("#photoContainer").height()) {
 			var imgWidth = $("#photo").width();

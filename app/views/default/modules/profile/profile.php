@@ -9,11 +9,7 @@
 									<strong>#{PROFILE.PICTURE}#</strong>
 								</div>
 								<div>
-									<div class="row">
-										<div id="photoContainer" class="col-xs-3 col-md-4">
-											<img id="photo" class="profile-photo" src="">
-										</div>
-									</div>
+									<img id="photo" class="profile-photo" src="#{LOGO}#">
 								</div>
 							</section>
 							<div>
