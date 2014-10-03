@@ -113,6 +113,43 @@ class mvc_controller {
 		echo $multimedia->save_file( $_GET["type"] );
 	}
 
+	function change_logo(){
+		$this->validate_session();
+		if( isset($_FILES["logo"]) && $_FILES["logo"]["error"] === 0 ){
+
+			$valid_exts = array("jpeg", "jpg", "png");
+			$ext = strtolower(pathinfo($_FILES["logo"]["name"], PATHINFO_EXTENSION));
+			//Si el archivo no tiene una extensión válida termina la función
+			if( !in_array($ext, $valid_exts) ){
+				return;
+			}
+
+			$path = "../media/".$_SESSION["client"]["nick"]."/image/";
+
+			while( file_exists( $path.$_FILES["logo"]["name"] ) ){
+				$path = $path."(".uniqid().")";
+			}
+			$path = $path.$_FILES["logo"]["name"];
+			
+			if ( move_uploaded_file($_FILES["logo"]["tmp_name"], $path) ) {
+				
+				$tmp_path = str_replace("../", "", $path);
+
+				$client = new client();
+				$client->change_logo($_SESSION["client"]["email"], $tmp_path);
+				$_SESSION["client"]["logo"] = $tmp_path;
+				$_SESSION["success"]["file_upload"] = true;
+			}
+			else{
+				$_SESSION["error"]["file_upload"] = true;
+			}
+
+
+
+			
+		}
+	}
+
 	function change_language(){
 		$this->validate_session();
 		if( isset($_POST["language"]) ){

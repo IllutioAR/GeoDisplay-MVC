@@ -27,6 +27,33 @@ $(document).ready(function() {
 		};
 	}
 
+	$("#change-logo").on("click", function(){
+		$("#select-logo").trigger("click");
+	});
+
+	$("#select-logo").on("change", function(){		
+
+		var fileInput = document.getElementById('select-logo');
+		var file = fileInput.files[0];
+		var formData = new FormData();
+		formData.append("logo", file);
+		
+		var xhr = new XMLHttpRequest();
+		
+		// Add any event handlers here...
+		xhr.open('POST', "ajax/change_logo.php", true);
+		xhr.send(formData);
+		xhr.onreadystatechange=function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				console.log("done: "+xhr.responseText);
+				location.reload();
+			}else{
+				console.log("error");
+			}
+		}
+
+	});
+
 	$("#change-language").on("click", function(e){
 		$(this).attr("disabled", "disabled");
 		var data = {"language" : $("#language").val() };

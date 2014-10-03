@@ -6,9 +6,15 @@
 						<div class="col-xs-12 col-md-12">
 							<section class="seccion">
 								<div class="titulo" id="photosection">
-									<strong>#{PROFILE.PICTURE}#</strong>
+									<span class="titulo-tag">
+										<strong>#{PROFILE.PICTURE}#</strong>
+									</span>
+									<span class="titulo-botones pull-right">
+										<i id="change-logo" class="fa fa-edit" data-toggle="tooltip" data-placement="top" title="#{PROFILE.EDIT-LOGO}#"></i>
+									</span>
 								</div>
 								<div>
+									<input id="select-logo" type="file" style="display: none">
 									<img id="photo" class="profile-photo" src="#{LOGO}#">
 								</div>
 							</section>

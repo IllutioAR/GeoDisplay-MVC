@@ -18,7 +18,7 @@ $(document).ready(function() {
 			type = $(this).attr("id");
 			uploadFile(fd, type);
 
-			console.debug("Subiendo archivo " + $(this).val());
+			//console.debug("Subiendo archivo " + $(this).val());
 		}
 	});
 

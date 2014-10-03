@@ -15,3 +15,7 @@ form{
 .profile-details > div{
 	padding: .1em 0;
 }
+
+.titulo i{
+	cursor: pointer;
+}

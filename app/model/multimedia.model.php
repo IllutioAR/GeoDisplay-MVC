@@ -26,7 +26,7 @@ class multimedia extends database {
 			return "user_space";
 		}
 		if($type == "image"){
-			$valid_exts = array("jpeg", "jpg", "png", "gif");
+			$valid_exts = array("jpeg", "jpg", "png");
 		}
 		elseif ($type == "audio") {
 			$valid_exts = array("mp3");
