@@ -137,7 +137,10 @@ class mvc_controller {
 
 				$client = new client();
 				$client->change_logo($_SESSION["client"]["email"], $tmp_path);
+
+				unlink("../".$_SESSION["client"]["logo"]);
 				$_SESSION["client"]["logo"] = $tmp_path;
+				
 				$_SESSION["success"]["file_upload"] = true;
 			}
 			else{
