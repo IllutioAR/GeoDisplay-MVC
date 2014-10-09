@@ -508,6 +508,7 @@ class mvc_controller {
 			$pagina = $this->replace_content('/\#{PROFILE.LANGUAGE-SPANISH}\#/ms', $language[$lan][$section]["LANGUAGE-SPANISH"], $pagina);
 			$pagina = $this->replace_content('/\#{PROFILE.LANGUAGE-ENGLISH}\#/ms', $language[$lan][$section]["LANGUAGE-ENGLISH"], $pagina);
 			$pagina = $this->replace_content('/\#{PROFILE.LANGUAGE-SELECT}\#/ms', $language[$lan][$section]["LANGUAGE-SELECT"], $pagina);
+			$pagina = $this->replace_content('/\#{PROFILE.EDIT-LOGO}\#/ms', $language[$lan][$section]["EDIT-LOGO"], $pagina);
 		}elseif ($section === "edittag") {
 			
 		}

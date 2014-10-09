@@ -47,6 +47,7 @@
 		},
 		"profile":{
 			"PICTURE":"Imagen de perfil",
+			"EDIT-LOGO":"Editar imagen de perfil",
 			"DETAIL":"Detalles de perfil",
 			"USEDPLACES":"Lugares utilizados",
 			"USEDSPACE":"Espacio utilizado",
@@ -144,6 +145,7 @@
 		},
 		"profile":{
 			"PICTURE":"Profile Image",
+			"EDIT-LOGO":"Edit Profile Image",
 			"DETAIL":"Profile Details",
 			"USEDPLACES":"Used Places",
 			"USEDSPACE":"Used Sapace",
