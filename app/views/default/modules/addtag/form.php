@@ -54,7 +54,7 @@
 									#{ADDTAG.WEBSITE}#
 									[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="#{ADDTAG.WEBSITE-TOOLTIP}#"></i>]
 								</label>
-								<input name="url" type="text" class="form-control" id="tag">
+								<input name="url" type="text" class="form-control" id="website_url">
 							</div>
 							<div class="col-xs-6">
 								<label for="tag">
@@ -62,7 +62,7 @@
 									#{ADDTAG.PURCHASEURL}#
 									[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="#{ADDTAG.PURCHASEURL-TOOLTIP}#"></i>]
 								</label>
-								<input name="purchase_url" type="text" class="form-control" id="tag">
+								<input name="purchase_url" type="text" class="form-control" id="purchase_url">
 							</div>
 						</div>
 					</div>
