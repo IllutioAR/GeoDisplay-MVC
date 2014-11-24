@@ -73,7 +73,7 @@ class client extends database {
 	}
 
 	function change_logo($email, $path){
-		$statement = "UPDATE client SET logo = :logo WHERE email = :email";
+		$statement = "UPDATE Client SET logo = :logo WHERE email = :email";
 		$query = $this->db->prepare($statement);
 		$query->bindParam(':logo', $path);
 		$query->bindParam(':email', $email);

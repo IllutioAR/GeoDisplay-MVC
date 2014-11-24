@@ -319,7 +319,7 @@ class tag extends database {
 			$query->bindParam(':id', $newId, PDO::PARAM_INT);
 			$query->execute();
 
-			$tryer = "SELECT multimedia_id, type FROM Multimedia_tag WHERE tag_id = :id";
+			$tryer = "SELECT multimedia_id, type FROM Multimedia_Tag WHERE tag_id = :id";
 			$query = $this->db->prepare($tryer);
 			$query->bindParam(':id',$id, PDO::PARAM_INT);
 			$query->execute();
