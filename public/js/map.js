@@ -30,7 +30,7 @@ function initialize() {
 			initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
 			map.setCenter(initialLocation);
 
-			var contentString = "Arrastra el marker para localizar un punto!";
+			var contentString = "Arrastra el marker para localizar un punto!<br>Drag the marker to locate a point!";
 
 			var infowindow = new google.maps.InfoWindow({
 				content: contentString

@@ -187,7 +187,7 @@
 			<div class="col-xs-12 col-md-4">
 				<div class="seccion">
 					<div class="titulo">
-						<strong>#{EDITTAG.TITLE-VIDEO}#</strong>
+						<strong>#{EDITTAG.TITLE-AUDIO}#</strong>
 						<!--
 						<?php 
 							if( isset($tag['audio_path']) )
