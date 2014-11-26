@@ -25,7 +25,7 @@
 			"LONGITUDE":"Longitud",
 			"TITLE-GENERAL":"Información general",
 			"TAGNAME":"Nombre del lugar",
-			"TAGNAME-TOOLTIP":"Pon un nombre al lugar que quieres etiquetar",
+			"TAGNAME-TOOLTIP":"Colocal el nombre del lugar que quieres etiquetar",
 			"TAGDESC":"Descripción",
 			"TAGDESC-TOOLTIP":"Agrega una breve descripción de este lugar",
 			"WEBSITE":"Sitio web",
@@ -54,7 +54,7 @@
 			"LONGITUDE":"Longitud",
 			"TITLE-GENERAL":"Información general",
 			"TAGNAME":"Nombre del lugar",
-			"TAGNAME-TOOLTIP":"Pon un nombre al lugar que quieres etiquetar",
+			"TAGNAME-TOOLTIP":"Colocal el nombre del lugar que quieres etiquetar",
 			"TAGDESC":"Descripción",
 			"TAGDESC-TOOLTIP":"Agrega una breve descripción de este lugar",
 			"WEBSITE":"Sitio web",
@@ -72,7 +72,8 @@
 			"UPLOAD-CLOUD":"Seleccionar de GeoDisplay ",
 			"TITLE-SELECTFILE":"Selecciona un archivo",
 			"BUTTON-SELECT":"Seleccionar",
-			"BUTTON-CANCEL":"Cancelar"
+			"BUTTON-CANCEL":"Cancelar",
+			"BROWSER-SUPPORT":"Tu navegador no tiene soporte para HTML5."
 		},
 		"profile":{
 			"PICTURE":"Imagen de perfil",
@@ -173,7 +174,34 @@
 			"BUTTON-CANCEL":"Cancel"
 		},
 		"edittag":{
-
+			"BACK":"Back",
+			"NEXT":"Next",
+			"TITLE-LOCATION":"Locate a place",
+			"SEARCH":"Serch...",
+			"LATITUDE":"Latitude",
+			"LONGITUDE":"Longitude",
+			"TITLE-GENERAL":"General Information",
+			"TAGNAME":"Name's Place",
+			"TAGNAME-TOOLTIP":"Name or Rename the place you are adding",
+			"TAGDESC":"Description",
+			"TAGDESC-TOOLTIP":"Add a little description about the place you are adding",
+			"WEBSITE":"Website",
+			"WEBSITE-TOOLTIP":"URL website",
+			"PURCHASEURL":"Url store",
+			"PURCHASEURL-TOOLTIP":"URL of store to buy a product or service",
+			"TITLE-SOCIAL":"Social Network",
+			"TITLE-IMAGE":"Image",
+			"DRAG-IMAGE":"Drag an image here",
+			"TITLE-VIDEO":"Video",
+			"DRAG-VIDEO":"Drag a video here",
+			"TITLE-AUDIO":"Audio",
+			"DRAG-AUDIO":"Drag an audio file here",
+			"UPLOAD-PC":"Upload from computer",
+			"UPLOAD-CLOUD":"Select from your GeoDisplay library",
+			"TITLE-SELECTFILE":"Select a file",
+			"BUTTON-SELECT":"Select",
+			"BUTTON-CANCEL":"Cancel",
+			"BROWSER-SUPPORT":"Your browser doesn't support HTML5."
 		},
 		"profile":{
 			"PICTURE":"Profile Image",

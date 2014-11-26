@@ -4,7 +4,7 @@
 		    <li>
 		    	<a id="back">
 		    		<i class="fa fa-arrow-left"></i>
-		    		Atrás
+		    		#{EDITTAG.BACK}#
 		    	</a>
 		    </li>
 		</ul>
@@ -12,12 +12,12 @@
 			<li id="save" style="display:none">
 				<a href="#" class="green">
 		    		<i class="fa fa-check"></i>
-		    		Guardar
+		    		#{EDITTAG.SAVE}#
 		    	</a>
 			</li>
 		    <li id="next">
 		    	<a href="#" class="green">
-		    		Siguiente
+		    		#{EDITTAG.NEXT}#
 		    		<i class="fa fa-arrow-right"></i>
 		    	</a>
 		    </li>
