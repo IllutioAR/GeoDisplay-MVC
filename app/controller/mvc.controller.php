@@ -382,22 +382,6 @@ class mvc_controller {
 		$language = json_decode(file_get_contents('../app/language/language.json'), true);
 		$lan = $_SESSION["client"]["language"];
 
-		/*
-		$pagina = $this->replace_content('/\#{NOTIFICATION.SUCCESS-CHANGE_PASSWORD}\#/ms', $language[$lan]["notifications"]["SUCCESS-CHANGE_PASSWORD"], $pagina);
-		$pagina = $this->replace_content('/\#{NOTIFICATION.SUCCESS-NEW_TAG}\#/ms', $language[$lan]["notifications"]["SUCCESS-NEW_TAG"], $pagina);
-		$pagina = $this->replace_content('/\#{NOTIFICATION.SUCCESS-EDIT_TAG}\#/ms', $language[$lan]["notifications"]["SUCCESS-EDIT_TAG"], $pagina);
-		$pagina = $this->replace_content('/\#{NOTIFICATION.SUCCESS-FILE_UPLOAD}\#/ms', $language[$lan]["notifications"]["SUCCESS-FILE_UPLOAD"], $pagina);
-		$pagina = $this->replace_content('/\#{NOTIFICATION.SUCCESS-FILE_RESTRICTION}\#/ms', $language[$lan]["notifications"]["SUCCESS-FILE_RESTRICTION"], $pagina);
-		$pagina = $this->replace_content('/\#{NOTIFICATION.ERROR-CHANGE_PASSWORD}\#/ms', $language[$lan]["notifications"]["ERROR-CHANGE_PASSWORD"], $pagina);
-		$pagina = $this->replace_content('/\#{NOTIFICATION.ERROR-EDIT_TAG}\#/ms', $language[$lan]["notifications"]["ERROR-EDIT_TAG"], $pagina);
-		$pagina = $this->replace_content('/\#{NOTIFICATION.ERROR-INCOMPLETE_TAG}\#/ms', $language[$lan]["notifications"]["ERROR-INCOMPLETE_TAG"], $pagina);
-		$pagina = $this->replace_content('/\#{NOTIFICATION.ERROR-EDIT_INCOMPLETE}\#/ms', $language[$lan]["notifications"]["ERROR-EDIT_INCOMPLETE"], $pagina);
-		$pagina = $this->replace_content('/\#{NOTIFICATION.ERROR-MEDIADIRECTORY}\#/ms', $language[$lan]["notifications"]["ERROR-MEDIADIRECTORY"], $pagina);
-		$pagina = $this->replace_content('/\#{NOTIFICATION.ERROR-USER_SPACE}\#/ms', $language[$lan]["notifications"]["ERROR-USER_SPACE"], $pagina);
-		$pagina = $this->replace_content('/\#{NOTIFICATION.ERROR-FILE_UPLOAD}\#/ms', $language[$lan]["notifications"]["ERROR-FILE_UPLOAD"], $pagina);
-		$pagina = $this->replace_content('/\#{NOTIFICATION.ERROR-NUM_TAGS}\#/ms', $language[$lan]["notifications"]["ERROR-NUM_TAGS"], $pagina);
-		*/
-
 		$notification = "";
 		if (isset( $_SESSION["success"] )) {
 			$notification = $this->load_page('../app/views/default/modules/notification/success.php');
@@ -432,85 +416,12 @@ class mvc_controller {
 	private function set_language($pagina, $section){
 		$language = json_decode(file_get_contents('../app/language/language.json'), true);
 		$lan = $_SESSION["client"]["language"];
+		foreach ($language[$lan]["general"] as $key => $value) {
+			$pagina = $this->replace_content('/\#{GENERAL.'.$key.'}\#/ms', $language[$lan]["general"][$key], $pagina);
+		}
 
-		$pagina = $this->replace_content('/\#{GENERAL.HOME}\#/ms', $language[$lan]["general"]["HOME"], $pagina);
-		$pagina = $this->replace_content('/\#{GENERAL.MULTIMEDIA}\#/ms', $language[$lan]["general"]["MULTIMEDIA"], $pagina);
-		$pagina = $this->replace_content('/\#{GENERAL.LOGOUT}\#/ms', $language[$lan]["general"]["LOGOUT"], $pagina);
-		
-		if ($section === "index") {
-			$pagina = $this->replace_content('/\#{INDEX.ACTIVE}\#/ms', $language[$lan][$section]["ACTIVE"], $pagina);
-			$pagina = $this->replace_content('/\#{INDEX.INACTIVE}\#/ms', $language[$lan][$section]["INACTIVE"], $pagina);
-			$pagina = $this->replace_content('/\#{INDEX.SEARCH-PLACEHOLDER}\#/ms', $language[$lan][$section]["SEARCH-PLACEHOLDER"], $pagina);
-			$pagina = $this->replace_content('/\#{INDEX.ADDTAG}\#/ms', $language[$lan][$section]["ADDTAG"], $pagina);
-			$pagina = $this->replace_content('/\#{INDEX.DISABLE}\#/ms', $language[$lan][$section]["DISABLE"], $pagina);
-			$pagina = $this->replace_content('/\#{INDEX.ENABLE}\#/ms', $language[$lan][$section]["ENABLE"], $pagina);
-			$pagina = $this->replace_content('/\#{INDEX.COPY}\#/ms', $language[$lan][$section]["COPY"], $pagina);
-			$pagina = $this->replace_content('/\#{INDEX.EDIT}\#/ms', $language[$lan][$section]["EDIT"], $pagina);
-			$pagina = $this->replace_content('/\#{INDEX.DELETE}\#/ms', $language[$lan][$section]["DELETE"], $pagina);
-		}elseif ($section === "addtag") {
-			$pagina = $this->replace_content('/\#{ADDTAG.BACK}\#/ms', $language[$lan][$section]["BACK"], $pagina);
-			$pagina = $this->replace_content('/\#{ADDTAG.NEXT}\#/ms', $language[$lan][$section]["NEXT"], $pagina);
-			$pagina = $this->replace_content('/\#{ADDTAG.TITLE-LOCATION}\#/ms', $language[$lan][$section]["TITLE-LOCATION"], $pagina);
-			$pagina = $this->replace_content('/\#{ADDTAG.SEARCH}\#/ms', $language[$lan][$section]["SEARCH"], $pagina);
-			$pagina = $this->replace_content('/\#{ADDTAG.LATITUDE}\#/ms', $language[$lan][$section]["LATITUDE"], $pagina);
-			$pagina = $this->replace_content('/\#{ADDTAG.LONGITUDE}\#/ms', $language[$lan][$section]["LONGITUDE"], $pagina);
-			$pagina = $this->replace_content('/\#{ADDTAG.TITLE-GENERAL}\#/ms', $language[$lan][$section]["TITLE-GENERAL"], $pagina);
-			$pagina = $this->replace_content('/\#{ADDTAG.TAGNAME}\#/ms', $language[$lan][$section]["TAGNAME"], $pagina);
-			$pagina = $this->replace_content('/\#{ADDTAG.TAGNAME-TOOLTIP}\#/ms', $language[$lan][$section]["TAGNAME-TOOLTIP"], $pagina);
-			$pagina = $this->replace_content('/\#{ADDTAG.TAGDESC}\#/ms', $language[$lan][$section]["TAGDESC"], $pagina);
-			$pagina = $this->replace_content('/\#{ADDTAG.TAGDESC-TOOLTIP}\#/ms', $language[$lan][$section]["TAGDESC-TOOLTIP"], $pagina);
-			$pagina = $this->replace_content('/\#{ADDTAG.WEBSITE}\#/ms', $language[$lan][$section]["WEBSITE"], $pagina);
-			$pagina = $this->replace_content('/\#{ADDTAG.WEBSITE-TOOLTIP}\#/ms', $language[$lan][$section]["WEBSITE-TOOLTIP"], $pagina);
-			$pagina = $this->replace_content('/\#{ADDTAG.PURCHASEURL}\#/ms', $language[$lan][$section]["PURCHASEURL"], $pagina);
-			$pagina = $this->replace_content('/\#{ADDTAG.PURCHASEURL-TOOLTIP}\#/ms', $language[$lan][$section]["PURCHASEURL-TOOLTIP"], $pagina);
-			$pagina = $this->replace_content('/\#{ADDTAG.TITLE-SOCIAL}\#/ms', $language[$lan][$section]["TITLE-SOCIAL"], $pagina);
-			$pagina = $this->replace_content('/\#{ADDTAG.TITLE-IMAGE}\#/ms', $language[$lan][$section]["TITLE-IMAGE"], $pagina);
-			$pagina = $this->replace_content('/\#{ADDTAG.DRAG-IMAGE}\#/ms', $language[$lan][$section]["DRAG-IMAGE"], $pagina);
-			$pagina = $this->replace_content('/\#{ADDTAG.TITLE-VIDEO}\#/ms', $language[$lan][$section]["TITLE-VIDEO"], $pagina);
-			$pagina = $this->replace_content('/\#{ADDTAG.DRAG-VIDEO}\#/ms', $language[$lan][$section]["DRAG-VIDEO"], $pagina);
-			$pagina = $this->replace_content('/\#{ADDTAG.TITLE-AUDIO}\#/ms', $language[$lan][$section]["TITLE-AUDIO"], $pagina);
-			$pagina = $this->replace_content('/\#{ADDTAG.DRAG-AUDIO}\#/ms', $language[$lan][$section]["DRAG-AUDIO"], $pagina);
-			$pagina = $this->replace_content('/\#{ADDTAG.UPLOAD-PC}\#/ms', $language[$lan][$section]["UPLOAD-PC"], $pagina);
-			$pagina = $this->replace_content('/\#{ADDTAG.UPLOAD-CLOUD}\#/ms', $language[$lan][$section]["UPLOAD-CLOUD"], $pagina);
-			$pagina = $this->replace_content('/\#{ADDTAG.TITLE-SELECTFILE}\#/ms', $language[$lan][$section]["TITLE-SELECTFILE"], $pagina);
-			$pagina = $this->replace_content('/\#{ADDTAG.BUTTON-SELECT}\#/ms', $language[$lan][$section]["BUTTON-SELECT"], $pagina);
-			$pagina = $this->replace_content('/\#{ADDTAG.BUTTON-CANCEL}\#/ms', $language[$lan][$section]["BUTTON-CANCEL"], $pagina);
-		}elseif ($section === "multimedia") {
-			$pagina = $this->replace_content('/\#{MULTIMEDIA.TITLE-FILES}\#/ms', $language[$lan][$section]["TITLE-FILES"], $pagina);
-			$pagina = $this->replace_content('/\#{MULTIMEDIA.NAME}\#/ms', $language[$lan][$section]["NAME"], $pagina);
-			$pagina = $this->replace_content('/\#{MULTIMEDIA.SIZE}\#/ms', $language[$lan][$section]["SIZE"], $pagina);
-			$pagina = $this->replace_content('/\#{MULTIMEDIA.DATEUPLOADED}\#/ms', $language[$lan][$section]["DATEUPLOADED"], $pagina);
-			$pagina = $this->replace_content('/\#{MULTIMEDIA.ACTION}\#/ms', $language[$lan][$section]["ACTION"], $pagina);
-			$pagina = $this->replace_content('/\#{MULTIMEDIA.BUTTON-DELETE}\#/ms', $language[$lan][$section]["BUTTON-DELETE"], $pagina);
-			$pagina = $this->replace_content('/\#{MULTIMEDIA.MENU-VIDEO}\#/ms', $language[$lan][$section]["MENU-VIDEO"], $pagina);
-			$pagina = $this->replace_content('/\#{MULTIMEDIA.MENU-IMAGE}\#/ms', $language[$lan][$section]["MENU-IMAGE"], $pagina);
-			$pagina = $this->replace_content('/\#{MULTIMEDIA.MENU-AUDIO}\#/ms', $language[$lan][$section]["MENU-AUDIO"], $pagina);
-			$pagina = $this->replace_content('/\#{MULTIMEDIA.SEARCH-PLACEHOLDER}\#/ms', $language[$lan][$section]["SEARCH-PLACEHOLDER"], $pagina);
-			$pagina = $this->replace_content('/\#{MULTIMEDIA.UPLOADFILE}\#/ms', $language[$lan][$section]["UPLOADFILE"], $pagina);
-			$pagina = $this->replace_content('/\#{MULTIMEDIA.TITLE-OVERVIEW}\#/ms', $language[$lan][$section]["TITLE-OVERVIEW"], $pagina);
-			$pagina = $this->replace_content('/\#{MULTIMEDIA.USEDSPACE}\#/ms', $language[$lan][$section]["USEDSPACE"], $pagina);
-			$pagina = $this->replace_content('/\#{MULTIMEDIA.FILES-VIDEO}\#/ms', $language[$lan][$section]["FILES-VIDEO"], $pagina);
-			$pagina = $this->replace_content('/\#{MULTIMEDIA.FILES-IMAGE}\#/ms', $language[$lan][$section]["FILES-IMAGE"], $pagina);
-			$pagina = $this->replace_content('/\#{MULTIMEDIA.FILES-AUDIO}\#/ms', $language[$lan][$section]["FILES-AUDIO"], $pagina);
-			$pagina = $this->replace_content('/\#{MULTIMEDIA.FILES-TOTAL}\#/ms', $language[$lan][$section]["FILES-TOTAL"], $pagina);
-		}elseif ($section === "profile") {
-			$pagina = $this->replace_content('/\#{PROFILE.PICTURE}\#/ms', $language[$lan][$section]["PICTURE"], $pagina);
-			$pagina = $this->replace_content('/\#{PROFILE.DETAIL}\#/ms', $language[$lan][$section]["DETAIL"], $pagina);
-			$pagina = $this->replace_content('/\#{PROFILE.USEDPLACES}\#/ms', $language[$lan][$section]["USEDPLACES"], $pagina);
-			$pagina = $this->replace_content('/\#{PROFILE.USEDSPACE}\#/ms', $language[$lan][$section]["USEDSPACE"], $pagina);
-			$pagina = $this->replace_content('/\#{PROFILE.PASSWORD-CHANGE}\#/ms', $language[$lan][$section]["PASSWORD-CHANGE"], $pagina);
-			$pagina = $this->replace_content('/\#{PROFILE.PASSWORD-CURRENT}\#/ms', $language[$lan][$section]["PASSWORD-CURRENT"], $pagina);
-			$pagina = $this->replace_content('/\#{PROFILE.PASSWORD-NEW}\#/ms', $language[$lan][$section]["PASSWORD-NEW"], $pagina);
-			$pagina = $this->replace_content('/\#{PROFILE.PASSWORD-CONFIRM}\#/ms', $language[$lan][$section]["PASSWORD-CONFIRM"], $pagina);
-			$pagina = $this->replace_content('/\#{PROFILE.PASSWORD-CHANGE}\#/ms', $language[$lan][$section]["PASSWORD-CHANGE"], $pagina);
-			$pagina = $this->replace_content('/\#{PROFILE.VAL-MIN6}\#/ms', $language[$lan][$section]["VAL-MIN6"], $pagina);
-			$pagina = $this->replace_content('/\#{PROFILE.LANGUAGE}\#/ms', $language[$lan][$section]["LANGUAGE"], $pagina);
-			$pagina = $this->replace_content('/\#{PROFILE.LANGUAGE-SPANISH}\#/ms', $language[$lan][$section]["LANGUAGE-SPANISH"], $pagina);
-			$pagina = $this->replace_content('/\#{PROFILE.LANGUAGE-ENGLISH}\#/ms', $language[$lan][$section]["LANGUAGE-ENGLISH"], $pagina);
-			$pagina = $this->replace_content('/\#{PROFILE.LANGUAGE-SELECT}\#/ms', $language[$lan][$section]["LANGUAGE-SELECT"], $pagina);
-			$pagina = $this->replace_content('/\#{PROFILE.EDIT-LOGO}\#/ms', $language[$lan][$section]["EDIT-LOGO"], $pagina);
-		}elseif ($section === "edittag") {
-			
+		foreach ($language[$lan][$section] as $key => $value) {
+			$pagina = $this->replace_content('/\#{'.strtoupper($section).'.'.$key.'}\#/ms', $language[$lan][$section][$key], $pagina);
 		}
 		return $pagina;
 	}

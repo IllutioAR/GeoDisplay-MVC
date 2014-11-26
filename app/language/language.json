@@ -45,6 +45,35 @@
 			"BUTTON-SELECT":"Seleccionar",
 			"BUTTON-CANCEL":"Cancelar"
 		},
+		"edittag":{
+			"BACK":"Atrás",
+			"NEXT":"Siguiente",
+			"TITLE-LOCATION":"Localiza un punto",
+			"SEARCH":"Buscar...",
+			"LATITUDE":"Latitud",
+			"LONGITUDE":"Longitud",
+			"TITLE-GENERAL":"Información general",
+			"TAGNAME":"Nombre del lugar",
+			"TAGNAME-TOOLTIP":"Pon un nombre al lugar que quieres etiquetar",
+			"TAGDESC":"Descripción",
+			"TAGDESC-TOOLTIP":"Agrega una breve descripción de este lugar",
+			"WEBSITE":"Sitio web",
+			"WEBSITE-TOOLTIP":"Dirección a tu sitio web",
+			"PURCHASEURL":"Url de compra",
+			"PURCHASEURL-TOOLTIP":"Dirección web para comprar un producto o servicio",
+			"TITLE-SOCIAL":"Redes sociales",
+			"TITLE-IMAGE":"Imagen",
+			"DRAG-IMAGE":"Arrastra una imagen aquí",
+			"TITLE-VIDEO":"Video",
+			"DRAG-VIDEO":"Arrastra un video aquí",
+			"TITLE-AUDIO":"Audio",
+			"DRAG-AUDIO":"Arrastra un audio aquí",
+			"UPLOAD-PC":"Subir desde PC",
+			"UPLOAD-CLOUD":"Seleccionar de GeoDisplay ",
+			"TITLE-SELECTFILE":"Selecciona un archivo",
+			"BUTTON-SELECT":"Seleccionar",
+			"BUTTON-CANCEL":"Cancelar"
+		},
 		"profile":{
 			"PICTURE":"Imagen de perfil",
 			"EDIT-LOGO":"Editar imagen de perfil",
@@ -142,6 +171,9 @@
 			"TITLE-SELECTFILE":"Select a file",
 			"BUTTON-SELECT":"Select",
 			"BUTTON-CANCEL":"Cancel"
+		},
+		"edittag":{
+
 		},
 		"profile":{
 			"PICTURE":"Profile Image",
