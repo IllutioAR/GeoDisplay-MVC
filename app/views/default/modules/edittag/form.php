@@ -33,7 +33,7 @@
 								<label for="name">
 									#{EDITTAG.TAGNAME}#
 									<i class="fa fa-asterisk"></i>
-									[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="#{EDITTAG.TAGNAME-TOOTIP}#"></i>]
+									[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="#{EDITTAG.TAGNAME-TOOLTIP}#"></i>]
 								</label>
 								<input name="name" type="text" class="form-control" id="name" value="<?= $tag['name'] ?>">
 							</div>
