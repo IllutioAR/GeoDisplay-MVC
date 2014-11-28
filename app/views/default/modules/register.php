@@ -53,19 +53,25 @@
 	                                <form action="register.php" method="post" role="form" enctype="multipart/form-data">
 	                                	<div class="col-xs-6">
 	                                		<div class="form-group">
-												<label for="nick">ID [<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Permite a los usuarios encontrar tu contenido"></i>]</label>
+												<label for="nick">
+													ID 
+													<i class="fa fa-asterisk"></i>
+													[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Permite a los usuarios encontrar tu contenido"></i>]</label>
 												<input name="nick" type="text" class="form-control" id="nick" pattern="[a-zA-Z][a-zA-Z0-9_]{1,19}" title="El ID sólo debe tener letras o números." placeholder="ID de usuario" required focus>
 											</div>
 		                            		<div class="form-group">
-												<label for="email">Correo electrónico [<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Con este correo electrónico podrás iniciar sesión"></i>]</label>
+												<label for="email">
+													Correo electrónico
+													<i class="fa fa-asterisk"></i>
+													[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Con este correo electrónico podrás iniciar sesión"></i>]</label>
 												<input name="email" type="email" class="form-control" id="email" placeholder="correo@ejemplo.com" required>
 											</div>
 											<div class="form-group">
-												<label for="password">Contraseña</label>
+												<label for="password">Contraseña<i class="fa fa-asterisk"></i></label>
 												<input name="password" type="password" class="form-control" id="password" pattern=".{8,}" title="Mínimo 8 caracteres." placeholder="Contraseña" required>
 											</div>
 											<div class="form-group">
-												<label for="password2">Confirmar contraseña</label>
+												<label for="password2">Confirmar contraseña<i class="fa fa-asterisk"></i></label>
 												<input name="password2" type="password" class="form-control" id="password2" pattern=".{8,}" title="Mínimo 8 caracteres." placeholder="Confirmar contraseña" required>
 											</div>
 											<div class="form-group parent-container" style="height:34px">
@@ -76,15 +82,17 @@
 										</div>
 										<div class="col-xs-6">
 											<div class="form-group">
-												<label for="name">Nombre</label>
+												<label for="name">Nombre<i class="fa fa-asterisk"></i></label>
 												<input name="name" type="text" class="form-control" id="name" placeholder="Nombre de usuario/organziación" required>
 											</div>
 											<div class="form-group">
-												<label for="logo">Logo [<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Necesario para ser visible en la pantalla de inicio de la app movil"></i>]</label>
+												<label for="logo">Logo
+													<i class="fa fa-asterisk"></i>
+													[<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Necesario para ser visible en la pantalla de inicio de la app movil"></i>]</label>
 												<input name="logo" type="file" class="form-control" id="logo">
 											</div>
 											<div class="form-group">
-												<label for="country">País</label>
+												<label for="country">País<i class="fa fa-asterisk"></i></label>
 												<select name="country" class="form-control" id="country" required>
 													<option value="">---</option>
 													<option value="Mexico">México</option>
@@ -94,7 +102,7 @@
 												</select>
 											</div>
 											<div class="form-group">
-												<label for="city">Ciudad</label>
+												<label for="city">Ciudad<i class="fa fa-asterisk"></i></label>
 												<input name="city" type="text" class="form-control" id="city" placeholder="Ciudad" required>
 											</div>
 											<div class="form-group">

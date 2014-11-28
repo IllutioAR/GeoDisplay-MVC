@@ -49,11 +49,11 @@
 							<div>
                                 <form action="login.php" method="post" role="form">
                             		<div class="form-group">
-										<label for="email">Correo electrónico</label>
+										<label for="email">Correo electrónico <i class="fa fa-asterisk"></i></label>
 										<input name="email" type="email" class="form-control" id="email" placeholder="Escribe tu correo electrónico" required focus>
 									</div>
 									<div class="form-group">
-										<label for="password">Contraseña</label>
+										<label for="password">Contraseña <i class="fa fa-asterisk"></i></label>
 										<input name="password" type="password" class="form-control" id="password" placeholder="Escribe tu contraseña" required>
 									</div>
 									<div class="form-group">
