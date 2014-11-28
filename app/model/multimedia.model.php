@@ -119,6 +119,45 @@ class multimedia extends database {
 		header("Location: ../addtag.php");
 	}
 
+	function createThumbs( $pathToImages, $pathToThumbs, $thumbWidth ) {
+        // parse path for the extension
+        $info = pathinfo($pathToImages);
+        // continue only if this is a JPEG image
+        if ( strtolower($info['extension']) == 'jpg' )
+        {
+            echo "Creating thumbnail for {$pathToImages} <br />";
+            // load image and get image size
+            $img = imagecreatefromjpeg( "{$pathToImages}" );
+        }elseif ( strtolower($info['extension']) == 'png' ) {
+            echo "Creating thumbnail for {$pathToImages} <br />";
+            // load image and get image size
+            $img = imagecreatefrompng( "{$pathToImages}" );
+        }else{
+            continue;
+        }
+            
+        $width = imagesx( $img );
+        $height = imagesy( $img );
+        // calculate thumbnail size
+        $new_width = $thumbWidth;
+        $new_height = floor( $height * ( $thumbWidth / $width ) );
+        // create a new tempopary image
+        $tmp_img = imagecreatetruecolor( $new_width, $new_height );
+        // copy and resize old image into new image 
+        imagecopyresized( $tmp_img, $img, 0, 0, 0, 0, $new_width, $new_height, $width, $height );
+        // save thumbnail into a file
+        $info = pathinfo($pathToImages);
+        // continue only if this is a JPEG image
+        if ( strtolower($info['extension']) == 'jpg' ) {
+            $pathToThumbs = str_replace(".jpg", ".png", $pathToThumbs);
+            $pathToThumbs = str_replace(".JPG", ".png", $pathToThumbs);
+            imagepng( $tmp_img, "{$pathToThumbs}", 0);    
+        }else{
+            imagepng( $tmp_img, "{$pathToThumbs}", 0);    
+        }
+        return $pathToThumbs;
+	}
+
 	function move_media_file($type, $tag_id){
 		if ( ($_FILES[$type]["size"]/(1024*1024)) > $this->get_user_space() ){
 			$_SESSION["error"]["user_space"] = true;

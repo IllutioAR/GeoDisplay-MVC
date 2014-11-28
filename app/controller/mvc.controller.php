@@ -21,7 +21,6 @@ class mvc_controller {
 			header("Location: index.php");	
 			exit();
 		}
-
 		if(
 			isset( $_POST["nick"] ) &&
 			isset( $_POST["email"] ) &&
@@ -31,7 +30,6 @@ class mvc_controller {
 			isset( $_POST["country"] ) &&
 			isset( $_POST["city"] )
 		){
-			
 			if( preg_match("/^[a-z]\w{0,19}$/i", $_POST["nick"]) != 1 ){
 				$_SESSION["error"]["nick"] = true;
 				header("Location: register.php");
@@ -47,8 +45,8 @@ class mvc_controller {
 				header("Location: register.php");
 				exit();
 			}
-			$user = new client();
 
+			$user = new client();
 			if( $user->user_exists($_POST["nick"], $_POST["email"] ) ){
 				$_SESSION["error"]["user_exists"] = true;
 				header("Location: register.php");
@@ -68,25 +66,18 @@ class mvc_controller {
 			
 
 			$path = "media/".$_POST["nick"];
-			if(!file_exists($path)){
-				mkdir($path);
-				if(!file_exists($path."/video")){
-					mkdir($path."/video");
-				}
-				if(!file_exists($path."/audio")){
-					mkdir($path."/audio");
-				}
-				if(!file_exists($path."/image")){
-					mkdir($path."/image");
-					var_dump($_FILES);
-					if( move_uploaded_file($_FILES["logo"]["tmp_name"], "media/".$_POST["nick"]."/image/".$_FILES["logo"]["name"]) ){
-						$data["logo"] = "media/".$_POST["nick"]."/image/".$_FILES["logo"]["name"];
-					}
-				}
-				if(!file_exists($path."/map")){
-					mkdir($path."/map");
-				}
+			mkdir($path);
+			mkdir($path."/video");
+			mkdir($path."/audio");
+			mkdir($path."/map");
+			mkdir($path."/image");
+			if( move_uploaded_file($_FILES["logo"]["tmp_name"], "media/".$_POST["nick"]."/image/".$_FILES["logo"]["name"]) ){
+				//$data["logo"] = "media/".$_POST["nick"]."/image/".$_FILES["logo"]["name"];
 			}
+			mkdir($path."/thumbnail");
+			if( move_uploaded_file($_FILES["logo"]["tmp_name"], "media/".$_POST["nick"]."/thumbnail/".$_FILES["logo"]["name"]) ){
+				$data["logo"] = "media/".$_POST["nick"]."/thumbnail/".$_FILES["logo"]["name"];
+			}	
 			$user->register($data);
 			
 			header("Location: login.php");
@@ -118,6 +109,9 @@ class mvc_controller {
 						}
 						if(!file_exists($path."/image")){
 							mkdir($path."/image");
+						}
+						if(!file_exists($path."/thumbnail")){
+							mkdir($path."/thumbnail");
 						}
 						if(!file_exists($path."/map")){
 							mkdir($path."/map");
