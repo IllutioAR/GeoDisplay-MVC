@@ -43,7 +43,7 @@
 					<div class="col-xs-12 col-md-4 col-md-offset-4">
 						<div class="seccion">
 							<div class="titulo-login">
-								<h2>GeoDisplay</h2>
+								<h2><img src="img/logo-124x124.png" height="60" width="60"> <span>GeoDisplay</span></h2>
 							</div>
 							<hr>
 							<div>
@@ -59,8 +59,11 @@
 									<div class="form-group">
 										<button type="submit" class="btn btn-primary" style="width: 100%">Iniciar sesión</button>
 									</div>
+									<span class="register-container">
+										<a href="register.php" class="register pull-left">Registrar</a>
+									</span>
 									<span class="pass-recovery-container">
-										<a id="passwordRecovery" class="pass-recovery pull-right">Olvidé mi contraseña</a>
+										<a id="passwordRecovery" class="pass-recovery pull-right">Recuperar contraseña</a>
 									</span>
                                 </form>
                             </div>

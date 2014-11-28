@@ -53,43 +53,49 @@
 	                                <form action="register.php" method="post" role="form" enctype="multipart/form-data">
 	                                	<div class="col-xs-6">
 	                                		<div class="form-group">
-												<label for="nick">Nick</label>
-												<input name="nick" type="text" class="form-control" id="nick" pattern="[a-zA-Z][a-zA-Z0-9_]{1,19}" title="El nick sólo debe tener letras o números." placeholder="Escribe un nick" required focus>
+												<label for="nick">ID [<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Permite a los usuarios encontrar tu contenido"></i>]</label>
+												<input name="nick" type="text" class="form-control" id="nick" pattern="[a-zA-Z][a-zA-Z0-9_]{1,19}" title="El ID sólo debe tener letras o números." placeholder="ID de usuario" required focus>
 											</div>
 		                            		<div class="form-group">
-												<label for="email">Correo electrónico</label>
-												<input name="email" type="email" class="form-control" id="email" placeholder="Escribe tu correo electrónico." required>
+												<label for="email">Correo electrónico [<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Con este correo electrónico podrás iniciar sesión"></i>]</label>
+												<input name="email" type="email" class="form-control" id="email" placeholder="correo@ejemplo.com" required>
 											</div>
 											<div class="form-group">
 												<label for="password">Contraseña</label>
-												<input name="password" type="password" class="form-control" id="password" pattern=".{6,}" title="Mínimo 6 caracteres." placeholder="Escribe tu contraseña" required>
+												<input name="password" type="password" class="form-control" id="password" pattern=".{8,}" title="Mínimo 8 caracteres." placeholder="Contraseña" required>
 											</div>
 											<div class="form-group">
 												<label for="password2">Confirmar contraseña</label>
-												<input name="password2" type="password" class="form-control" id="password2" pattern=".{6,}" title="Mínimo 6 caracteres." placeholder="Escribe de nuevo tu contraseña." required>
+												<input name="password2" type="password" class="form-control" id="password2" pattern=".{8,}" title="Mínimo 8 caracteres." placeholder="Confirmar contraseña" required>
+											</div>
+											<div class="form-group parent-container" style="height:34px">
+												<div class="child-container">
+													<a href="login.php" class="pull-right login">Volver a inicio de sesión</a>
+												</div>
 											</div>
 										</div>
 										<div class="col-xs-6">
 											<div class="form-group">
 												<label for="name">Nombre</label>
-												<input name="name" type="text" class="form-control" id="name" placeholder="Escribe tu nombre" required>
+												<input name="name" type="text" class="form-control" id="name" placeholder="Nombre de usuario/organziación" required>
 											</div>
 											<div class="form-group">
-												<label for="logo">Logo</label>
+												<label for="logo">Logo [<i class="fa fa-question" data-toggle="tooltip" data-placement="top" title="Necesario para ser visible en la pantalla de inicio de la app movil"></i>]</label>
 												<input name="logo" type="file" class="form-control" id="logo">
 											</div>
 											<div class="form-group">
-												<label for="country">Country</label>
+												<label for="country">País</label>
 												<select name="country" class="form-control" id="country" required>
 													<option value="">---</option>
 													<option value="Mexico">México</option>
 													<option value="United States">Estados Unidos</option>
 													<option value="United Kingdom">Reino Unido</option>
+													<option value="Rest of the world">Resto del mundo</option>
 												</select>
 											</div>
 											<div class="form-group">
-												<label for="city">City</label>
-												<input name="city" type="text" class="form-control" id="city" required>
+												<label for="city">Ciudad</label>
+												<input name="city" type="text" class="form-control" id="city" placeholder="Ciudad" required>
 											</div>
 											<div class="form-group">
 												<button type="submit" class="btn btn-primary" style="width: 100%">Registrar</button>
@@ -113,6 +119,7 @@
 		-->
 		<script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
+		<script src="js/geodisplay.js"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
         <script>
             var map;
