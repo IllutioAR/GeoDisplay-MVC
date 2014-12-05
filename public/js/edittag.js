@@ -50,20 +50,7 @@ $("#save").click(function(){
 		uploading = false;
 		message += "- Description\n";
 	}
-	if( $("#image").length > 0 ) {
-		var filename = $("#image").val();
-		if( filename != "" ){
-			var extension = filename.split(".").pop();
-			if( extension !== "jpg" && extension !== "png"){
-				uploading = false;
-				message += "- Image (Must be a png or jpg file)";	
-			}
-		}
-		else{
-			uploading = false;
-			message += "- Image";	
-		}
-	}else if( $("#image_id").length > 0 ){
+	if( $("#image_id").length > 0 ){
 		if( $("#image_id").val() == "" ){
 			uploading = false;
 			message += "- Image (Select an image)";	
