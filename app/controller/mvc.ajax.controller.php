@@ -163,6 +163,7 @@ class mvc_controller {
 				}
 				
 				//Busca si el archivo existe, si existe le pone un nombre nuevo
+				$file_identifier = "";
 				while( file_exists($gif_path.$_FILES["gif_image"]["name"]) ){
 					$file_identifier = "(".uniqid().")";
 					$gif_path = $gif_path.$file_identifier;

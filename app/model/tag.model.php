@@ -378,17 +378,17 @@ class tag extends database {
 	}
 
 	function get_gif(){
-		$statement = "SELECT * FROM Gif ORDER BY id desc";
+		$statement = "SELECT * FROM Gif WHERE client_nick = :client_nick";
 		$query = $this->db->prepare($statement);
-		$query->bindParam(':nick', 	$this->nick);
-		$query->bindParam(':status',$status, PDO::PARAM_INT);
+		$query->bindParam(':client_nick', $_SESSION["client"]["nick"]);
 		$query->execute();
 		return $query->fetchAll(PDO::FETCH_ASSOC);
 	}
 
 	function get_num_gif(){
-		$statement = "SELECT count(id) FROM Gif";
+		$statement = "SELECT count(id) FROM Gif WHERE client_nick = :client_nick";
 		$query = $this->db->prepare($statement);
+		$query->bindParam(':client_nick', $_SESSION["client"]["nick"]);
 		$query->execute();
 		return $query->fetchAll(PDO::FETCH_ASSOC)[0]["count(id)"];
 	}
@@ -406,14 +406,13 @@ class tag extends database {
 		$query->bindParam(':sprite', $sprite);
 		$query->bindParam(':client_nick', $_SESSION["client"]["nick"]);
 		$query->execute();
-		var_dump($this->db);
-		exit();
 	}
 
 	function delete_gif($id){
-		$statement = "DELETE FROM Gif WHERE id = :id";
+		$statement = "DELETE FROM Gif WHERE id = :id and client_nick = :client_nick";
 		$query = $this->db->prepare($statement);
 		$query->bindParam(':id', $id, PDO::PARAM_INT);
+		$query->bindParam(':client_nick', $_SESSION["client"]["nick"]);
 		$query->execute();
 	}
 }
