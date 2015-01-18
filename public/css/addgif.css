@@ -1,0 +1,197 @@
+.seccion #map-canvas{
+    height: 400px;
+    width: 100%;
+}
+
+#map-search {
+    background-color: #fff;
+    padding: 0 11px 0 13px;
+    position: absolute;
+    width: 400px;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+    text-overflow: ellipsis;
+}
+
+.controls {
+    margin-top: 16px;
+    border: 1px solid transparent;
+    border-radius: 2px 0 0 2px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    height: 32px;
+    outline: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#map-search:focus {
+    border-color: #4d90fe;
+    margin-left: -1px;
+    padding-left: 14px;  /* Regular padding-left + 1. */
+    width: 401px;
+}
+
+.pac-container {
+font-family: Roboto;
+}
+
+#type-selector {
+    color: #fff;
+    background-color: #4d90fe;
+    padding: 5px 11px 0px 11px;
+}
+
+#type-selector label {
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: 300;
+}
+
+.form{
+    margin: .5em;
+}
+
+input, textarea{
+    margin-bottom: 1em;
+}
+
+textarea{
+    height: 3em;
+}
+
+form [class*="error-input"]{
+    /*background: #FFD6DC;*/
+    border: 1px #F00 solid;
+    box-shadow: 0px 0px 3px #f00;
+}
+
+form [class*="error-input"]:focus{
+    /*background: #FFD6DC;*/
+    border: 1px #F00 solid;
+    box-shadow: 0px 0px 3px #f00;
+}
+
+.close-icon{
+    color: red;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.multimedia-container{
+    padding: 0 !important;
+}
+
+.multimedia-container video{
+    width: 100%;
+}
+
+.multimedia-container > .audio-preview{
+    padding: 1em;
+    background: #DDD;
+}
+
+.multimedia-container audio{
+    width: 100%;
+}
+
+.multimedia-container img{
+    width: 100%;
+}
+
+.drag-area{
+    background: #DDD;
+    color: #AAA;
+    cursor: pointer;
+    border: 1px dashed;
+}
+
+.drag-area > div{
+    min-height: 200px;
+}
+
+.preview-upload-progress{
+    background: #DDD;
+    color: #AAA;
+    height: 200px;
+}
+
+.button-area{
+    text-align: center;
+    margin: 1em;
+}
+
+.button-area > button{
+    height: 3em;
+    width: 100%;
+}
+
+.button-area > button:first-child{
+    margin-bottom: inherit;
+}
+
+.button-area > button:last-child{
+    margin-bottom: 0 !important;
+}
+
+/*
+    FILE SELECT CLOUD
+*/
+
+.file-wrapper{
+    border-radius: 3px;
+    cursor: pointer;
+    margin-bottom: 1em;
+    text-align: center;
+}
+
+.file-wrapper:hover{
+    background: #EEE;
+}
+
+.file-wrapper-selected{
+    background: #1B75CE !important;
+    color: white;
+}
+
+.file-image{
+
+}
+
+.file-name{
+    height: 3em;
+    max-height: 3em;
+    overflow: hidden;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type=file] {
+    position:   absolute;
+    top:        0;
+    right:      0;
+    min-width:  100%;
+    min-height: 100%;
+    text-align: right;
+    filter:     alpha(opacity=0);
+    opacity:    0;
+    background: red;
+    cursor:     inherit;
+    display:    block;
+}
+
+canvas{
+    background: #EEE;
+    border: 1px #DDD solid;
+    margin-top: 1em;
+    padding: .5em;
+    cursor: pointer;
+    width: 100%;
+}
+
+#preview-canvas{
+    min-height: 400px;
+}

@@ -2,7 +2,9 @@
 	"Spanish":{
 		"general":{
 			"HOME":"Inicio",
-			"MULTIMEDIA":"Mis Archivos",
+			"PLACES":"Lugares",
+			"GIF":"Gifs",
+			"MULTIMEDIA":"Multimedia",
 			"LOGOUT":"Cerrar Sesión"
 		},
 		"index":{
@@ -93,6 +95,25 @@
 			"LANGUAGE-GERMAN":"Alemán",
 			"LANGUAGE-SELECT":"Seleccionar idioma"
 		},
+		"gif":{
+			"ACTIVE":"Activos",
+			"SEARCH-PLACEHOLDER":"Busca un gif",
+			"ADDGIF":"Agregar Gif",
+			"DELETE":"Eliminar"
+		},
+		"addgif":{
+			"BACK":"Atrás",
+			"NEXT":"Siguiente",
+			"TITLE-LOCATION":"Localización",
+			"SEARCH":"Busca un lugar",
+			"LATITUDE":"Latitud",
+			"LONGITUDE":"Longitud",
+			"TITLE-DETAILS":"Detalles del gif",
+			"NAME":"Nombre del gif",
+			"SELECT-FILE":"Selecciona un archivo",
+			"SELECT":"Seleccionar",
+			"SELECTPLACEHOLDER":"Selecciona un archivo..."
+		},
 		"multimedia":{
 			"TITLE-FILES":"Archivos",
 			"NAME":"Nombre",
@@ -131,7 +152,9 @@
 	"English":{
 		"general":{
 			"HOME":"Home",
-			"MULTIMEDIA":"My Files",
+			"PLACES":"Places",
+			"GIF":"Gifs",
+			"MULTIMEDIA":"Multimedia",
 			"LOGOUT":"Log Out"
 		},
 		"index":{
@@ -221,6 +244,25 @@
 			"LANGUAGE-ENGLISH":"English",
 			"LANGUAGE-GERMAN":"German",
 			"LANGUAGE-SELECT":"Select Language"
+		},
+		"gif":{
+			"ACTIVE":"Activos",
+			"SEARCH-PLACEHOLDER":"Busca un gif",
+			"ADDGIF":"Agregar Gif",
+			"DELETE":"Eliminar"
+		},
+		"addgif":{
+			"BACK":"Atrás",
+			"NEXT":"Siguiente",
+			"TITLE-LOCATION":"Localización",
+			"SEARCH":"Busca un lugar",
+			"LATITUDE":"Latitud",
+			"LONGITUDE":"Longitud",
+			"TITLE-DETAILS":"Detalles del gif",
+			"NAME":"Nombre del gif",
+			"SELECT-FILE":"Selecciona un archivo",
+			"SELECT":"Seleccionar",
+			"SELECTPLACEHOLDER":"Selecciona un archivo..."
 		},
 		"multimedia":{
 			"TITLE-FILES":"Files",

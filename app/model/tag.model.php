@@ -376,5 +376,45 @@ class tag extends database {
 			));
 		}	
 	}
+
+	function get_gif(){
+		$statement = "SELECT * FROM Gif ORDER BY id desc";
+		$query = $this->db->prepare($statement);
+		$query->bindParam(':nick', 	$this->nick);
+		$query->bindParam(':status',$status, PDO::PARAM_INT);
+		$query->execute();
+		return $query->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	function get_num_gif(){
+		$statement = "SELECT count(id) FROM Gif";
+		$query = $this->db->prepare($statement);
+		$query->execute();
+		return $query->fetchAll(PDO::FETCH_ASSOC)[0]["count(id)"];
+	}
+
+	function add_gif($gif_path, $num_frames, $ancho, $alto, $sprite){
+		$statement = "INSERT INTO Gif (latitude, longitude, name, gif, frames, height, width, sprite, client_nick) VALUES (:latitude, :longitude, :name, :gif, :frames, :height, :width, :sprite, :client_nick)";
+		$query = $this->db->prepare($statement);
+		$query->bindParam(':latitude', $_POST["latitude"]);
+		$query->bindParam(':longitude', $_POST["longitude"]);
+		$query->bindParam(':name', $_POST["name"]);
+		$query->bindParam(':gif', $gif_path);
+		$query->bindParam(':frames', $num_frames, PDO::PARAM_INT);
+		$query->bindParam(':height', $alto, PDO::PARAM_INT);
+		$query->bindParam(':width', $ancho, PDO::PARAM_INT);
+		$query->bindParam(':sprite', $sprite);
+		$query->bindParam(':client_nick', $_SESSION["client"]["nick"]);
+		$query->execute();
+		var_dump($this->db);
+		exit();
+	}
+
+	function delete_gif($id){
+		$statement = "DELETE FROM Gif WHERE id = :id";
+		$query = $this->db->prepare($statement);
+		$query->bindParam(':id', $id, PDO::PARAM_INT);
+		$query->execute();
+	}
 }
 ?>

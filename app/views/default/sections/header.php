@@ -22,6 +22,18 @@
 								</a>
 							</li>
 							<li>
+								<a href="index.php">
+									<i class="fa fa-map-marker"></i>
+									#{GENERAL.PLACES}#
+								</a>
+							</li>
+							<li>
+								<a href="gif.php">
+									<i class="fa fa-image"></i>
+									#{GENERAL.GIF}#
+								</a>
+							</li>
+							<li>
 								<a href="multimedia.php">
 									<i class="fa fa-cloud"></i>
 									#{GENERAL.MULTIMEDIA}#

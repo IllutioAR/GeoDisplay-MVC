@@ -145,11 +145,79 @@ class mvc_controller {
 			else{
 				$_SESSION["error"]["file_upload"] = true;
 			}
-
-
-
-			
 		}
+	}
+
+	function add_gif(){
+		$this->validate_session();
+		
+		if( isset($_POST["name"]) && isset($_POST["latitude"]) && isset($_POST["longitude"]) ){
+			if(
+				(isset($_FILES["gif_image"]) && $_FILES["gif_image"]["error"] == 0)
+			){	
+				$path = "../media/".$_SESSION["client"]["nick"]."/gif/";
+				$gif_path = $path;
+
+				if( !file_exists($path) ){
+					mkdir($path);
+				}
+				
+				//Busca si el archivo existe, si existe le pone un nombre nuevo
+				while( file_exists($gif_path.$_FILES["gif_image"]["name"]) ){
+					$file_identifier = "(".uniqid().")";
+					$gif_path = $gif_path.$file_identifier;
+				}
+				$gif_path = $gif_path.$_FILES["gif_image"]["name"];
+				//Sube el archivo, si lo sube sube el siguiente
+				if( move_uploaded_file($_FILES["gif_image"]["tmp_name"], $gif_path) ){
+					
+					$gifFilePath = $gif_path;
+
+					require '../../app/lib/GifFrameExtractor/src/GifFrameExtractor/GifFrameExtractor.php';
+					require '../../app/lib/image_to_sprite.php';
+
+					if (GifFrameExtractor::isAnimatedGif($gifFilePath)) { // check this is an animated GIF
+					    
+					    $gfe = new GifFrameExtractor();
+					    $gfe->extract($gifFilePath);
+					    
+					    $gif = $gfe->getFrames();
+
+					    $num_frames = count($gif);
+
+					    //Folder for each frame
+					    $framesFolder = $path.$file_identifier.$_FILES["gif_image"]["name"]." frames";
+					    mkdir($framesFolder);
+					    $i = 0;
+					    foreach ($gif as $frame) {
+					    	imagepng($frame["image"], $framesFolder."/frame".$i++.".png");
+					    }
+
+					    list($ancho, $alto, $tipo, $atributos) = getimagesize($gif_path);
+					    $class = new images_to_sprite($framesFolder,'sprite',$ancho,$alto);
+						$sprite_path = $class->create_sprite($framesFolder);
+
+						//echo $sprite_path;
+
+						$tag = new tag( $_SESSION["client"]["nick"] );
+						$gif_path = str_replace("../","",$gif_path);
+						$tag->add_gif($gif_path, $num_frames, $ancho, $alto, $sprite_path);
+						
+						header("Location: ../gif.php");
+					}else{
+						"El Gif tiene que ser animado";
+					}
+				}else{
+					echo "Error file upload";
+				}
+			}
+		}
+	}
+
+	function delete_gif(){
+		$this->validate_session();
+		$tag = new tag( $_SESSION["client"]["nick"] );
+		$tag->delete_gif( $_POST["id"] );
 	}
 
 	function change_language(){

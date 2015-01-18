@@ -282,6 +282,61 @@ class mvc_controller {
 		$this->view_page($pagina);
 	}
 
+	function show_gif(){
+		$this->validate_session();
+
+		/*TEMPLATE STUFF*/
+		$css = array("gif.css");
+		$js = array(
+				"js/gif.js", 
+				"js/search.js"
+			);
+
+		$pagina = $this->load_template("Gifs", "es", $css, $js );
+		$menu = $this->load_page('../app/views/default/modules/gif/menu.php');
+		$pagina = $this->replace_content('/\#{MENU}\#/ms' ,$menu , $pagina);
+
+		$tag = new tag($_SESSION["client"]["nick"]);
+
+		$data = $tag->get_gif();
+		$num_gifs = $tag->get_num_gif();
+		
+		$pagina = $this->replace_content('/\#{NUMACTIVE}\#/ms', $num_gifs, $pagina);
+		
+		ob_start();
+		include "../app/views/default/modules/gif/gifs.php";
+		$gif = ob_get_clean();
+
+		$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms', $gif, $pagina);
+
+		/*FINAL STUFF*/
+		$pagina = $this->show_notification($pagina);
+		$pagina = $this->set_language($pagina, "gif");
+		$this->view_page($pagina);
+	}
+
+	function add_gif(){
+		$this->validate_session();
+		$css = array("addgif.css");
+		$js = array(
+			"https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places",
+			"js/map.js",
+			"js/addgif.js/navigator.js",
+			"js/addgif.js/fileSelect.js",
+			"js/addgif.js/imagePreview.js",
+			);
+		$pagina = $this->load_template("Agregar gif", "es", $css, $js );
+		$menu = $this->load_page("../app/views/default/modules/addgif/menu.php");
+		$pagina = $this->replace_content('/\#{MENU}\#/ms' ,$menu , $pagina);
+
+		$form = $this->load_page("../app/views/default/modules/addgif/form.php");
+		$pagina = $this->replace_content('/\#{CONTENIDO}\#/ms' ,$form , $pagina);
+		
+		$pagina = $this->show_notification($pagina);
+		$pagina = $this->set_language($pagina, "addgif");
+		$this->view_page($pagina);
+	}
+
 	function multimedia($type){
 		$this->validate_session();
 		$css = array("media.css");
